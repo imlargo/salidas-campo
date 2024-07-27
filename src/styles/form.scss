@@ -1,0 +1,20 @@
+.form-label {
+	@apply font-bold text-lg mb-1 block;
+	color: #f9ae00;
+}
+
+.form-control {
+	@apply px-3 py-1 border rounded block w-full;
+}
+
+.input-disabled {
+	@apply bg-gray-200;
+}
+
+.is-invalid {
+	@apply border-red-500;
+}
+
+.is-valid {
+	@apply border-green-500;
+}
