@@ -15,7 +15,7 @@ class ControllerProyeccion implements ProyeccionData {
 	facultad = $state('MINAS');
 	docente = $derived(storeAuth.nombre);
 
-	uab = $state(storeAuth.uab?.codigo || '');
+	uab = $state('');
 	asignatura = $derived(storeFiltro.valueAsignatura);
 	codigo = $derived(storeFiltro.valueCodigo);
 
@@ -47,7 +47,7 @@ class ControllerProyeccion implements ProyeccionData {
 
 	handleFechaChange() {
 		if (this.fechaRegreso < this.fechaSalida) {
-			this.fechaRegreso = this.fechaSalida;
+			this.fechaRegreso = "";
 			document.getElementById('fechaRegreso')?.dispatchEvent(new Event('change'));
 		}
 	}
@@ -60,11 +60,16 @@ class ControllerProyeccion implements ProyeccionData {
 		this.destinos.push(destino);
 	}
 
-	changeUAB(e: Event) {
-		const target = e.target as HTMLSelectElement;
-		this.uab = target.value;
-		storeFiltro.valueUAB = target.value;
-		console.log(this.uab);
+	changeUAB(value: string) {
+
+		console.log(value);
+		
+		
+		this.uab = value;
+		console.log("codigo:", this.uab);
+
+		storeFiltro.valueUAB = value;
+		console.log("listado: ", storeFiltro.listadoAsignaturas);
 
 		storeFiltro.valueAsignatura = '';
 		storeFiltro.valueCodigo = '';

@@ -4,7 +4,6 @@
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
 	import { storeAuth } from '$src/lib/stores/storeAuth.svelte';
-	import type { ProyeccionData } from '$lib/types';
 	import { storeFiltro } from '$src/lib/client/asignaturas.svelte';
 
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
@@ -37,6 +36,16 @@
 			targetElement.setCustomValidity('');
 		}
 	}
+
+	$effect(() => {
+		if (storeAuth.uab !== null) {
+			console.log('Hey, x2');
+
+			controllerProyeccion.uab = storeAuth.uab.codigo;
+
+			controllerProyeccion.changeUAB(storeAuth.uab.codigo);
+		}
+	});
 </script>
 
 <Section titulo="Información General">
@@ -101,9 +110,9 @@
 			id="uab"
 			name="uab"
 			value={storeAuth.uab?.codigo || ''}
-			onchange={controllerProyeccion.changeUAB}
+			onchange={(e) => controllerProyeccion.changeUAB(e.target.value)}
 		>
-			<option value="" disabled>--- Seleccionar ---</option>
+			<option value="">--- Seleccionar ---</option>
 			{#each storeData.uabs as uab}
 				<option value={uab.codigo}>{uab.nombre}</option>
 			{/each}
