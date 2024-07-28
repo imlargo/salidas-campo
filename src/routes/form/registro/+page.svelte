@@ -5,6 +5,7 @@
 	import { storeData } from '$src/lib/stores/storeData.svelte';
 	import { storeAuth } from '$src/lib/stores/storeAuth.svelte';
 	import { storeFiltro } from '$src/lib/client/asignaturas.svelte';
+	import { validateGroups } from '$src/lib/util/validation';
 
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
 
@@ -17,32 +18,9 @@
 	storeData.riesgos = data.riesgos;
 	storeData.uabs = data.uabs;
 
-	function validateGroups(e: Event) {
-		const targetElement = e.target as HTMLInputElement;
-
-		const grupos = targetElement.value
-			.split(',')
-			.map((item: string) => item.trim())
-			.filter((item: string) => item !== '');
-
-		if (grupos.some((item: string) => isNaN(item)) || grupos.length !== new Set(grupos).size) {
-			targetElement.classList.add('is-invalid');
-			targetElement.setCustomValidity(
-				'Los grupos deben ser números separados por coma y no se pueden repetir'
-			);
-		} else {
-			targetElement.classList.remove('is-invalid');
-			targetElement.classList.add('is-valid');
-			targetElement.setCustomValidity('');
-		}
-	}
-
 	$effect(() => {
 		if (storeAuth.uab !== null) {
-			console.log('Hey, x2');
-
 			controllerProyeccion.uab = storeAuth.uab.codigo;
-
 			controllerProyeccion.changeUAB(storeAuth.uab.codigo);
 		}
 	});
@@ -110,7 +88,7 @@
 			id="uab"
 			name="uab"
 			value={storeAuth.uab?.codigo || ''}
-			onchange={(e) => controllerProyeccion.changeUAB(e.target.value)}
+			onchange={(e) => controllerProyeccion.changeUAB(e.target?.value)}
 		>
 			<option value="">--- Seleccionar ---</option>
 			{#each storeData.uabs as uab}

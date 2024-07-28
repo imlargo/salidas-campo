@@ -56,6 +56,12 @@ class DBController {
 		return exists ? (userRef.data() as UserResponse) : null;
 	}
 
+
+	/* Proyeccion */
+	async addRegistro(registro) {
+		await addDoc(colProyeccion, registro);
+	}
+
 	async updateInternalData(data) {
 		const docRef = doc(db, 'config', 'data');
 		await setDoc(docRef, data);
@@ -73,10 +79,6 @@ class DBController {
 
 	async deleteSolicitud(key: string) {
 		await deleteDoc(doc(db, 'solicitud', key.toString()));
-	}
-
-	async addRegistro(registro) {
-		await addDoc(colProyeccion, registro);
 	}
 
 	async getProyeccionesByDocente(email: string) {

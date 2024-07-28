@@ -3,6 +3,7 @@ import { storeAuth } from '$stores/storeAuth.svelte';
 import { storeFiltro } from './asignaturas.svelte';
 import type { ProyeccionData, Destino } from '$lib/types';
 import { calcularDuracion } from '../util/utils';
+import { dbController } from '../db/controller';
 
 class ControllerProyeccion implements ProyeccionData {
 	multidocente = $state(false);
@@ -61,18 +62,40 @@ class ControllerProyeccion implements ProyeccionData {
 	}
 
 	changeUAB(value: string) {
-
-		console.log(value);
-		
-		
 		this.uab = value;
-		console.log("codigo:", this.uab);
-
 		storeFiltro.valueUAB = value;
-		console.log("listado: ", storeFiltro.listadoAsignaturas);
 
 		storeFiltro.valueAsignatura = '';
 		storeFiltro.valueCodigo = '';
+	}
+
+	sendData() {
+		const data: ProyeccionData = {
+			facultad: this.facultad,
+			docente: this.docente,
+			uab: this.uab,
+			asignatura: this.asignatura,
+			codigo: this.codigo,
+			grupo: this.grupo,
+			asistentes: this.asistentes,
+			fechaSalida: this.fechaSalida,
+			horaSalida: this.horaSalida,
+			lugarSalida: this.lugarSalida,
+			fechaRegreso: this.fechaRegreso,
+			horaRegreso: this.horaRegreso,
+			lugarRegreso: this.lugarRegreso,
+			duracion: this.duracion,
+			departamentos: this.departamentos,
+			municipios: this.municipios,
+			ultimoDestino: this.ultimoDestino,
+			marcaTemporal: this.marcaTemporal,
+			email: this.email,
+			solicitada: this.solicitada,
+			blank: this.blank
+		};
+
+		dbController.addRegistro(data);
+
 	}
 }
 
