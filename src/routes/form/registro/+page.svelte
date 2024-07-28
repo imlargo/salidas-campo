@@ -13,6 +13,10 @@
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
+	storeData.config = data.config;
+	storeData.lugares = data.lugares;
+	storeData.riesgos = data.riesgos;
+	storeData.uabs = data.uabs;
 
 	function validateGroups(e: Event) {
 		const targetElement = e.target as HTMLInputElement;
@@ -22,10 +26,7 @@
 			.map((item: string) => item.trim())
 			.filter((item: string) => item !== '');
 
-		if (
-			grupos.some((item: string) => isNaN(item as number)) ||
-			grupos.length !== new Set(grupos).size
-		) {
+		if (grupos.some((item: string) => isNaN(item)) || grupos.length !== new Set(grupos).size) {
 			targetElement.classList.add('is-invalid');
 			targetElement.setCustomValidity(
 				'Los grupos deben ser números separados por coma y no se pueden repetir'

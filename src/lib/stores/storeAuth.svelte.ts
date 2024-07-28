@@ -63,7 +63,7 @@ class StoreAuth implements UserData {
 	}
 
 	async init() {
-		await setPersistence(auth, browserLocalPersistence);
+		await setPersistence(auth, browserSessionPersistence);
 
 		onAuthStateChanged(auth, async (user) => {
 			if (user !== null) {
@@ -82,7 +82,6 @@ class StoreAuth implements UserData {
 					return;
 				}
 
-				await storeData.loadData();
 
 				const sessionData: UserData = {
 					user: user,
