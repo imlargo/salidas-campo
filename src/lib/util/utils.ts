@@ -15,3 +15,24 @@ export function calcularDuracion(fecha1: Date, fecha2: Date) {
 export function normalizarTexto(texto: string) {
 	return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
+
+export function GroupBy(array: [], func: (obj: any) => any) {
+	return array.reduce((acc, obj) => {
+		const key = func(obj);
+		if (!acc[key]) {
+			acc[key] = [];
+		}
+		acc[key].push(obj);
+		return acc;
+	}, {});
+}
+
+export function validarFechaActual(min: string, max: string) {
+
+	const fechaActual = new Date();
+	
+	const fechaInicio = new Date(min);
+	const fechaFin = new Date(max);
+
+	return fechaActual >= fechaInicio && fechaActual <= fechaFin
+}

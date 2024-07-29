@@ -9,6 +9,7 @@
 	import { storeFiltro } from '$src/lib/client/asignaturas.svelte';
 	import { validateGroups } from '$src/lib/util/validation';
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
+	import { redirect } from '@sveltejs/kit';
 
 	const { data } = $props();
 
@@ -20,9 +21,18 @@
 	storeData.uabs = data.uabs;
 
 	$effect(() => {
-		if (storeAuth.uab !== null && data.proyeccion === null) {
-			controllerProyeccion.uab = storeAuth.uab.codigo;
-			controllerProyeccion.changeUAB(storeAuth.uab.codigo);
+		if (storeAuth.uab !== null) {
+			// Si es en blanco seleccionar UAB
+			if (data.proyeccion === null) {
+				controllerProyeccion.uab = storeAuth.uab.codigo;
+				controllerProyeccion.changeUAB(storeAuth.uab.codigo);
+				return;
+			}
+
+			// Si es editada verificar que sea del mismo usuario
+			if (data.proyeccion.email !== storeAuth.email) {
+				redirect(307, '/');
+			}
 		}
 	});
 
@@ -31,7 +41,11 @@
 	}
 </script>
 
-<Form handleSubmit={() => controllerProyeccion.sendData()}>
+<svelte:head>
+	<title>Formulario de Proyeccion - Salidas de campo</title>
+</svelte:head>
+
+<Form handleSubmit={() => controllerProyeccion.sendData()} isEdit={data.proyeccion !== null}>
 	<Section titulo="Información General">
 		<div>
 			<label for="facultad" class="form-label">Facultad</label>
@@ -348,6 +362,19 @@
 					<option value={destino.municipio}>{destino.municipio}</option>
 				{/each}
 			</select>
+		</div>
+
+		<div>
+			<label for="observaciones" class="form-label">Observaciones</label>
+			<p class="mb-2">
+				Ingrese aqui sus observacioes adicionales, ya sea con respecto a el lugar de destino.
+			</p>
+			<textarea
+				name="observaciones"
+				id="observaciones"
+				class="form-control"
+				bind:value={controllerProyeccion.observaciones}
+			></textarea>
 		</div>
 	</Section>
 </Form>

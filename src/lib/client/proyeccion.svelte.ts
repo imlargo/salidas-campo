@@ -13,7 +13,7 @@ class ControllerProyeccion implements Proyeccion {
 	multidocente = $state(false);
 	docenteAdicional = $state('');
 
-	tieneRelacion = $state(true);
+	tieneRelacion = $state(false);
 	incluirRelacion = $state(false);
 	relacion: Asignatura | null = $state(null);
 
@@ -40,9 +40,10 @@ class ControllerProyeccion implements Proyeccion {
 	destinos: Destino[] = $state([]);
 	ultimoDestino = $derived(
 		this.ultimoDestinoSelection
-			? this.destinos.find((destino) => destino.municipio === this.ultimoDestinoSelection)
+			? this.destinos.find((destino) => destino.municipio === this.ultimoDestinoSelection) || null
 			: null
 	);
+	observaciones = $state('');
 	marcaTemporal = $state('');
 	email = $derived(storeAuth.email);
 	solicitada = $state(false);
@@ -79,7 +80,7 @@ class ControllerProyeccion implements Proyeccion {
 			docente: this.docente,
 			uab: this.uab,
 			asignatura: this.asignatura!,
-			relacion: this.relacion!,
+			relacion: storeFiltro.anterior,
 			grupo: this.grupo,
 			asistentes: this.asistentes,
 			fechaSalida: this.fechaSalida,
@@ -91,6 +92,7 @@ class ControllerProyeccion implements Proyeccion {
 			duracion: this.duracion,
 			destinos: this.destinos,
 			ultimoDestino: this.ultimoDestino!,
+			observaciones: this.observaciones,
 			email: this.email,
 			solicitada: this.solicitada,
 			blank: this.blank
@@ -116,6 +118,9 @@ class ControllerProyeccion implements Proyeccion {
 
 		// Enviar a la API para guardar en la base de datos
 		// proyeccion.solicitada = this.editMode ? this.solicitada : false;
+
+		console.log(proyeccion);
+
 
 		if (this.editMode) {
 			await dbController.updateProyeccion(proyeccion);
@@ -173,7 +178,7 @@ class ControllerProyeccion implements Proyeccion {
 		this.docenteAdicional = docentes.length > 1 ? docentes[1] : '';
 
 		this.tieneRelacion = proyeccion.relacion !== null;
-		this.incluirRelacion = true;
+		this.incluirRelacion = proyeccion.relacion !== null;
 		this.relacion = proyeccion.relacion;
 
 		this.facultad = proyeccion.facultad;
@@ -195,6 +200,8 @@ class ControllerProyeccion implements Proyeccion {
 		// this.duracion = proyeccion.duracion;
 		
 		this.destinos = proyeccion.destinos;
+		this.observaciones = proyeccion.observaciones;
+		
 		// this.ultimoDestino = proyeccion.ultimoDestino;
 		this.marcaTemporal = proyeccion.marcaTemporal;
 		// this.email = proyeccion.email;

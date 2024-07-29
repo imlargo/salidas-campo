@@ -1,4 +1,4 @@
-import type { Proyeccion } from '../types';
+import type { Proyeccion, Config, UAB } from '../types';
 
 import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
 
@@ -16,8 +16,11 @@ import {
 	deleteDoc,
 	updateDoc,
 	query,
-	where
+	where,
+	type DocumentData
 } from 'firebase/firestore';
+import { GroupBy } from '$src/lib/util/utils';
+
 
 import type { UserResponse } from '../types';
 
@@ -34,11 +37,19 @@ function getSnapshotData(querySnapshot) {
 class DBController {
 	async loadData() {
 		const docSnap = await getDoc(doc(db, 'config', 'data'));
-		const data = docSnap.data();
+		const data = docSnap.data() as DocumentData;
 
 		const lugares = data.lugares;
-		const uabs = data.uabs;
-		const riesgos = data.riesgos;
+		const uabs = data.uabs.map((uab: any) => {
+			const data: UAB = {
+				codigo: uab.CODIGO_UAB.toString(),
+				nombre: uab.NOMBRE_UAB.toString(),
+				correo: uab.CORREO_UAB.toString()
+			};
+
+			return data;
+		});
+		const riesgos = GroupBy(data.riesgos, ({ TIPO }) => TIPO);
 
 		return {
 			lugares,
@@ -47,9 +58,9 @@ class DBController {
 		};
 	}
 
-	async loadConfig() {
+	async loadConfig(): Promise<Config> {
 		const docSnap = await getDoc(doc(db, 'config', 'config'));
-		return docSnap.data();
+		return docSnap.data() as Config;
 	}
 
 	async getUser(email: string): Promise<UserResponse | null> {

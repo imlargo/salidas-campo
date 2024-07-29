@@ -18,3 +18,7 @@
 .is-valid {
 	@apply border-green-500;
 }
+
+textarea {
+    field-sizing: content!important;
+}

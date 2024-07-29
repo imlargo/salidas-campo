@@ -1,12 +1,20 @@
 <script lang="ts">
 	const {
-		handleSubmit
+		handleSubmit,
+		isEdit
 	}: {
-		handleSubmit: () => void;
+		handleSubmit: (e: SubmitEvent) => void;
+		isEdit: boolean;
 	} = $props();
 </script>
 
-<form class="flex flex-col gap-7 mb-12" onsubmit={handleSubmit}>
+<form
+	class="flex flex-col gap-7 mb-12"
+	onsubmit={(e) => {
+		e.preventDefault();
+		handleSubmit(e);
+	}}
+>
 	<slot />
 
 	<div>
@@ -28,7 +36,7 @@
 	</div>
 
 	<button type="submit" class="px-4 py-3 text-center w-full rounded-lg font-bold text-xl">
-		Enviar
+		{isEdit ? 'Guardar cambios' : 'Enviar'}
 	</button>
 </form>
 

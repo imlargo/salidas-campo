@@ -28,7 +28,7 @@ class StoreFiltro implements StoreFiltro {
 		this.tieneRelacion
 			? storeData.asignaturas.find(
 					(asignatura) => asignatura.COD_ASIGNATURA === this.asignatura.ANTERIOR
-				)
+				) || null
 			: null
 	);
 

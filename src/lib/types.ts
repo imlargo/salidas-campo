@@ -48,6 +48,7 @@ export interface Proyeccion {
 
 	destinos: Destino[];
 	ultimoDestino: Destino;
+	observaciones: string;
 
 	email: string;
 	solicitada: boolean;

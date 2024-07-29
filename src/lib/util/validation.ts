@@ -1,8 +1,6 @@
 export function validateGroups(e: Event) {
 	const targetElement = e.target as HTMLInputElement;
 
-	console.log('targetElement', targetElement.value);
-
 	const grupos = targetElement.value
 		.split(',')
 		.map((item: string) => item.trim())

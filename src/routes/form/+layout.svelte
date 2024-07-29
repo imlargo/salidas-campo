@@ -7,7 +7,7 @@
 </script>
 
 <div class="max-w-7xl mx-auto container py-5">
-	<Banner variante={$page.url.pathname === '/form/registro' ? 'proyeccion' : 'solicitud'} />
+	<Banner variante={$page.url.pathname === '/form/proyeccion' ? 'proyeccion' : 'solicitud'} />
 
 	<p class="text-lg my-8 text-zinc-600">
 		Estimado docente, la fase de proyección consiste en la planificación y organización de las
