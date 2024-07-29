@@ -6,7 +6,7 @@
 	} = $props();
 </script>
 
-<form class="flex flex-col gap-7 mb-12">
+<form class="flex flex-col gap-7 mb-12" onsubmit={handleSubmit}>
 	<slot />
 
 	<div>
@@ -27,11 +27,7 @@
 		</div>
 	</div>
 
-	<button
-		onclick={handleSubmit}
-		type="submit"
-		class="px-4 py-3 text-center w-full rounded-lg font-bold text-xl"
-	>
+	<button type="submit" class="px-4 py-3 text-center w-full rounded-lg font-bold text-xl">
 		Enviar
 	</button>
 </form>
