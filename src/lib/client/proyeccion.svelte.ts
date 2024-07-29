@@ -110,11 +110,6 @@ class ControllerProyeccion implements Proyeccion {
 			return;
 		}
 
-		console.log(proyeccion);
-		console.log('Enviando');
-
-		return;
-
 		// Agregar marca temporal del momento en que se envía el formulario (Fecha, hora)
 		const marcaTemporal = new Date();
 		proyeccion.marcaTemporal = `${marcaTemporal.toLocaleDateString()} - ${marcaTemporal.toLocaleTimeString()}`;
@@ -138,8 +133,6 @@ class ControllerProyeccion implements Proyeccion {
 			},
 			body: JSON.stringify(email)
 		});
-
-		console.log('Todo enviado');
 
 		// Limpiar formulario
 
