@@ -63,14 +63,21 @@ class DBController {
 		const lastInd = await this.getLastInd();
 		const key = (lastInd + 1).toString();
 
+		proyeccion.id = key;
 		await setDoc(doc(db, 'proyeccion', key), proyeccion);
 		return key;
+	}
+
+	async getProyeccion(key: string): Promise<Proyeccion | null> {
+		const docSnap = await getDoc(doc(db, 'proyeccion', key));
+		return docSnap.exists() ? docSnap.data() as Proyeccion  : null;
 	}
 
 	async updateProyeccion(proyeccion: Proyeccion) {
 		const docRef = doc(db, 'proyeccion', proyeccion.id);
 		await updateDoc(docRef, proyeccion as object);
 	}
+	
 
 	async updateInternalData(data) {
 		const docRef = doc(db, 'config', 'data');

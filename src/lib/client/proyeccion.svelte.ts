@@ -161,6 +161,46 @@ class ControllerProyeccion implements Proyeccion {
 		);
 		*/
 	}
+
+	loadFromData(proyeccion: Proyeccion) {
+		this.editMode = true
+		this.id = proyeccion.id;
+
+		const docentes = proyeccion.docente.split(',').map((docente) => docente.trim());
+
+		this.ultimoDestinoSelection = proyeccion.ultimoDestino?.municipio || '';
+		this.multidocente = docentes.length > 1;
+		this.docenteAdicional = docentes.length > 1 ? docentes[1] : '';
+
+		this.tieneRelacion = proyeccion.relacion !== null;
+		this.incluirRelacion = true;
+		this.relacion = proyeccion.relacion;
+
+		this.facultad = proyeccion.facultad;
+		// this.docente = docentes[0];
+		this.uab = proyeccion.uab;
+		// this.asignatura = proyeccion.asignatura;
+		storeFiltro.valueUAB = proyeccion.uab;
+		storeFiltro.valueAsignatura = proyeccion.asignatura.ASIGNATURA;
+		storeFiltro.valueCodigo = proyeccion.asignatura.COD_ASIGNATURA;
+
+		this.grupo = proyeccion.grupo;
+		this.asistentes = proyeccion.asistentes;
+		this.fechaSalida = proyeccion.fechaSalida;
+		this.horaSalida = proyeccion.horaSalida;
+		this.lugarSalida = proyeccion.lugarSalida;
+		this.fechaRegreso = proyeccion.fechaRegreso;
+		this.horaRegreso = proyeccion.horaRegreso;
+		this.lugarRegreso = proyeccion.lugarRegreso;
+		// this.duracion = proyeccion.duracion;
+		
+		this.destinos = proyeccion.destinos;
+		// this.ultimoDestino = proyeccion.ultimoDestino;
+		this.marcaTemporal = proyeccion.marcaTemporal;
+		// this.email = proyeccion.email;
+		this.solicitada = proyeccion.solicitada;
+		this.blank = proyeccion.blank;
+	}
 }
 
 export const controllerProyeccion = new ControllerProyeccion();

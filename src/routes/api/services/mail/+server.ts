@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	// Obtener los datos de la pagina
 	const emailRequest = await request.json();
 
-	fetch(API_URL, {
+	await fetch(API_URL, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

@@ -20,11 +20,15 @@
 	storeData.uabs = data.uabs;
 
 	$effect(() => {
-		if (storeAuth.uab !== null) {
+		if (storeAuth.uab !== null && data.proyeccion === null) {
 			controllerProyeccion.uab = storeAuth.uab.codigo;
 			controllerProyeccion.changeUAB(storeAuth.uab.codigo);
 		}
 	});
+
+	if (data.proyeccion !== null) {
+		controllerProyeccion.loadFromData(data.proyeccion);
+	}
 </script>
 
 <Form handleSubmit={() => controllerProyeccion.sendData()}>
