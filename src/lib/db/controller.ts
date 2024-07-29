@@ -1,3 +1,5 @@
+import type { Proyeccion } from '../types';
+
 import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
 
 import { solicitudStatus } from '../util/enums';
@@ -56,10 +58,18 @@ class DBController {
 		return exists ? (userRef.data() as UserResponse) : null;
 	}
 
-
 	/* Proyeccion */
-	async addRegistro(registro) {
-		await addDoc(colProyeccion, registro);
+	async createProyeccion(proyeccion: Proyeccion) {
+		const lastInd = await this.getLastInd();
+		const key = (lastInd + 1).toString();
+
+		await setDoc(doc(db, 'proyeccion', key), proyeccion);
+		return key;
+	}
+
+	async updateProyeccion(proyeccion: Proyeccion) {
+		const docRef = doc(db, 'proyeccion', proyeccion.id);
+		await updateDoc(docRef, proyeccion as object);
 	}
 
 	async updateInternalData(data) {
@@ -127,18 +137,6 @@ class DBController {
 		const q = query(colProyeccion, where('estado', '==', solicitudStatus.APROBADA));
 		const querySnapshot = await getDocs(q);
 		return getSnapshotData(querySnapshot);
-	}
-
-	async saveRegistrofunction(registro) {
-		const lastInd = await this.getLastInd();
-		const key = lastInd + 1;
-		await setDoc(doc(db, 'proyeccion', key.toString()), registro.export());
-		return key;
-	}
-
-	async updateRegistrofunction(id: string, registro) {
-		const docRef = doc(db, 'proyeccion', id);
-		await updateDoc(docRef, registro.export());
 	}
 
 	async asignarDocente(id: string, correoDocente: string) {

@@ -3,7 +3,7 @@
 	import { storeData } from '$src/lib/stores/storeData.svelte';
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
 	import type { Destino } from '$src/lib/types';
-	import Destino from './Destino.svelte';
+	import DestinoRow from './Destino.svelte';
 
 	let busqueda = $state('');
 	let coincidencias = $derived.by(() => {
@@ -66,6 +66,6 @@
 <hr class="my-4" />
 <div id="flex flex-col">
 	{#each controllerProyeccion.destinos as destino}
-		<Destino {destino} />
+		<DestinoRow {destino} />
 	{/each}
 </div>

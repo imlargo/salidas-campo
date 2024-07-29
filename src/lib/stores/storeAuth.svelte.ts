@@ -82,7 +82,6 @@ class StoreAuth implements UserData {
 					return;
 				}
 
-
 				const sessionData: UserData = {
 					user: user,
 					email: user.email as string,

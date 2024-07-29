@@ -1,6 +1,5 @@
 import { storeData } from '../stores/storeData.svelte';
-import type { Asignatura, UAB } from '$lib/types';
-import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
+import type { Asignatura } from '$lib/types';
 
 interface StoreFiltro {
 	valueUAB: string;
@@ -35,7 +34,9 @@ class StoreFiltro implements StoreFiltro {
 
 	listadoAsignaturas = $derived(
 		this.valueUAB
-			? storeData.asignaturas.filter((asignatura) => asignatura.COD_UAB === this.valueUAB)
+			? storeData.asignaturas
+					.filter((asignatura) => asignatura.COD_UAB === this.valueUAB)
+					.sort((a, b) => a.ASIGNATURA.toLowerCase().localeCompare(b.ASIGNATURA.toLowerCase()))
 			: []
 	);
 

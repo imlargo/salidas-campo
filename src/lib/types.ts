@@ -25,25 +25,30 @@ export interface Config {
 	inicioSolicitud: string;
 }
 
-export interface ProyeccionData {
+export interface Proyeccion {
+	id: string;
+	marcaTemporal: string;
 	facultad: string;
 	docente: string;
 	uab: string;
-	asignatura: string;
-	codigo: string;
+
+	asignatura: Asignatura;
+	relacion: Asignatura | null;
 	grupo: string;
-	asistentes: string;
+	asistentes: number;
+
 	fechaSalida: string;
 	horaSalida: string;
 	lugarSalida: string;
 	fechaRegreso: string;
 	horaRegreso: string;
 	lugarRegreso: string;
+
 	duracion: number;
-	departamentos: string;
-	municipios: string;
-	ultimoDestino: string;
-	marcaTemporal: string;
+
+	destinos: Destino[];
+	ultimoDestino: Destino;
+
 	email: string;
 	solicitada: boolean;
 	blank: boolean;

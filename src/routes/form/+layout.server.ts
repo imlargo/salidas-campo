@@ -5,20 +5,19 @@ import geo from '$lib/assets/geo.json';
 import { dbController } from '$src/lib/db/controller';
 
 function GroupBy(array: [], func: (obj: any) => any) {
-    return array.reduce((acc, obj) => {
-        const key = func(obj);
-        if (!acc[key]) {
-            acc[key] = [];
-        }
-        acc[key].push(obj);
-        return acc;
-    }, {});
+	return array.reduce((acc, obj) => {
+		const key = func(obj);
+		if (!acc[key]) {
+			acc[key] = [];
+		}
+		acc[key].push(obj);
+		return acc;
+	}, {});
 }
 
 export const load = (async () => {
-
 	const [data, config] = await Promise.all([dbController.loadData(), dbController.loadConfig()]);
-	
+
 	return {
 		config: config,
 		lugares: data.lugares,
@@ -29,7 +28,7 @@ export const load = (async () => {
 				nombre: uab.NOMBRE_UAB.toString(),
 				correo: uab.CORREO_UAB.toString()
 			};
-	
+
 			return data;
 		}),
 		asignaturas,

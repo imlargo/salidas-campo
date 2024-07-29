@@ -1,5 +1,4 @@
 import type { UAB, Destino, Config, Asignatura } from '$lib/types';
-import { dbController } from '../db/controller';
 
 class StoreData {
 	asignaturas: Asignatura[] = $state([]);
