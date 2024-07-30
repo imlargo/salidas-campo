@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Banner from '$src/lib/components/form/Banner.svelte';
-	import Section from '$src/lib/components/form/Section.svelte';
 	import TableSolicitudes from '$src/lib/components/admin/TableSolicitudes.svelte';
 
-	import { showPicker } from '$src/lib/util/utils';
+	import { controllerGestion } from '$src/lib/client/controllers/gestion.svelte';
 
 	const { data } = $props();
 
 	const { config, internalData, solicitudes } = data;
+	controllerGestion.solicitudes = solicitudes;
 </script>
 
 <Banner titulo="Gestion de Solicitudes" variante="proyeccion">
@@ -76,7 +76,7 @@
 
 	<hr class="mb-5" />
 
-	<TableSolicitudes {solicitudes} />
+	<TableSolicitudes solicitudes={controllerGestion.solicitudes} />
 </main>
 
 <style lang="scss">

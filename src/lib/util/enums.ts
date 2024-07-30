@@ -12,3 +12,10 @@ export enum solicitudStatus {
 	NEGADA = 'Negada',
 	PENDIENTE = 'Pendiente'
 }
+
+export enum EstadoSolicitud {
+	SIN_ASIGNAR = 'Sin asignar',
+    APROBADA = 'Aprobada',
+    DENEGADA = 'Denegada',
+    PENDIENTE = 'Pendiente'
+}

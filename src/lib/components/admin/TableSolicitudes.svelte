@@ -10,14 +10,14 @@
 	const { solicitudes }: Props = $props();
 </script>
 
-<div class="grid grid-cols-9 text-center">
+<div class="grid grid-cols-9 text-center font-semibold">
 	<span>FM</span>
 	<span>Docente</span>
 	<span>Departamento</span>
 	<span>Asignatura</span>
 	<span>Comité asesor</span>
-	<span class="text-center">Agendar</span>
-	<span class="text-center">Revisado</span>
+	<span>Agendar</span>
+	<span>Revisado</span>
 	<span>Concepto</span>
 	<span>Acta</span>
 </div>

@@ -147,7 +147,10 @@ class DBController {
 	async getSolicitudes(): Promise<Solicitud[]> {
 		const querySnapshot = await getDocs(colSolicitudes);
 		const solicitudes = getSnapshotData(querySnapshot);
-		return solicitudes.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+		return solicitudes.sort((a, b) => parseInt(a.id) - parseInt(b.id)).map((solicitud) => {
+			solicitud.estado = solicitud.estado.toString();
+			return solicitud;
+		});
 	}
 
 	async getSalidasAprobadas() {
