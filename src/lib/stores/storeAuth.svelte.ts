@@ -63,7 +63,7 @@ class StoreAuth implements UserData {
 	}
 
 	async init() {
-		await setPersistence(auth, browserSessionPersistence);
+		await setPersistence(auth, browserLocalPersistence);
 
 		onAuthStateChanged(auth, async (user) => {
 			if (user !== null) {

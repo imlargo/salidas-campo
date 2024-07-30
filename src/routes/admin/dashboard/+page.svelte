@@ -14,7 +14,7 @@
 </script>
 
 <Banner titulo="Modulo Vicedecanatura" variante="proyeccion">
-	<a href="/resumen" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
+	<a href="/admin/gestion" class="nav-link"><i class="bi bi-house"></i> Gestion</a>
 </Banner>
 
 <main class="py-12 flex flex-col w-full gap-8">
@@ -288,15 +288,5 @@
 	.card-titulo {
 		color: #f9ae00;
 		@apply font-semibold text-lg mb-2;
-	}
-
-	.btn-primary {
-		@apply text-white text-sm font-semibold border-0 rounded-md py-2 px-4 block;
-
-		background-color: #ff9b21;
-
-		&:hover {
-			background-color: #f9ae00;
-		}
 	}
 </style>

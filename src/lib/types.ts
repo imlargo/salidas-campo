@@ -55,6 +55,8 @@ export interface Proyeccion {
 	blank: boolean;
 }
 
+export interface Solicitud {}
+
 export interface Asignatura {
 	COD_UAB: string;
 	UAB: string;

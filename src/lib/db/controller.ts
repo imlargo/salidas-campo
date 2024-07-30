@@ -1,4 +1,4 @@
-import type { Proyeccion, Config, UAB } from '../types';
+import type { Proyeccion, Solicitud, Config, UAB } from '../types';
 
 import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
 
@@ -144,9 +144,10 @@ class DBController {
 		return getSnapshotData(querySnapshot);
 	}
 
-	async getSolicitudes() {
+	async getSolicitudes(): Promise<Solicitud[]> {
 		const querySnapshot = await getDocs(colSolicitudes);
-		return getSnapshotData(querySnapshot);
+		const solicitudes = getSnapshotData(querySnapshot);
+		return solicitudes.sort((a, b) => parseInt(a.id) - parseInt(b.id));
 	}
 
 	async getSalidasAprobadas() {

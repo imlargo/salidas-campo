@@ -7,13 +7,15 @@ import { redirect } from '@sveltejs/kit';
 import { validarFechaActual } from '$src/lib/util/utils';
 
 export const load = (async () => {
-	const [config, internalData] = await Promise.all([
+	const [config, internalData, solicitudes] = await Promise.all([
 		dbController.loadConfig(),
-		dbController.loadData()
+		dbController.loadData(),
+		dbController.getSolicitudes()
 	]);
 
 	return {
 		config,
-		internalData
+		internalData,
+		solicitudes
 	};
 }) satisfies LayoutLoad;
