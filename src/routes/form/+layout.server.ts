@@ -11,11 +11,17 @@ export const load = (async ({ url }) => {
 
 	const formulario = url.pathname === '/form/proyeccion' ? 'proyeccion' : 'solicitud';
 
-	if (formulario === "proyeccion" && validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false) {
+	if (
+		formulario === 'proyeccion' &&
+		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
+	) {
 		redirect(307, '/');
 	}
 
-	if (formulario === "solicitud" && validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false) {
+	if (
+		formulario === 'solicitud' &&
+		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
+	) {
 		redirect(307, '/');
 	}
 

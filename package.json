@@ -42,6 +42,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"firebase": "^10.12.4"
+		"firebase": "^10.12.4",
+		"tippy.js": "^6.3.7"
 	}
 }

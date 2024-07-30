@@ -121,7 +121,6 @@ class ControllerProyeccion implements Proyeccion {
 
 		console.log(proyeccion);
 
-
 		if (this.editMode) {
 			await dbController.updateProyeccion(proyeccion);
 		} else {
@@ -168,7 +167,7 @@ class ControllerProyeccion implements Proyeccion {
 	}
 
 	loadFromData(proyeccion: Proyeccion) {
-		this.editMode = true
+		this.editMode = true;
 		this.id = proyeccion.id;
 
 		const docentes = proyeccion.docente.split(',').map((docente) => docente.trim());
@@ -198,10 +197,10 @@ class ControllerProyeccion implements Proyeccion {
 		this.horaRegreso = proyeccion.horaRegreso;
 		this.lugarRegreso = proyeccion.lugarRegreso;
 		// this.duracion = proyeccion.duracion;
-		
+
 		this.destinos = proyeccion.destinos;
 		this.observaciones = proyeccion.observaciones;
-		
+
 		// this.ultimoDestino = proyeccion.ultimoDestino;
 		this.marcaTemporal = proyeccion.marcaTemporal;
 		// this.email = proyeccion.email;

@@ -28,11 +28,10 @@ export function GroupBy(array: [], func: (obj: any) => any) {
 }
 
 export function validarFechaActual(min: string, max: string) {
-
 	const fechaActual = new Date();
-	
+
 	const fechaInicio = new Date(min);
 	const fechaFin = new Date(max);
 
-	return fechaActual >= fechaInicio && fechaActual <= fechaFin
+	return fechaActual >= fechaInicio && fechaActual <= fechaFin;
 }

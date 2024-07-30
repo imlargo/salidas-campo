@@ -3,12 +3,8 @@
 	color: #f9ae00;
 }
 
-.form-control {
-	@apply px-3 py-1 border rounded block w-full;
-}
-
 .input-disabled {
-	@apply bg-gray-200;
+	@apply bg-gray-100;
 }
 
 .is-invalid {
@@ -20,5 +16,9 @@
 }
 
 textarea {
-    field-sizing: content!important;
+	field-sizing: content !important;
+}
+
+.form-control {
+	@apply px-3 py-1 border rounded block w-full;
 }

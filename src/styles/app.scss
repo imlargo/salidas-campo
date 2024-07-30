@@ -24,3 +24,13 @@ body {
 	text-decoration: underline;
 	text-decoration-color: #a46bff;
 }
+
+.vr {
+	@apply inline-block self-stretch w-px min-h-[1rem] h-full my-auto bg-neutral-400;
+}
+
+.nav-link {
+	@apply text-white font-semibold px-3 py-2 rounded-md;
+	background-color: #ffad48;
+	transition: all 0.3s ease;
+}

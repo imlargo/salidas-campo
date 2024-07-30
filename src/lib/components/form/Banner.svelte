@@ -1,17 +1,19 @@
 <script lang="ts">
-	const { variante }: { variante: string } = $props();
+	type Props = {
+		variante: string;
+		titulo: string;
+	};
+	const { variante, titulo }: Props = $props();
 </script>
 
 <header class="flex justify-between rounded-xl variante-{variante}">
 	<div class="px-12 w-75">
-		<h1>Formulario de proyección de salidas de campo</h1>
+		<h1>{titulo}</h1>
 		<div class="separador w-3/4"></div>
 	</div>
 
-	<div class="flex justify-end items-center gap-3 w-1/4">
-		<a href="/resumen" class="rounded border bg-zinc-400 py-2 px-3"
-			><i class="bi bi-house"></i> Resumen</a
-		>
+	<div class="flex justify-end items-center gap-3 w-1/4 pe-12">
+		<slot />
 	</div>
 </header>
 

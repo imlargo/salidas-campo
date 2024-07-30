@@ -21,7 +21,6 @@ import {
 } from 'firebase/firestore';
 import { GroupBy } from '$src/lib/util/utils';
 
-
 import type { UserResponse } from '../types';
 
 function getSnapshotData(querySnapshot) {
@@ -35,7 +34,7 @@ function getSnapshotData(querySnapshot) {
 	return data;
 }
 class DBController {
-	async loadData() {
+	async loadData(): Promise<{ lugares: string[]; uabs: UAB[]; riesgos: object }> {
 		const docSnap = await getDoc(doc(db, 'config', 'data'));
 		const data = docSnap.data() as DocumentData;
 
@@ -69,6 +68,16 @@ class DBController {
 		return exists ? (userRef.data() as UserResponse) : null;
 	}
 
+	async getCantidadRegistros() {
+		const queryProyeccion = await getDocs(colProyeccion);
+		const querySolicitudes = await getDocs(colSolicitudes);
+
+		return {
+			proyeccion: queryProyeccion.size,
+			solicitud: querySolicitudes.size
+		};
+	}
+
 	/* Proyeccion */
 	async createProyeccion(proyeccion: Proyeccion) {
 		const lastInd = await this.getLastInd();
@@ -81,14 +90,13 @@ class DBController {
 
 	async getProyeccion(key: string): Promise<Proyeccion | null> {
 		const docSnap = await getDoc(doc(db, 'proyeccion', key));
-		return docSnap.exists() ? docSnap.data() as Proyeccion  : null;
+		return docSnap.exists() ? (docSnap.data() as Proyeccion) : null;
 	}
 
 	async updateProyeccion(proyeccion: Proyeccion) {
 		const docRef = doc(db, 'proyeccion', proyeccion.id);
 		await updateDoc(docRef, proyeccion as object);
 	}
-	
 
 	async updateInternalData(data) {
 		const docRef = doc(db, 'config', 'data');
@@ -134,16 +142,6 @@ class DBController {
 	async getRegistros() {
 		const querySnapshot = await getDocs(colProyeccion);
 		return getSnapshotData(querySnapshot);
-	}
-
-	async getRegistrosSize() {
-		const queryProyeccion = await getDocs(colProyeccion);
-		const querySolicitudes = await getDocs(colSolicitudes);
-
-		return {
-			proyecciones: queryProyeccion.size,
-			solicitudes: querySolicitudes.size
-		};
 	}
 
 	async getSolicitudes() {
@@ -232,10 +230,10 @@ class DBController {
 		});
 	}
 
-	async setCampoConfigfunction(key: string, value: string) {
+	async setCampoConfig(campo: string, valor: string) {
 		const docRef = doc(db, 'config', 'config');
 		await updateDoc(docRef, {
-			[key]: value
+			[campo]: valor
 		});
 	}
 

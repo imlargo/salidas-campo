@@ -4,9 +4,9 @@ import type { PageServerLoad } from './$types';
 export const load = (async ({ url }) => {
 	const id = url.searchParams.get('id');
 
-    const proyeccion = id ? await dbController.getProyeccion(id) : null;
+	const proyeccion = id ? await dbController.getProyeccion(id) : null;
 
 	return {
-        proyeccion
-    };
+		proyeccion
+	};
 }) satisfies PageServerLoad;
