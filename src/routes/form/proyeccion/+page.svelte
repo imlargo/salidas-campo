@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Banner from '$components/form/Banner.svelte';
 	import Section from '$src/lib/components/form/Section.svelte';
 	import SearchDestinos from '$src/lib/components/form/SearchDestinos.svelte';
 	import Form from '$src/lib/components/form/Form.svelte';
@@ -44,6 +45,17 @@
 <svelte:head>
 	<title>Formulario de Proyeccion - Salidas de campo</title>
 </svelte:head>
+
+<Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
+	<a href="/resumen" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
+</Banner>
+
+<p class="text-lg my-8 text-zinc-600">
+	Estimado docente, la fase de proyección consiste en la planificación y organización de las salidas
+	de campo que se realizarán en el próximo semestre. Su participación es fundamental para estimar
+	los costos de su salida de campo y solicitar los recursos financieros necesarios para su
+	ejecución.
+</p>
 
 <Form handleSubmit={() => controllerProyeccion.sendData()} isEdit={data.proyeccion !== null}>
 	<Section titulo="Información General">

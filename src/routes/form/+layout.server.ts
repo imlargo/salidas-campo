@@ -9,20 +9,25 @@ import { validarFechaActual } from '$src/lib/util/utils';
 export const load = (async ({ url }) => {
 	const [data, config] = await Promise.all([dbController.loadData(), dbController.loadConfig()]);
 
-	const formulario = url.pathname === '/form/proyeccion' ? 'proyeccion' : 'solicitud';
+	const formulario =
+		url.pathname === '/form/proyeccion'
+			? 'proyeccion'
+			: url.pathname === '/form/solicitud'
+				? 'solicitud'
+				: '';
 
 	if (
 		formulario === 'proyeccion' &&
 		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
 	) {
-		redirect(307, '/');
+		redirect(307, '/form/cerrado');
 	}
 
 	if (
 		formulario === 'solicitud' &&
 		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
 	) {
-		redirect(307, '/');
+		redirect(307, '/form/cerrado');
 	}
 
 	return {
