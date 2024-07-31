@@ -254,7 +254,7 @@
 					min={storeData.config.inicioSemestre}
 					onchange={() => controllerProyeccion.handleFechaChange()}
 					max={storeData.config.finSemestre}
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerProyeccion.fechaSalida}
 				/>
 			</div>
@@ -266,7 +266,7 @@
 					type="time"
 					name="horaSalida"
 					id="horaSalida"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerProyeccion.horaSalida}
 				/>
 			</div>
@@ -298,7 +298,7 @@
 					name="fechaRegreso"
 					min={controllerProyeccion.fechaSalida || storeData.config.inicioSemestre}
 					max={storeData.config.finSemestre}
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerProyeccion.fechaRegreso}
 				/>
 			</div>
@@ -310,7 +310,7 @@
 					type="time"
 					id="horaRegreso"
 					name="horaRegreso"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerProyeccion.horaRegreso}
 				/>
 			</div>

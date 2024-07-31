@@ -13,7 +13,7 @@ class ControllerGestion {
 		inicioSolicitud: ''
 	});
 
-    solicitudes: Solicitud[] = $state([]);
+	solicitudes: Solicitud[] = $state([]);
 }
 
 export const controllerGestion = new ControllerGestion();

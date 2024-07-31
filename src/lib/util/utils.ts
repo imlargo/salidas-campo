@@ -2,8 +2,8 @@ export function checkNumber(event: KeyboardEvent) {
 	return event.keyCode !== 69;
 }
 
-export function showPicker(e: MouseEvent) {
-	e.target.showPicker();
+export function showPicker(e: FocusEvent) {
+	e.target?.showPicker();
 }
 
 export function calcularDuracion(fecha1: Date, fecha2: Date) {

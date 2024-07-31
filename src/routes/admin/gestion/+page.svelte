@@ -6,8 +6,58 @@
 
 	const { data } = $props();
 
-	const { config, internalData, solicitudes } = data;
+	const { solicitudes } = data;
 	controllerGestion.solicitudes = solicitudes;
+
+	let filtroCampo = $state('');
+	let filtroValor = $state('');
+	let filtrado = $state(false);
+
+	function changeCampo() {
+		document.getElementById('filtro-valor').value = '';
+		document.getElementById('filtro-valor')?.dispatchEvent(new Event('change'));
+
+		filtrado = false;
+
+		if (filtroCampo === '') {
+			filtroValor = '';
+			return;
+		}
+	}
+
+	function changeValor() {
+		filtrado = false;
+	}
+
+	function filtrar() {
+		if (filtroCampo === '' || filtroValor === '') {
+			return;
+		}
+
+		filtrado = true;
+	}
+
+	function eliminarFiltro() {
+		filtrado = false;
+	}
+
+	let listadoCampos = $derived.by(() => {
+		const data = Array.from(
+			new Set(
+				controllerGestion.solicitudes.map((solicitud) => {
+					if (filtroCampo === 'acta') {
+						return solicitud[filtroCampo] || 'Sin asignar';
+					}
+
+					return solicitud[filtroCampo];
+				})
+			)
+		);
+
+		console.log(data);
+
+		return data;
+	});
 </script>
 
 <Banner titulo="Gestion de Solicitudes" variante="proyeccion">
@@ -42,14 +92,21 @@
 		<div class="flex gap-4 items-center">
 			<span>
 				<strong>Solicitudes agendadas: </strong>
-				<span id="counter-agendadas" class="decoration-orange">...</span>
 			</span>
+			<span class="decoration-orange"
+				>{controllerGestion.solicitudes.filter(({ agendado }) => agendado).length || '...'}</span
+			>
 		</div>
 
 		<div class="flex items-center gap-3">
-			<i id="filter-icon" class="bi bi-funnel"></i>
+			<i id="filter-icon" class:filtro-activo={filtrado} class="bi bi-funnel"></i>
 
-			<select id="filtro-campo" class="px-3 py-1 border rounded block w-50">
+			<select
+				id="filtro-campo"
+				class="px-3 py-1 border rounded block w-50"
+				bind:value={filtroCampo}
+				onchange={changeCampo}
+			>
 				<option selected value=""> -- Seleccionar campo -- </option>
 				<option value="docente">Docente</option>
 				<option value="uab">UAB</option>
@@ -58,16 +115,30 @@
 				<option value="acta">Acta</option>
 			</select>
 
-			<select id="filtro-valor" class="px-3 py-1 border rounded block w-50">
+			<select
+				id="filtro-valor"
+				class="px-3 py-1 border rounded block w-50"
+				bind:value={filtroValor}
+				onchange={changeValor}
+			>
 				<option selected value=""> -- Seleccionar valor -- </option>
+				{#each listadoCampos as valor}
+					{#if valor}
+						<option value={valor}>{valor}</option>
+					{:else}
+						<option value={valor}>Sin asignar</option>
+					{/if}
+				{/each}
 			</select>
 
 			<button
+				onclick={filtrar}
 				id="filtro-btn-filtrar"
 				class="font-semibold text-sm text-blue-500 border border-blue-500 rounded-md py-2 px-4 block"
 				>Fitrar</button
 			>
 			<button
+				onclick={eliminarFiltro}
 				id="filtro-btn-borrar"
 				class="font-semibold text-sm text-red-500 border border-red-500 rounded-md py-2 px-4 block bi bi-trash"
 			></button>
@@ -76,8 +147,15 @@
 
 	<hr class="mb-5" />
 
-	<TableSolicitudes solicitudes={controllerGestion.solicitudes} />
+	<TableSolicitudes
+		solicitudes={controllerGestion.solicitudes.filter(
+			(solicitud) => !filtrado || solicitud[filtroCampo] === filtroValor
+		)}
+	/>
 </main>
 
 <style lang="scss">
+	.filtro-activo {
+		color: #ffc420;
+	}
 </style>

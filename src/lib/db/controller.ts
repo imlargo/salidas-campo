@@ -98,6 +98,17 @@ class DBController {
 		await updateDoc(docRef, proyeccion as object);
 	}
 
+	async deleteProyeccion(key: string) {
+		await deleteDoc(doc(db, 'proyeccion', key.toString()));
+	}
+
+	/* Solicitud */
+
+	async updateCampoSolicitud(id: string, data: { [key: string]: any }) {
+		const docRef = doc(db, 'solicitudes', id);
+		await updateDoc(docRef, data);
+	}
+
 	async updateInternalData(data) {
 		const docRef = doc(db, 'config', 'data');
 		await setDoc(docRef, data);
@@ -107,10 +118,6 @@ class DBController {
 		const docReference = doc(db, 'config', 'data');
 		const docSnap = await getDoc(docReference);
 		return docSnap.data();
-	}
-
-	async deleteProyeccion(key: string) {
-		await deleteDoc(doc(db, 'proyeccion', key.toString()));
 	}
 
 	async deleteSolicitud(key: string) {
@@ -147,10 +154,12 @@ class DBController {
 	async getSolicitudes(): Promise<Solicitud[]> {
 		const querySnapshot = await getDocs(colSolicitudes);
 		const solicitudes = getSnapshotData(querySnapshot);
-		return solicitudes.sort((a, b) => parseInt(a.id) - parseInt(b.id)).map((solicitud) => {
-			solicitud.estado = solicitud.estado.toString();
-			return solicitud;
-		});
+		return solicitudes
+			.sort((a, b) => parseInt(a.id) - parseInt(b.id))
+			.map((solicitud) => {
+				solicitud.estado = solicitud.estado.toString();
+				return solicitud;
+			});
 	}
 
 	async getSalidasAprobadas() {
@@ -171,7 +180,7 @@ class DBController {
 		}
 	}
 
-	async updateSolicitudfunction(id: string, solicitud) {
+	async updateSolicitud(id: string, solicitud) {
 		const datosSolicitud = solicitud.export();
 
 		const docRef = doc(db, 'solicitudes', id);

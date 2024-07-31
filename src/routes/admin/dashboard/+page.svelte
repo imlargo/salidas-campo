@@ -156,7 +156,7 @@
 					type="date"
 					class="form-control"
 					data-campo="inicioSemestre"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.inicioSemestre}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>
@@ -167,7 +167,7 @@
 					type="date"
 					class="form-control"
 					data-campo="finSemestre"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.finSemestre}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>
@@ -179,7 +179,7 @@
 					type="date"
 					class="form-control"
 					data-campo="inicioProyeccion"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.inicioProyeccion}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>
@@ -190,7 +190,7 @@
 					type="date"
 					class="form-control"
 					id="finProyeccion"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.finProyeccion}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>
@@ -202,7 +202,7 @@
 					type="date"
 					class="form-control"
 					data-campo="inicioSolicitud"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.inicioSolicitud}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>
@@ -213,7 +213,7 @@
 					type="date"
 					class="form-control"
 					data-campo="finSolicitud"
-					onfocus={showPicker as EventListener}
+					onfocus={showPicker}
 					bind:value={controllerDashboard.config.finSolicitud}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}
 				/>

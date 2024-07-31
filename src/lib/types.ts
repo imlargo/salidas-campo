@@ -56,39 +56,39 @@ export interface Proyeccion {
 }
 
 export interface Solicitud {
-		id: string;
-		marcaTemporal: string;
-        facultad: string;
-        departamentoFacultad: string;
-        email: string;
-        docente: string;
-        asignatura: string;
-        codigo: string;
-        nivel: string;
-        contemplada: string;
-        porcentaje: string;
-        asistentes: string;
-        pertinencia: string;
-        objetivo: string;
-        alcance: string;
-        descripcion: string;
-        requerimientos: string;
-        justificacionRequerimientos: string;
-        pertinenciaRequerimientos: string;
-        departamentos: string;
-        destino: string;
-        fechaSalida: string;
-        fechaRegreso: string;
-        riesgos: string;
-        agenda: string;
-        idProyeccion: string;
-        comite: string;
-        acta: string;
-        agendado: boolean;
-        revisado: boolean;
-        estado: EstadoSolicitud;
-        costo: number;
-        blank: boolean;
+	id: string;
+	marcaTemporal: string;
+	facultad: string;
+	departamentoFacultad: string;
+	email: string;
+	docente: string;
+	asignatura: string;
+	codigo: string;
+	nivel: string;
+	contemplada: string;
+	porcentaje: string;
+	asistentes: string;
+	pertinencia: string;
+	objetivo: string;
+	alcance: string;
+	descripcion: string;
+	requerimientos: string;
+	justificacionRequerimientos: string;
+	pertinenciaRequerimientos: string;
+	departamentos: string;
+	destino: string;
+	fechaSalida: string;
+	fechaRegreso: string;
+	riesgos: string;
+	agenda: string;
+	idProyeccion: string;
+	comite: string;
+	acta: string;
+	agendado: boolean;
+	revisado: boolean;
+	estado: EstadoSolicitud;
+	costo: number;
+	blank: boolean;
 }
 
 export interface Asignatura {
