@@ -28,7 +28,10 @@ export function GroupBy(array: [], func: (obj: any) => any) {
 }
 
 export function validarFechaActual(min: string, max: string) {
-	const fechaActual = new Date();
+	const rawDate = new Date();
+	const local = rawDate.toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+	const fechaActual = new Date(local.split(',')[0].split('/').reverse().join('-'));
 
 	const fechaInicio = new Date(min);
 	const fechaFin = new Date(max);

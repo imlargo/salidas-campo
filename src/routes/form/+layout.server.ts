@@ -14,20 +14,44 @@ export const load = (async ({ url }) => {
 			? 'proyeccion'
 			: url.pathname === '/form/solicitud'
 				? 'solicitud'
-				: '';
+				: url.pathname === '/form/cerrado'
+					? 'cerrado'
+					: '';
 
 	if (
 		formulario === 'proyeccion' &&
 		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
 	) {
-		redirect(307, '/form/cerrado');
+		redirect(307, '/form/cerrado?formulario=proyeccion');
 	}
 
 	if (
 		formulario === 'solicitud' &&
 		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
 	) {
-		redirect(307, '/form/cerrado');
+		redirect(307, '/form/cerrado?formulario=solicitud');
+	}
+
+	if (formulario === 'cerrado') {
+		const formulario = url.searchParams.get('formulario');
+
+		if (!formulario) {
+			redirect(307, '/');
+		}
+
+		if (
+			formulario === 'proyeccion' &&
+			validarFechaActual(config.inicioProyeccion, config.finProyeccion) === true
+		) {
+			redirect(301, '/form/proyeccion');
+		}
+
+		if (
+			formulario === 'solicitud' &&
+			validarFechaActual(config.inicioProyeccion, config.finProyeccion) === true
+		) {
+			redirect(307, '/form/solicitud');
+		}
 	}
 
 	return {
