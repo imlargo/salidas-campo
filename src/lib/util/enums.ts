@@ -19,3 +19,9 @@ export enum EstadoSolicitud {
 	DENEGADA = '2',
 	PENDIENTE = '3'
 }
+
+export enum NivelRiesgo {
+	POSIBLE = 'Posible',
+	PROBABLE = 'Probable',
+	INMINENTE = 'Inminente'
+}

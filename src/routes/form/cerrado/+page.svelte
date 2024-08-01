@@ -21,7 +21,7 @@
 	<title>Formulario Cerrado - Salidas de campo</title>
 </svelte:head>
 
-<Banner titulo="Formulario Cerrado" variante={formulario}>
+<Banner titulo="Formulario Cerrado" variante={formulario as string}>
 	<a href="/resumen" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
 </Banner>
 

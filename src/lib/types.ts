@@ -1,4 +1,4 @@
-import { ROL, EstadoSolicitud } from './util/enums';
+import { ROL, EstadoSolicitud, NivelRiesgo } from './util/enums';
 
 export interface UAB {
 	codigo: string;
@@ -11,6 +11,11 @@ export interface UserResponse {
 	ROL: ROL;
 }
 
+export interface SeleccionRiesgo {
+	tipo: string;
+	nombre: string;
+	nivel: NivelRiesgo;
+}
 export interface Destino {
 	municipio: string;
 	departamento: string;
@@ -30,9 +35,10 @@ export interface Proyeccion {
 	marcaTemporal: string;
 	facultad: string;
 	docente: string;
+	email: string;
 	uab: string;
 
-	asignatura: Asignatura;
+	asignatura: Asignatura | null;
 	relacion: Asignatura | null;
 	grupo: string;
 	asistentes: number;
@@ -50,7 +56,6 @@ export interface Proyeccion {
 	ultimoDestino: Destino;
 	observaciones: string;
 
-	email: string;
 	solicitada: boolean;
 	blank: boolean;
 }
@@ -59,15 +64,19 @@ export interface Solicitud {
 	id: string;
 	marcaTemporal: string;
 	facultad: string;
-	departamentoFacultad: string;
-	email: string;
 	docente: string;
-	asignatura: string;
-	codigo: string;
+	email: string;
+	uab: string;
+
+	asignatura: Asignatura | null;
+	relacion: Asignatura | null;
+
 	nivel: string;
-	contemplada: string;
-	porcentaje: string;
-	asistentes: string;
+	contemplada: boolean;
+
+	porcentaje: number;
+	asistentes: number;
+
 	pertinencia: string;
 	objetivo: string;
 	alcance: string;
@@ -75,12 +84,14 @@ export interface Solicitud {
 	requerimientos: string;
 	justificacionRequerimientos: string;
 	pertinenciaRequerimientos: string;
-	departamentos: string;
-	destino: string;
+
+	destinos: Destino[];
+
 	fechaSalida: string;
 	fechaRegreso: string;
-	riesgos: string;
-	agenda: string;
+
+	riesgos: SeleccionRiesgo[];
+	agenda: string[];
 	idProyeccion: string;
 	comite: string;
 	acta: string;

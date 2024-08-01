@@ -1,16 +1,17 @@
 <script lang="ts">
-	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
 	import type { Destino } from '$src/lib/types';
 
 	function deleteDestino(e: Event) {
 		e.preventDefault();
-		controllerProyeccion.eliminarDestino(destino);
+		controller.eliminarDestino(destino);
 	}
 
 	const {
-		destino
+		destino,
+		controller
 	}: {
 		destino: Destino;
+		controller: any;
 	} = $props();
 </script>
 

@@ -356,7 +356,7 @@
 				<i class="bi bi-search"></i>
 			</label>
 
-			<SearchDestinos />
+			<SearchDestinos controller={controllerProyeccion} />
 		</div>
 	</Section>
 	<Section titulo="Destino más lejano">

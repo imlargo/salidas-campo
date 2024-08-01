@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { normalizarTexto } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
-	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
 	import type { Destino } from '$src/lib/types';
 	import DestinoRow from './Destino.svelte';
+
+	const { controller } = $props();
 
 	let busqueda = $state('');
 	let coincidencias = $derived.by(() => {
@@ -22,7 +23,7 @@
 	});
 
 	function agegarDestino(destino: Destino) {
-		controllerProyeccion.agregarDestino(destino);
+		controller.agregarDestino(destino);
 		busqueda = '';
 	}
 
@@ -65,7 +66,7 @@
 </div>
 <hr class="my-4" />
 <div id="flex flex-col">
-	{#each controllerProyeccion.destinos as destino}
-		<DestinoRow {destino} />
+	{#each controller.destinos as destino}
+		<DestinoRow {controller} {destino} />
 	{/each}
 </div>

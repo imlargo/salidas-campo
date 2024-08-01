@@ -22,3 +22,7 @@ textarea {
 .form-control {
 	@apply px-3 py-1 border rounded block w-full;
 }
+
+.form-disabled {
+	@apply bg-zinc-200;
+}

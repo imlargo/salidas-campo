@@ -104,6 +104,11 @@ class DBController {
 
 	/* Solicitud */
 
+	async getSolicitud(key: string): Promise<Solicitud | null> {
+		const docSnap = await getDoc(doc(db, 'solicitudes', key));
+		return docSnap.exists() ? ({ ...docSnap.data(), id: docSnap.id } as Solicitud) : null;
+	}
+
 	async updateCampoSolicitud(id: string, data: { [key: string]: any }) {
 		const docRef = doc(db, 'solicitudes', id);
 		await updateDoc(docRef, data);
@@ -138,11 +143,6 @@ class DBController {
 
 	async getRegistro(key: string) {
 		const docSnap = await getDoc(doc(db, 'proyeccion', key));
-		return docSnap.exists() ? { ...docSnap.data(), id: docSnap.id } : null;
-	}
-
-	async getSolicitud(key: string) {
-		const docSnap = await getDoc(doc(db, 'solicitudes', key));
 		return docSnap.exists() ? { ...docSnap.data(), id: docSnap.id } : null;
 	}
 
