@@ -38,3 +38,8 @@ export function validarFechaActual(min: string, max: string) {
 
 	return fechaActual >= fechaInicio && fechaActual <= fechaFin;
 }
+
+export function getMarcaTemporal(): string {
+	const fechaActual = new Date();
+	return `${fechaActual.toLocaleDateString()} - ${fechaActual.toLocaleTimeString()}`;
+}

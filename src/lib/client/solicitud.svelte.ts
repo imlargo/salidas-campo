@@ -5,9 +5,17 @@ import { calcularDuracion } from '../util/utils';
 import { dbController } from '../db/controller';
 import { EmailProyeccion } from '../util/emails';
 import { EstadoSolicitud, NivelRiesgo } from '$utils/enums';
+import { getMarcaTemporal } from '../util/utils';
+import { controllerProyeccion } from './proyeccion.svelte';
 
 class ControllerSolicitud implements Solicitud {
 	id = $state('');
+	proyeccion: Proyeccion | null = $state(null);
+
+	isBlank = $state(false);
+	isNew = $state(false);
+	isEdit = $state(false);
+
 	editMode = $state(false);
 
 	multidocente = $state(false);
@@ -190,6 +198,53 @@ class ControllerSolicitud implements Solicitud {
 
 	async sendData() {
 		const solicitud = this.getData();
+
+		if (this.multidocente) {
+			solicitud.docente = `${this.docente},${this.docenteAdicional}`;
+		}
+
+		if (this.destinos.length === 0) {
+			return;
+		}
+
+		// Relacion de asignaturas?
+
+		// Agregar marca temporal del momento en que se envía el formulario (Fecha, hora)
+		solicitud.marcaTemporal = getMarcaTemporal();
+
+		if (this.riesgos.length === 0) {
+			// alert("Debe seleccionar al menos un riesgo y su nivel");
+			return;
+		}
+
+		// Si la solicitud es desde cero
+		if (this.isBlank) {
+			const nuevaProyeccion = controllerProyeccion.getData();
+
+			const newId = await dbController.createProyeccion(nuevaProyeccion);
+
+			solicitud.idProyeccion = newId;
+			solicitud.blank = true;
+
+			await dbController.createSolicitud(solicitud);
+		}
+
+		if (this.isNew) {
+			if (this.proyeccion === null) {
+				return;
+			}
+			const idProyeccion = this.proyeccion.id;
+			solicitud.idProyeccion = idProyeccion;
+
+			await dbController.setProyeccionSolicitada(idProyeccion);
+			await dbController.createSolicitud(solicitud);
+		}
+
+		if (this.isEdit) {
+			await dbController.updateSolicitud(this.id, solicitud);
+		}
+
+		// Enviar correo
 	}
 }
 

@@ -103,6 +103,10 @@ class DBController {
 	}
 
 	/* Solicitud */
+	async createSolicitud(solicitud: Solicitud) {
+		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
+		await setDoc(docRef, solicitud);
+	}
 
 	async getSolicitud(key: string): Promise<Solicitud | null> {
 		const docSnap = await getDoc(doc(db, 'solicitudes', key));
@@ -207,11 +211,6 @@ class DBController {
 		await updateDoc(docRef, { costo: solicitud.costo });
 	}
 
-	async saveSolicitudfunction(solicitud) {
-		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
-		await setDoc(docRef, solicitud.export());
-	}
-
 	async updateComiteSolicitudfunction(solicitud) {
 		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
 		await updateDoc(docRef, { comite: solicitud.comite });
@@ -236,7 +235,7 @@ class DBController {
 		return querySolicitudes.size;
 	}
 
-	async setSalidaSolicitadafunction(id: string) {
+	async setProyeccionSolicitada(id: string) {
 		const refProyeccion = doc(db, 'proyeccion', id);
 		await updateDoc(refProyeccion, {
 			solicitada: true

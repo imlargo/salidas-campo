@@ -17,6 +17,7 @@
 	import { calcularDuracion } from '$src/lib/util/utils';
 
 	const { data } = $props();
+	const { solicitud, proyeccion, isEdit, isBlank, isNew } = data;
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
@@ -25,8 +26,9 @@
 	storeData.riesgos = data.riesgos;
 	storeData.uabs = data.uabs;
 
-	const { solicitud, proyeccion, isEdit, isBlank, isNew } = data;
-	console.log({ solicitud, proyeccion, isEdit, isBlank, isNew });
+	controllerSolicitud.isBlank = isBlank as boolean;
+	controllerSolicitud.isNew = isNew as boolean;
+	controllerSolicitud.isEdit = isEdit as boolean;
 
 	if (isNew) {
 		controllerSolicitud.loadFromProyeccion(proyeccion as Proyeccion);
@@ -665,49 +667,6 @@
 	<Section titulo="Agenda de actividades">
 		<Agenda {duracion} agenda={controllerSolicitud.agenda} />
 	</Section>
-	<!--
-
-	<Section titulo="Destinos">
-		<div>
-			<label for="input-municipio" class="form-label">
-				<span>Buscar municipios de destino</span>
-				<i class="bi bi-search"></i>
-			</label>
-
-			<SearchDestinos />
-		</div>
-	</Section>
-	<Section titulo="Destino más lejano">
-		<div>
-			<label for="municipio" class="form-label">Municipio</label>
-			<select
-				required
-				class="form-control"
-				id="ultimoDestino"
-				name="ultimoDestino"
-				bind:value={controllerSolicitud.ultimoDestinoSelection}
-			>
-				<option value="" disabled>--- Seleccionar ---</option>
-				{#each controllerSolicitud.destinos as destino}
-					<option value={destino.municipio}>{destino.municipio}</option>
-				{/each}
-			</select>
-		</div>
-
-		<div>
-			<label for="observaciones" class="form-label">Observaciones</label>
-			<p class="mb-2">
-				Ingrese aqui sus observacioes adicionales, ya sea con respecto a el lugar de destino.
-			</p>
-			<textarea
-				name="observaciones"
-				id="observaciones"
-				class="form-control"
-				bind:value={controllerSolicitud.observaciones}
-			></textarea>
-		</div>
-	</Section>
-    -->
 </Form>
 
 <style lang="scss">
