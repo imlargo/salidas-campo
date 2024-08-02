@@ -27,7 +27,7 @@ export const load = (async ({ url }) => {
 
 	if (
 		formulario === 'solicitud' &&
-		validarFechaActual(config.inicioProyeccion, config.finProyeccion) === false
+		validarFechaActual(config.inicioSolicitud, config.finSolicitud) === false
 	) {
 		redirect(307, '/form/cerrado?formulario=solicitud');
 	}
