@@ -5,6 +5,7 @@
 	import Form from '$src/lib/components/form/Form.svelte';
 	import type { Proyeccion, Solicitud, Destino, Asignatura } from '$lib/types';
 	import Agenda from '$src/lib/components/form/Agenda.svelte';
+	import Riesgos from '$src/lib/components/form/Riesgos.svelte';
 
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
@@ -335,7 +336,7 @@
 
 					<p class="mt-2 text-justify">
 						<strong>Nota: </strong>
-						<span class="text-muted"
+						<span class="text-zinc-200"
 							>Estimad@ docente, si en el contenido de la asignatura no se encuentra el párrafo de
 							salida de campo, debe contactarse con el Sistema de Gestión de Áreas Curriculares para
 							realizar la solicitud ante el comité asesor.</span
@@ -629,6 +630,35 @@
 
 			<SearchDestinos controller={controllerSolicitud} />
 		</div>
+	</Section>
+
+	<Section titulo="Riesgos">
+		<div class="flex flex-col gap-2">
+			<p>
+				<strong><i class="bi bi-info-circle"></i></strong>
+				<span class="text-zinc-600"
+					>Riesgo posible: Es aquel fenómeno que puede suceder o que es factible porque no existen
+					razones históricas y científicas para decir que esto no sucederá</span
+				>
+			</p>
+
+			<p>
+				<strong><i class="bi bi-info-circle"></i></strong>
+				<span class="text-zinc-600"
+					>Riesgo probable: Es aquel fenómeno esperado del cual existen razones y argumentos
+					técnicos científicos para creer que sucederá.</span
+				>
+			</p>
+
+			<p>
+				<strong><i class="bi bi-info-circle"></i></strong>
+				<span class="text-zinc-600"
+					>Riesgo inminente: Es aquel fenómeno esperado que tiene alta probabilidad de ocurrir</span
+				>
+			</p>
+		</div>
+
+		<Riesgos />
 	</Section>
 
 	{#if isBlank}

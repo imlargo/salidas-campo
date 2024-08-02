@@ -6,6 +6,11 @@ export interface UAB {
 	correo: string;
 }
 
+export type Riesgo = {
+	RIESGO: string;
+	TIPO: string;
+};
+
 export interface UserResponse {
 	CODIGO_UAB: string;
 	ROL: ROL;
