@@ -91,9 +91,9 @@ export const load = (async ({ url }) => {
 		return {
 			proyeccion,
 			solicitud,
-			isEdit: false,
+			isEdit: true,
 			isBlank: false,
-			isNew: true
+			isNew: false
 		};
 	}
 }) satisfies PageServerLoad;

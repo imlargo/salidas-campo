@@ -35,7 +35,7 @@ class ControllerSolicitud implements Solicitud {
 	relacion: Asignatura | null = $state(null);
 
 	nivel = $state('');
-	contemplada = $state(false);
+	contemplada = $state('');
 
 	porcentaje = $state(0);
 	asistentes = $state(0);
@@ -65,6 +65,16 @@ class ControllerSolicitud implements Solicitud {
 	blank = $state(false);
 
 	loadFromProyeccion(proyeccion: Proyeccion) {
+		this.proyeccion = proyeccion;
+
+		if (proyeccion.asignatura === null) {
+			return;
+		}
+
+		storeFiltro.valueUAB = proyeccion.asignatura.COD_UAB;
+		storeFiltro.valueAsignatura = proyeccion.asignatura.ASIGNATURA;
+		storeFiltro.valueCodigo = proyeccion.asignatura.COD_ASIGNATURA;
+
 		// this.id = proyeccion.id;
 		// this.marcaTemporal = proyeccion.marcaTemporal;
 		// this.facultad = proyeccion.facultad;
@@ -72,6 +82,9 @@ class ControllerSolicitud implements Solicitud {
 		// this.email = proyeccion.email;
 		this.uab = proyeccion.uab;
 		this.asignatura = proyeccion.asignatura;
+
+		this.tieneRelacion = proyeccion.relacion !== null;
+		this.incluirRelacion = proyeccion.relacion !== null;
 		this.relacion = proyeccion.relacion;
 		// this.nivel = proyeccion.nivel;
 		// this.contemplada = proyeccion.contemplada;
@@ -100,6 +113,14 @@ class ControllerSolicitud implements Solicitud {
 	}
 
 	loadFromSolicitud(solicitud: Solicitud) {
+		if (solicitud.asignatura === null) {
+			return;
+		}
+
+		storeFiltro.valueUAB = solicitud.asignatura.COD_UAB;
+		storeFiltro.valueAsignatura = solicitud.asignatura.ASIGNATURA;
+		storeFiltro.valueCodigo = solicitud.asignatura.COD_ASIGNATURA;
+
 		this.id = solicitud.id;
 		// this.marcaTemporal = solicitud.marcaTemporal;
 		// this.facultad = solicitud.facultad;
@@ -107,9 +128,14 @@ class ControllerSolicitud implements Solicitud {
 		// this.email = solicitud.email;
 		this.uab = solicitud.uab;
 		this.asignatura = solicitud.asignatura;
+
+		this.tieneRelacion = solicitud.relacion !== null;
+		this.incluirRelacion = solicitud.relacion !== null;
 		this.relacion = solicitud.relacion;
+
 		this.nivel = solicitud.nivel;
 		this.contemplada = solicitud.contemplada;
+
 		this.porcentaje = solicitud.porcentaje;
 		this.asistentes = solicitud.asistentes;
 		this.pertinencia = solicitud.pertinencia;
@@ -166,7 +192,7 @@ class ControllerSolicitud implements Solicitud {
 			email: this.email,
 			uab: this.uab,
 			asignatura: this.asignatura,
-			relacion: this.relacion,
+			relacion: this.incluirRelacion ? storeFiltro.anterior : null,
 			nivel: this.nivel,
 			contemplada: this.contemplada,
 			porcentaje: this.porcentaje,

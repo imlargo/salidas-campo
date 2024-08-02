@@ -32,16 +32,10 @@
 
 	if (isNew) {
 		controllerSolicitud.loadFromProyeccion(proyeccion as Proyeccion);
-		storeFiltro.valueUAB = proyeccion.asignatura.COD_UAB;
-		storeFiltro.valueAsignatura = proyeccion.asignatura.ASIGNATURA;
-		storeFiltro.valueCodigo = proyeccion.asignatura.COD_ASIGNATURA;
 	}
 
 	if (isEdit) {
 		controllerSolicitud.loadFromSolicitud(solicitud as Solicitud);
-		storeFiltro.valueUAB = solicitud.asignatura.COD_UAB;
-		storeFiltro.valueAsignatura = solicitud.asignatura.ASIGNATURA;
-		storeFiltro.valueCodigo = solicitud.asignatura.COD_ASIGNATURA;
 	}
 
 	$effect(() => {
@@ -104,7 +98,7 @@
 	asignatura.
 </p>
 
-<Form handleSubmit={() => controllerSolicitud.sendData()} isEdit={data.proyeccion !== null}>
+<Form handleSubmit={() => controllerSolicitud.sendData()} {isEdit}>
 	<Section titulo="Información General">
 		<div>
 			<label for="facultad" class="form-label">Facultad</label>
@@ -181,8 +175,14 @@
 
 				<div>
 					<span class="form-label">Su asignatura es de:</span>
-					<select class="form-control" name="nivel" id="nivel" required>
-						<option disabled selected value> -- Seleccionar -- </option>
+					<select
+						class="form-control"
+						name="nivel"
+						id="nivel"
+						required
+						bind:value={controllerSolicitud.nivel}
+					>
+						<option disabled value=""> -- Seleccionar -- </option>
 						<option value="Pregrado">Pregrado</option>
 						<option value="Posgrado">Posgrado</option>
 					</select>
@@ -318,9 +318,9 @@
 					name="contemplada"
 					bind:value={controllerSolicitud.contemplada}
 				>
-					<option disabled selected value> -- Seleccionar -- </option>
-					<option value={true}>Sí</option>
-					<option value={false}>No</option>
+					<option disabled value=""> -- Seleccionar -- </option>
+					<option value="true">Sí</option>
+					<option value="false">No</option>
 				</select>
 
 				<div class="mt-2">
@@ -368,7 +368,7 @@
 
 	<Section titulo="Información de la práctica">
 		<div>
-			<label class="form-label">Pertinencia de la práctica</label>
+			<span class="form-label">Pertinencia de la práctica</span>
 			<textarea
 				id="pertinencia"
 				required
@@ -379,7 +379,7 @@
 			></textarea>
 		</div>
 		<div>
-			<label class="form-label">Objetivo de la práctica</label>
+			<span class="form-label">Objetivo de la práctica</span>
 			<textarea
 				id="objetivo"
 				required
@@ -390,7 +390,7 @@
 			></textarea>
 		</div>
 		<div>
-			<label class="form-label">Alcance de la práctica</label>
+			<span class="form-label">Alcance de la práctica</span>
 			<textarea
 				id="alcance"
 				required
@@ -401,7 +401,7 @@
 			></textarea>
 		</div>
 		<div>
-			<label class="form-label">Descripción de la actividad</label>
+			<span class="form-label">Descripción de la actividad</span>
 			<textarea
 				id="descripcion"
 				required
@@ -413,7 +413,7 @@
 		</div>
 
 		<div>
-			<label class="form-label">Número mínimo de estudiantes a participar</label>
+			<span class="form-label">Número mínimo de estudiantes a participar</span>
 			<input
 				bind:value={controllerSolicitud.asistentes}
 				id="asistentes"

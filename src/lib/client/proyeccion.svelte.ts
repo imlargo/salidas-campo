@@ -80,7 +80,7 @@ class ControllerProyeccion implements Proyeccion {
 			docente: this.docente,
 			uab: this.uab,
 			asignatura: this.asignatura!,
-			relacion: storeFiltro.anterior,
+			relacion: this.incluirRelacion ? storeFiltro.anterior : null,
 			grupo: this.grupo,
 			asistentes: this.asistentes,
 			fechaSalida: this.fechaSalida,
@@ -137,33 +137,6 @@ class ControllerProyeccion implements Proyeccion {
 			},
 			body: JSON.stringify(email)
 		});
-
-		// Limpiar formulario
-
-		/*
-		const templateModal = `
-		<p>Hola ${proyeccion.docente}, se ha ${
-			GLOBALS.state.editMode ? 'modificado' : 'registrado'
-		} su salida de campo con éxito.</p>
-		<strong>Su código consecutivo es: ${
-			proyeccion.id
-		}, también llegará en el correo de confirmación</strong>
-		<p>Se ha enviado un correo de confirmación a ${
-			proyeccion.email
-		} con los datos de la salida e información adicional.</p>
-		`;
-
-		// Mostrar aviso de confirmación instantáneo
-		showModal(
-			`<span>Confirmacion de registro </span><i class="bi bi-check2-square"></i>`,
-			templateModal,
-			() => {
-				const isUAB = Firestore.state.docente.rol === 'UAB';
-
-				window.location.href = isUAB ? 'uab.html' : 'resumen.html';
-			}
-		);
-		*/
 	}
 
 	loadFromData(proyeccion: Proyeccion) {

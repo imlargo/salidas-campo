@@ -72,7 +72,7 @@ export interface Solicitud {
 	relacion: Asignatura | null;
 
 	nivel: string;
-	contemplada: boolean;
+	contemplada: string;
 
 	porcentaje: number;
 	asistentes: number;
