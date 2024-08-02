@@ -647,8 +647,6 @@
 			</p>
 		</div>
 
-		<p>{JSON.stringify(controllerSolicitud.riesgos)}</p>
-
 		<Riesgos solicitudRiesgos={solicitud ? solicitud.riesgos : null} />
 	</Section>
 
