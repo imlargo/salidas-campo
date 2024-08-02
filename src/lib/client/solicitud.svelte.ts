@@ -7,6 +7,7 @@ import { EmailProyeccion } from '../util/emails';
 import { EstadoSolicitud, NivelRiesgo } from '$utils/enums';
 import { getMarcaTemporal } from '../util/utils';
 import { controllerProyeccion } from './proyeccion.svelte';
+import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
 
 class ControllerSolicitud implements Solicitud {
 	id = $state('');
@@ -31,7 +32,7 @@ class ControllerSolicitud implements Solicitud {
 	email = $derived(storeAuth.email);
 	uab = $state('');
 
-	asignatura: Asignatura | null = $state(null);
+	asignatura = $derived(storeFiltro.asignatura);
 	relacion: Asignatura | null = $state(null);
 
 	nivel = $state('');
@@ -53,8 +54,24 @@ class ControllerSolicitud implements Solicitud {
 	fechaSalida = $state('');
 	fechaRegreso = $state('');
 
-	riesgos: SeleccionRiesgo[] = $state([]);
 	agenda: string[] = $state([]);
+	riesgos: SeleccionRiesgo[] = $derived.by(() => {
+		const seleccion: SeleccionRiesgo[] = [];
+
+		for (const uid in controllerRiesgos.riesgos) {
+			const riesgo = controllerRiesgos.riesgos[uid];
+
+			if (riesgo.checked && riesgo.nivel !== NivelRiesgo.NN) {
+				seleccion.push({
+					tipo: riesgo.tipo,
+					nombre: riesgo.nombre,
+					nivel: riesgo.nivel
+				});
+			}
+		}
+
+		return seleccion;
+	});
 	idProyeccion = $state('');
 	comite = $state('');
 	acta = $state('');
@@ -127,7 +144,7 @@ class ControllerSolicitud implements Solicitud {
 		this.docente = solicitud.docente;
 		// this.email = solicitud.email;
 		this.uab = solicitud.uab;
-		this.asignatura = solicitud.asignatura;
+		// this.asignatura = solicitud.asignatura;
 
 		this.tieneRelacion = solicitud.relacion !== null;
 		this.incluirRelacion = solicitud.relacion !== null;
@@ -148,7 +165,7 @@ class ControllerSolicitud implements Solicitud {
 		this.destinos = solicitud.destinos;
 		this.fechaSalida = solicitud.fechaSalida;
 		this.fechaRegreso = solicitud.fechaRegreso;
-		this.riesgos = solicitud.riesgos;
+		// this.riesgos = solicitud.riesgos;
 		this.agenda = solicitud.agenda;
 		this.idProyeccion = solicitud.idProyeccion;
 		this.comite = solicitud.comite;
@@ -224,35 +241,39 @@ class ControllerSolicitud implements Solicitud {
 
 	async sendData() {
 		const solicitud = this.getData();
+		const marcaTemporal = getMarcaTemporal();
 
 		if (this.multidocente) {
 			solicitud.docente = `${this.docente},${this.docenteAdicional}`;
 		}
 
-		if (this.destinos.length === 0) {
-			return;
-		}
-
-		// Relacion de asignaturas?
-
 		// Agregar marca temporal del momento en que se envía el formulario (Fecha, hora)
-		solicitud.marcaTemporal = getMarcaTemporal();
-
-		if (this.riesgos.length === 0) {
-			// alert("Debe seleccionar al menos un riesgo y su nivel");
-			return;
-		}
+		solicitud.marcaTemporal = marcaTemporal;
 
 		// Si la solicitud es desde cero
 		if (this.isBlank) {
 			const nuevaProyeccion = controllerProyeccion.getData();
+			nuevaProyeccion.uab = this.uab;
+			nuevaProyeccion.solicitada = true;
+			nuevaProyeccion.blank = true;
+			nuevaProyeccion.relacion = this.incluirRelacion ? storeFiltro.anterior : null;
+			nuevaProyeccion.marcaTemporal = marcaTemporal;
 
 			const newId = await dbController.createProyeccion(nuevaProyeccion);
 
+			solicitud.destinos = nuevaProyeccion.destinos;
+			solicitud.fechaSalida = nuevaProyeccion.fechaSalida;
+			solicitud.fechaRegreso = nuevaProyeccion.fechaRegreso;
 			solicitud.idProyeccion = newId;
 			solicitud.blank = true;
+			solicitud.id = newId;
 
 			await dbController.createSolicitud(solicitud);
+		}
+
+		if (this.riesgos.length === 0) {
+			// alert("Debe seleccionar al menos un riesgo y su nivel");
+			return;
 		}
 
 		if (this.isNew) {
@@ -261,6 +282,7 @@ class ControllerSolicitud implements Solicitud {
 			}
 			const idProyeccion = this.proyeccion.id;
 			solicitud.idProyeccion = idProyeccion;
+			solicitud.id = idProyeccion;
 
 			await dbController.setProyeccionSolicitada(idProyeccion);
 			await dbController.createSolicitud(solicitud);
@@ -269,6 +291,8 @@ class ControllerSolicitud implements Solicitud {
 		if (this.isEdit) {
 			await dbController.updateSolicitud(this.id, solicitud);
 		}
+
+		console.log(solicitud);
 
 		// Enviar correo
 	}

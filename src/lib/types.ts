@@ -6,9 +6,22 @@ export interface UAB {
 	correo: string;
 }
 
+export interface SeleccionRiesgo {
+	tipo: string;
+	nombre: string;
+	nivel: NivelRiesgo;
+}
+
 export type Riesgo = {
 	RIESGO: string;
 	TIPO: string;
+};
+
+export type RiesgoExtendido = {
+	tipo: string;
+	nombre: string;
+	checked: boolean;
+	nivel: NivelRiesgo;
 };
 
 export interface UserResponse {
@@ -16,11 +29,6 @@ export interface UserResponse {
 	ROL: ROL;
 }
 
-export interface SeleccionRiesgo {
-	tipo: string;
-	nombre: string;
-	nivel: NivelRiesgo;
-}
 export interface Destino {
 	municipio: string;
 	departamento: string;

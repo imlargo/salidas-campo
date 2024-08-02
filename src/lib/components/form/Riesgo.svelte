@@ -1,26 +1,26 @@
 <script lang="ts">
 	import { NivelRiesgo } from '$src/lib/util/enums';
-	import type { Riesgo } from '$lib/types';
-	type Props = {
-		riesgo: Riesgo;
-	};
-	const { riesgo }: Props = $props();
+	import type { SeleccionRiesgo, Riesgo, RiesgoExtendido } from '$lib/types';
+	import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
 
-	let selected = $state(false);
-	let nivel: NivelRiesgo = $state('');
+	const {
+		riesgo
+	}: {
+		riesgo: RiesgoExtendido;
+	} = $props();
 
-	let uidRiesgo = `riesgo-${riesgo.RIESGO.toLowerCase().replace(' ', '-')}`;
+	let uid = controllerRiesgos.getUid(riesgo.nombre);
 </script>
 
 <div class="flex items-center gap-2">
-	<input id={uidRiesgo} type="checkbox" bind:checked={selected} />
+	<input id={uid} type="checkbox" bind:checked={riesgo.checked} />
 
-	<label for={uidRiesgo}>{riesgo.RIESGO}</label>
+	<label for={uid}>{riesgo.nombre}</label>
 
-	{#if selected}
+	{#if riesgo.checked}
 		<select
-			class="inline-flex items-center rounded-md bg-zinc-50 px-2 py-1 text-sm font-medium text-zinc-700 ring-1 ring-inset ring-zinc-700/10 riesgo-{nivel}"
-			bind:value={nivel}
+			class="inline-flex items-center rounded-md bg-zinc-50 px-2 py-1 text-sm font-medium text-zinc-700 ring-1 ring-inset ring-zinc-700/10 riesgo-{riesgo.nivel}"
+			bind:value={riesgo.nivel}
 		>
 			<option value="" disabled>-- Tipo --</option>
 			<option value="Posible">Posible</option>

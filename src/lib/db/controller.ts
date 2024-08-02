@@ -1,8 +1,8 @@
-import type { Proyeccion, Solicitud, Config, UAB } from '../types';
+import type { Proyeccion, Solicitud, Config, UAB, Destino } from '../types';
 
 import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
 
-import { solicitudStatus } from '../util/enums';
+import { EstadoSolicitud, solicitudStatus } from '../util/enums';
 
 import {
 	getFirestore,
@@ -33,6 +33,24 @@ function getSnapshotData(querySnapshot) {
 	});
 	return data;
 }
+
+function compararDestinos(destinos1: Destino[], destinos2: Destino[]) {
+	// Si se agrego o elimino algun destino
+	if (destinos1.length !== destinos2.length) {
+		return false;
+	}
+
+	// Si no son los mismos destinos
+	for (const destino of destinos1) {
+		const exists = destinos2.some(
+			(d) => d.municipio === destino.municipio && d.departamento === destino.departamento
+		);
+		if (!exists) return false;
+	}
+
+	return true;
+}
+
 class DBController {
 	async loadData(): Promise<{ lugares: string[]; uabs: UAB[]; riesgos: object }> {
 		const docSnap = await getDoc(doc(db, 'config', 'data'));
@@ -184,21 +202,20 @@ class DBController {
 		}
 	}
 
-	async updateSolicitud(id: string, solicitud) {
-		const datosSolicitud = solicitud.export();
-
+	async updateSolicitud(id: string, solicitud: Solicitud) {
 		const docRef = doc(db, 'solicitudes', id);
-		const docSnap = await getDoc(docRef);
-		const prevData = await docSnap.data();
 
-		// Si NO hubo un cambio de destino, no se debe desagendar la solicitud
-		if (prevData.destino === datosSolicitud.destino) {
-			datosSolicitud.agendado = prevData.agendado;
-			datosSolicitud.revisado = prevData.revisado;
-			datosSolicitud.estado = prevData.estado;
+		const docSnap = await getDoc(docRef);
+		const prevData: Solicitud = (await docSnap.data()) as Solicitud;
+
+		// Si hubo un cambio de destino, se debe desagendar la solicitud
+		if (compararDestinos(solicitud.destinos, prevData.destinos)) {
+			solicitud.agendado = false;
+			solicitud.revisado = false;
+			solicitud.estado = EstadoSolicitud.SIN_ASIGNAR;
 		}
 
-		await updateDoc(docRef, datosSolicitud);
+		await updateDoc(docRef, solicitud as object);
 	}
 
 	async updateActaSolicitudfunction(solicitud) {

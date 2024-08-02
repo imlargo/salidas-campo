@@ -5,13 +5,6 @@ import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ url }) => {
-	// const solicitud = isEdit && id ? await dbController.getSolicitud(id) : null;
-
-	// Si es una solicitud a partir de una proyeccion
-	// const id = url.searchParams.get('id');
-
-	// Verificar si está dentro de las fechas correctas
-
 	// Si es una solicitud en blanco
 	if (!url.searchParams.has('id')) {
 		// Cargar como solicitud en blanco (sin proyeccion)

@@ -21,6 +21,7 @@ export enum EstadoSolicitud {
 }
 
 export enum NivelRiesgo {
+	NN = '',
 	POSIBLE = 'Posible',
 	PROBABLE = 'Probable',
 	INMINENTE = 'Inminente'

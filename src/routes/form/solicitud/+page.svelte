@@ -621,17 +621,6 @@
 		{/if}
 	</Section>
 
-	<Section titulo="Destinos">
-		<div>
-			<label for="input-municipio" class="form-label">
-				<span>Buscar municipios de destino</span>
-				<i class="bi bi-search"></i>
-			</label>
-
-			<SearchDestinos controller={controllerSolicitud} />
-		</div>
-	</Section>
-
 	<Section titulo="Riesgos">
 		<div class="flex flex-col gap-2">
 			<p>
@@ -658,10 +647,23 @@
 			</p>
 		</div>
 
-		<Riesgos />
+		<p>{JSON.stringify(controllerSolicitud.riesgos)}</p>
+
+		<Riesgos solicitudRiesgos={solicitud ? solicitud.riesgos : null} />
 	</Section>
 
 	{#if isBlank}
+		<Section titulo="Destinos">
+			<div>
+				<label for="input-municipio" class="form-label">
+					<span>Buscar municipios de destino</span>
+					<i class="bi bi-search"></i>
+				</label>
+
+				<SearchDestinos controller={controllerProyeccion} />
+			</div>
+		</Section>
+
 		<Section titulo="Destino más lejano">
 			<div>
 				<label for="municipio" class="form-label">Municipio</label>
@@ -690,6 +692,17 @@
 					class="form-control"
 					bind:value={controllerProyeccion.observaciones}
 				></textarea>
+			</div>
+		</Section>
+	{:else}
+		<Section titulo="Destinos">
+			<div>
+				<label for="input-municipio" class="form-label">
+					<span>Buscar municipios de destino</span>
+					<i class="bi bi-search"></i>
+				</label>
+
+				<SearchDestinos controller={controllerSolicitud} />
 			</div>
 		</Section>
 	{/if}
