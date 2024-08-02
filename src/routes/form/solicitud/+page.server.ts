@@ -24,76 +24,6 @@ export const load = (async ({ url }) => {
 		};
 	}
 
-	/*
-
-	// Verificar las condiciones de solicitud
-	const queryParams = new URLSearchParams(window.location.search);
-
-	// Si es una solicitud en blanco:
-	if (!queryParams.has("id")) {
-		return;
-	}
-
-	// Si es una solicitud a partir de una proyeccion
-	const id = queryParams.get("id");
-	const proyeccion = await Firestore.getRegistro(id);
-
-	// En caso de error en la id
-	if (proyeccion === null) {
-		alert("No se ha encontrado la salida de campo solicitada, verifica el codigo FM");
-		window.location.href = "resumen.html";
-	}
-
-	// Si es una solicitud de otra persona
-	if (proyeccion.email !== user.email) {
-		alert("No tienes permisos para editar este registro");
-		window.location.href = "resumen.html";
-	}
-
-	// Agregar indicador de fm en la solicitud
-	const selectFm = document.getElementById("fm");
-	const option = document.createElement("option");
-	option.value = proyeccion.id;
-	option.textContent = `FM${proyeccion.id} - ${proyeccion.asignatura}`;
-	selectFm.appendChild(option);
-
-	// Si ya ha sido solicitada pero no esta en modo de edicion
-	if (proyeccion.solicitada && !queryParams.has("edit")) {
-		alert("Ya has solicitado esta salida de campo, para modificarla ve al panel de resumen.");
-		window.location.href = "resumen.html";
-		return;
-	}
-
-	// Si ya ha sido solicitada y esta en modo de edicion
-	if (proyeccion.solicitada && queryParams.has("edit")) {
-
-		// Obtiene la solicitud a editar
-		const solicitud = await Firestore.getSolicitud(proyeccion.id);
-
-		if (solicitud.agendado && !solicitud.revisado) {
-			showModal(
-				"Advertencia",
-				"La solicitud actual se encuentra agendada, por lo tanto no es posible modificarla",
-				() => { window.location.href = "resumen.html"; }
-			);
-			return;
-		}
-		if (solicitud.agendado && solicitud.estado !== SolicitudStatus.PENDIENTE && solicitud.estado !== SolicitudStatus.DENEGADA) {
-			showModal(
-				"Advertencia",
-				"El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla",
-				() => { window.location.href = "resumen.html"; }
-			);
-			return;
-		}
-
-		// Entrar en modo de edicion
-		GLOBALS.state.editMode = true;
-		fillFromSolicitud(solicitud);
-		return;
-	}
-	*/
-
 	// Si es una solicitud a partir de una proyeccion
 	const id = url.searchParams.get('id');
 	const proyeccion = await dbController.getProyeccion(id as string);
@@ -112,7 +42,8 @@ export const load = (async ({ url }) => {
 		redirect(307, '/modulo/docente');
 	}
 
-	if (!url.searchParams.has('edit')) {
+	// Si es en blanco
+	if (!proyeccion.solicitada && !url.searchParams.has('edit')) {
 		return {
 			solicitud: null,
 			proyeccion: proyeccion,
@@ -121,6 +52,20 @@ export const load = (async ({ url }) => {
 			isNew: true
 		};
 	}
+
+	/*
+	
+	// Verificar las condiciones de solicitud
+	const queryParams = new URLSearchParams(window.location.search);
+
+	// Agregar indicador de fm en la solicitud
+	const selectFm = document.getElementById("fm");
+	const option = document.createElement("option");
+	option.value = proyeccion.id;
+	option.textContent = `FM${proyeccion.id} - ${proyeccion.asignatura}`;
+	selectFm.appendChild(option);
+
+	*/
 
 	// Si ya ha sido solicitada y esta en modo de edicion
 	if (proyeccion.solicitada && url.searchParams.has('edit')) {
@@ -145,8 +90,10 @@ export const load = (async ({ url }) => {
 
 		return {
 			proyeccion,
-			isEdit: true,
-			solicitud
+			solicitud,
+			isEdit: false,
+			isBlank: false,
+			isNew: true
 		};
 	}
 }) satisfies PageServerLoad;

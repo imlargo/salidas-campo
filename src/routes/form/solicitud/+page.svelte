@@ -3,7 +3,7 @@
 	import Section from '$src/lib/components/form/Section.svelte';
 	import SearchDestinos from '$src/lib/components/form/SearchDestinos.svelte';
 	import Form from '$src/lib/components/form/Form.svelte';
-	import type { Proyeccion, Destino, Asignatura } from '$lib/types';
+	import type { Proyeccion, Solicitud, Destino, Asignatura } from '$lib/types';
 	import Agenda from '$src/lib/components/form/Agenda.svelte';
 
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
@@ -28,46 +28,43 @@
 	const { solicitud, proyeccion, isEdit, isBlank, isNew } = data;
 	console.log({ solicitud, proyeccion, isEdit, isBlank, isNew });
 
-	if (isNew || isEdit) {
+	if (isNew) {
 		controllerSolicitud.loadFromProyeccion(proyeccion as Proyeccion);
 		storeFiltro.valueUAB = proyeccion.asignatura.COD_UAB;
 		storeFiltro.valueAsignatura = proyeccion.asignatura.ASIGNATURA;
 		storeFiltro.valueCodigo = proyeccion.asignatura.COD_ASIGNATURA;
 	}
 
-	if (isBlank) {
-		console.log('Blanca');
+	if (isEdit) {
+		controllerSolicitud.loadFromSolicitud(solicitud as Solicitud);
+		storeFiltro.valueUAB = solicitud.asignatura.COD_UAB;
+		storeFiltro.valueAsignatura = solicitud.asignatura.ASIGNATURA;
+		storeFiltro.valueCodigo = solicitud.asignatura.COD_ASIGNATURA;
 	}
 
 	$effect(() => {
-		if (storeAuth.uab !== null) {
+		if (storeAuth.email !== '') {
 			controllerSolicitud.docente = storeAuth.nombre;
-			/*
-			// Si es editada verificar que sea del mismo usuario
-			if (data.proyeccion.email !== storeAuth.email) {
+
+			// Si es una proyeccion de otra persona
+			if (isNew && proyeccion?.email !== storeAuth.email) {
+				// No tienes permisos para editar este registro
 				redirect(307, '/');
 			}
-                */
 
-			// Si es nueva proyección, cargar la UAB del usuario
-			if (isBlank) {
-				controllerSolicitud.uab = storeAuth.uab.codigo;
-				controllerSolicitud.changeUAB(storeAuth.uab.codigo);
-				return;
-			}
-
-			// Si a partir de una proyeccion verificar que sea del mismo usuario
-			if ((isEdit || isNew) && proyeccion?.email !== storeAuth.email) {
+			// Si es una solicitud de otra persona
+			if (isEdit && solicitud?.email !== storeAuth.email) {
+				// No tienes permisos para editar este registro
 				redirect(307, '/');
 			}
 		}
-	});
 
-	/*
-	if (data.proyeccion !== null) {
-		controllerSolicitud.loadFromData(data.proyeccion);
-	}
-        */
+		if (storeAuth.uab !== null && isBlank) {
+			// Si es nueva proyección, cargar la UAB del usuario
+			controllerSolicitud.uab = storeAuth.uab.codigo;
+			controllerSolicitud.changeUAB(storeAuth.uab.codigo);
+		}
+	});
 
 	let duracion = $derived.by(() => {
 		if (isBlank) {
