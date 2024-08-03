@@ -189,7 +189,7 @@
 				<input
 					type="date"
 					class="form-control"
-					id="finProyeccion"
+					data-campo="finProyeccion"
 					onfocus={showPicker}
 					bind:value={controllerDashboard.config.finProyeccion}
 					onchange={(e) => controllerDashboard.cambiarFechaConfig(e)}

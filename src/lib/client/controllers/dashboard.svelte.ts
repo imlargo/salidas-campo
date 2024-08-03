@@ -17,8 +17,9 @@ class ControllerDashboard {
 		const elemento = e.target as HTMLInputElement;
 		const fecha = elemento.value;
 		const campo = elemento.dataset.campo;
-
-		dbController.setCampoConfig(campo as string, fecha);
+		console.log('Cambiando:', campo, fecha);
+		await dbController.setCampoConfig(campo as string, fecha);
+		console.log('Cambiada');
 	}
 }
 

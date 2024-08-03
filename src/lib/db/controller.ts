@@ -151,10 +151,10 @@ class DBController {
 		await deleteDoc(doc(db, 'solicitud', key.toString()));
 	}
 
-	async getProyeccionesByDocente(email: string) {
+	async getProyeccionesByDocente(email: string): Promise<Proyeccion[]> {
 		const q = query(colProyeccion, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot);
+		return getSnapshotData(querySnapshot) as Proyeccion[];
 	}
 
 	async getSolicitudesByDocente(email: string) {
