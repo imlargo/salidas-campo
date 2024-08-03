@@ -1,30 +1,13 @@
 import { initializeApp } from 'firebase/app';
 
+import { getFirestore, collection } from 'firebase/firestore';
 import {
 	getAuth,
 	GoogleAuthProvider,
-	signInWithPopup,
-	signOut,
-	onAuthStateChanged,
 	setPersistence,
 	browserLocalPersistence,
-	browserSessionPersistence
+	type Persistence
 } from 'firebase/auth';
-
-import {
-	getFirestore,
-	collection,
-	onSnapshot,
-	doc,
-	addDoc,
-	setDoc,
-	getDocs,
-	getDoc,
-	deleteDoc,
-	updateDoc,
-	query,
-	where
-} from 'firebase/firestore';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyCI3x94m8Yl80letqFZ-0gIrKOmRRYur7g',
@@ -40,7 +23,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Auth
-const auth = getAuth();
+const auth = getAuth(app);
+
+const persistance: Persistence = { type: 'NONE' };
+await setPersistence(auth, browserLocalPersistence);
+
 const provider = new GoogleAuthProvider();
 
 // Base de datos
@@ -48,16 +35,5 @@ const db = getFirestore(app);
 const colProyeccion = collection(db, 'proyeccion');
 const colSolicitudes = collection(db, 'solicitudes');
 const colConfig = collection(db, 'config');
-
-function getSnapshotData(querySnapshot) {
-	const data = [];
-	querySnapshot.forEach((doc) => {
-		data.push({
-			...doc.data(),
-			id: doc.id
-		});
-	});
-	return data;
-}
 
 export { app, auth, provider, db, colProyeccion, colSolicitudes, colConfig };
