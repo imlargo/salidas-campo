@@ -123,3 +123,13 @@ export interface Asignatura {
 	VIGENTE: boolean;
 	ANTERIOR?: string;
 }
+
+export interface UserData {
+	user: any;
+	email: string;
+	nombre: string;
+	rol: ROL;
+	uab: UAB | null;
+	isAdmin: boolean;
+	isDepartamento: boolean;
+}

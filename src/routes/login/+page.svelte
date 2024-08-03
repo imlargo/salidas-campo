@@ -1,24 +1,41 @@
 <script lang="ts">
 	import '$styles/form.scss';
 	import Banner from '$components/form/Banner.svelte';
+	import { ROL } from '$utils/enums';
+	import { getUserSession } from '$src/lib/client/user.js';
+
+	const { data } = $props();
+	const { uabs } = data;
 
 	import { auth, provider } from '$lib/client/firebase';
-	import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+	import { signInWithPopup } from 'firebase/auth';
+	import { dbController } from '$lib/db/controller';
+	import type { UserData } from '$lib/types';
 
 	let form: HTMLFormElement;
 	async function login(): Promise<void> {
-		const cred = await signInWithPopup(auth, provider);
+		const result = await signInWithPopup(auth, provider);
+		const user = result.user;
+		const token = await result.user.getIdToken();
 
-		const token = await cred.user.getIdToken();
-		await auth.signOut();
+		const userData = await dbController.getUser(user.email as string);
 
-		console.log('token: ', token);
+		// Si el usuario no es valido
+		if (userData === null) {
+			return;
+		}
+
+		// Si el usuario es valido
+		const userSessionData = getUserSession(user, userData, uabs);
+
+		// await auth.signOut();
 
 		const input = document.createElement('input');
 		input.type = 'hidden';
 		input.name = 'token';
 		input.value = token;
 		form.appendChild(input);
+
 		form.submit();
 	}
 

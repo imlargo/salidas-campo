@@ -7,4 +7,6 @@ const serviceAccount = JSON.parse(SERVICE_ACOUNT_STRING) as ServiceAccount;
 const cert = admin.credential.cert(serviceAccount);
 admin.initializeApp({ credential: cert });
 
+// const db = admin.firestore();
+
 export { admin };

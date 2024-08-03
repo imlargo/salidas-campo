@@ -35,15 +35,7 @@ import { dbController } from '../db/controller';
 
 import { app, auth, provider } from '$lib/client/firebase';
 
-interface UserData {
-	user: any;
-	email: string;
-	nombre: string;
-	rol: ROL;
-	uab: UAB | null;
-	isAdmin: boolean;
-	isDepartamento: boolean;
-}
+import type { UserData } from '$lib/types';
 
 class StoreAuth implements UserData {
 	static storageKey = 'SessionAuthCache';
@@ -99,6 +91,18 @@ class StoreAuth implements UserData {
 				signInWithPopup(auth, provider);
 			}
 		});
+	}
+
+	getData(): UserData {
+		return {
+			user: this.user,
+			email: this.email,
+			nombre: this.nombre,
+			rol: this.rol,
+			uab: this.uab,
+			isAdmin: this.isAdmin,
+			isDepartamento: this.isDepartamento
+		};
 	}
 
 	setData(userData: UserData) {

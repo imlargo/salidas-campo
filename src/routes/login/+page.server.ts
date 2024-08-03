@@ -2,19 +2,28 @@ import { redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { admin } from '$lib/server/firebase-server';
 
+import { dbController } from '$lib/db/controller';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
+	const data = await dbController.loadData();
+
 	const user = locals.user;
 
 	if (user !== null) {
 		redirect(303, '/');
 	}
+
+	return {
+		uabs: data.uabs
+	};
 }) satisfies PageServerLoad;
 
 export const actions = {
 	default: async ({ request, cookies }) => {
 		const form = await request.formData();
+
+		const userData = form.get('userData');
 		const token = form.get('token');
 
 		if (!token || typeof token !== 'string') {
