@@ -10,15 +10,15 @@
 	const { proyecciones }: Props = $props();
 </script>
 
-<div class="grid grid-cols-8 text-center font-semibold">
-	<span>Consecutivo</span>
+<div class="grid grid-cols-8 font-semibold gap-x-5">
+	<span class="text-center">Consecutivo</span>
 	<span>Codigo(s)</span>
 	<span>Asignatura(s)</span>
 	<span>Fecha salida</span>
-	<span>Duracion asesor</span>
+	<span>Duracion</span>
 	<span>Destinos</span>
 	<span>Modificar</span>
-	<span>Eliminar</span>
+	<span class="text-center">Eliminar</span>
 </div>
 
 <div class="flex flex-col divide-y divide-solid mt-3 border-y">
