@@ -9,8 +9,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	const session = event.cookies.get('session') ?? '';
 
-    if (session === '') {
+	const isLogin: boolean = event.url.pathname === '/login';
+
+	if (session === '' && isLogin === false) {
 		throw redirect(303, '/login');
+	}
+
+	if (session === '' && isLogin === true) {
+		return await resolve(event);
 	}
 
 	if (building) {
@@ -23,11 +29,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	try {
 		let decodedUser: DecodedIdToken = await admin.auth().verifySessionCookie(session, false);
 		event.locals.user = decodedUser;
-		console.log(decodedUser);
 
 		return await resolve(event);
 	} catch (error) {
-		console.error(error);
+		event.cookies.set('session', '', {
+			path: '/'
+		});
 		throw redirect(303, '/login');
 	}
 };

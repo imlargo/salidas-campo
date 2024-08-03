@@ -1,10 +1,9 @@
 import admin from 'firebase-admin';
 
 import type { ServiceAccount } from 'firebase-admin';
+import { SERVICE_ACOUNT_STRING } from '$env/static/private';
 
-const serviceAccountString = '';
-
-const serviceAccount = JSON.parse(serviceAccountString) as ServiceAccount;
+const serviceAccount = JSON.parse(SERVICE_ACOUNT_STRING) as ServiceAccount;
 const cert = admin.credential.cert(serviceAccount);
 admin.initializeApp({ credential: cert });
 
