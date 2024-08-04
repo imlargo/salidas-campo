@@ -21,7 +21,7 @@
 	<!-- Descargar reportes -->
 	<Section titulo="Descargar reportes" icon="bi bi-bookmark">
 		<div class="border rounded-md p-4 shadow-lg">
-			<div class="flex justify-between items-top ">
+			<div class="flex justify-between items-top">
 				<h4 class="card-titulo">Proyecciones</h4>
 
 				<span
