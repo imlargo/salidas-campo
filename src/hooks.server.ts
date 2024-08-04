@@ -24,7 +24,11 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.cookies.set('userData', '', {
 			path: '/'
 		});
-		throw redirect(303, '/login' + (event.url.pathname !== "/" && event.url.pathname !== "/logout" ? `?from=${fromLink}` : ''));
+		throw redirect(
+			303,
+			'/login' +
+				(event.url.pathname !== '/' && event.url.pathname !== '/logout' ? `?from=${fromLink}` : '')
+		);
 	}
 
 	// Si no hay session y es login, continuar
