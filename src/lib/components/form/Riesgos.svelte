@@ -24,7 +24,7 @@
 	{#each listado as [tipo, riesgos]}
 		<div>
 			<span class="form-label">{tipo}</span>
-			<div class="grid grid-cols-2 gap-x-4 gap-y-3">
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
 				{#each riesgos as riesgo}
 					<RiesgoRow
 						riesgo={controllerRiesgos.getRiesgo(controllerRiesgos.getUid(riesgo.RIESGO))}

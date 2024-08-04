@@ -6,13 +6,15 @@
 	const { variante, titulo }: Props = $props();
 </script>
 
-<header class="flex justify-between rounded-xl variante-{variante}">
-	<div class="px-12 w-75">
-		<h1>{titulo}</h1>
+<header
+	class="flex flex-col sm:flex-row sm:justify-between rounded-xl px-8 py-4 sm:px-16 sm:py-5 variante-{variante}"
+>
+	<div class="w-75">
+		<h1 class="block text-2xl sm:text-4xl font-semibold">{titulo}</h1>
 		<div class="separador w-3/4"></div>
 	</div>
 
-	<div class="flex justify-end items-center gap-3 w-1/4 pe-12">
+	<div class="flex sm:justify-end items-center gap-3 w-full sm:w-1/4">
 		<slot />
 	</div>
 </header>
@@ -37,18 +39,10 @@
 	header {
 		height: auto;
 		contain: content;
-		padding: 1rem;
 
 		h1 {
-			font-weight: bolder;
 			color: white;
-			margin-bottom: 0em;
-			line-height: 1.5em;
-
-			font-size: 2.2em;
-
 			font-family: 'Ancizar sans', Tahoma, Geneva, sans-serif;
-			display: block;
 			margin-block-start: 1em;
 			margin-inline-end: 0px;
 		}

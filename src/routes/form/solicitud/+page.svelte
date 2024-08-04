@@ -140,7 +140,7 @@
 
 	<Section titulo="Información Asignatura">
 		<div>
-			<div class="field-layout grid-cols-2">
+			<div class="field-layout grid-cols-1 md:grid-cols-2">
 				<div>
 					<label for="uab" class="form-label">Unidad académica básica</label>
 					<select
@@ -179,7 +179,7 @@
 		</div>
 
 		<div>
-			<div class="field-layout grid-cols-2">
+			<div class="field-layout grid-cols-1 md:grid-cols-2">
 				<div>
 					<label for="asignatura" class="form-label">Nombre de la asignatura</label>
 					<select
@@ -217,7 +217,7 @@
 			</div>
 
 			{#if storeFiltro.tieneRelacion}
-				<div class="field-layout grid-cols-2 mt-3" id="contenedor-multi-asignatura">
+				<div class="field-layout grid-cols-1 md:grid-cols-2 mt-3" id="contenedor-multi-asignatura">
 					<div>
 						<p class="decoration-orange fw-light">
 							<i class="bi bi-arrow-up"></i>
@@ -251,7 +251,7 @@
 		{#if isBlank}
 			<hr />
 
-			<div class="field-layout grid-cols-2">
+			<div class="field-layout grid-cols-1 md:grid-cols-2">
 				<div>
 					<label for="grupo" class="form-label">Número del grupo(s)</label>
 					<input
@@ -294,7 +294,7 @@
 			</div>
 		{/if}
 
-		<div class="field-layout grid-cols-2">
+		<div class="field-layout grid-cols-1 md:grid-cols-2">
 			<div>
 				<label class="form-label" for="contemplada"
 					>¿La salida está contemplada en el contenido de la asignatura?</label
@@ -467,7 +467,7 @@
 
 	<Section titulo="Información de la salida y regreso">
 		{#if isBlank}
-			<div class="field-layout grid-cols-3">
+			<div class="field-layout grid-cols-1 md:grid-cols-3">
 				<div>
 					<label for="fechaSalida" class="form-label">Fecha (Día/Mes/Año)</label>
 					<input
@@ -512,7 +512,7 @@
 				</div>
 			</div>
 
-			<div class="field-layout grid-cols-3">
+			<div class="field-layout grid-cols-1 md:grid-cols-3">
 				<div>
 					<label for="fechaRegreso" class="form-label">Fecha (Día/Mes/Año)</label>
 					<input
@@ -573,7 +573,7 @@
 				/>
 			</div>
 		{:else}
-			<div class="field-layout grid-cols-2">
+			<div class="field-layout grid-cols-1 md:grid-cols-2">
 				<div>
 					<label for="fechaSalida" class="form-label">Fecha (Día/Mes/Año)</label>
 					<input

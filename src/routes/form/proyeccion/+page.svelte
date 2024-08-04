@@ -156,7 +156,7 @@
 		</div>
 
 		<div>
-			<div class="field-layout grid-cols-2">
+			<div class="field-layout grid-cols-1 md:grid-cols-2">
 				<div>
 					<label for="asignatura" class="form-label">Nombre de la asignatura</label>
 					<select
@@ -192,7 +192,7 @@
 			</div>
 
 			{#if storeFiltro.tieneRelacion}
-				<div class="field-layout grid-cols-2 mt-3" id="contenedor-multi-asignatura">
+				<div class="field-layout grid-cols-1 md:grid-cols-2 mt-3" id="contenedor-multi-asignatura">
 					<div>
 						<p class="decoration-orange fw-light">
 							<i class="bi bi-arrow-up"></i>
@@ -225,7 +225,7 @@
 
 		<hr />
 
-		<div class="field-layout grid-cols-2">
+		<div class="field-layout grid-cols-1 md:grid-cols-2">
 			<div>
 				<label for="grupo" class="form-label">Número del grupo(s)</label>
 				<input
@@ -268,7 +268,7 @@
 		</div>
 	</Section>
 	<Section titulo="Información de la salida y regreso">
-		<div class="field-layout grid-cols-3">
+		<div class="field-layout grid-cols-1 md:grid-cols-3">
 			<div>
 				<label for="fechaSalida" class="form-label">Fecha (Día/Mes/Año)</label>
 				<input
@@ -313,7 +313,7 @@
 			</div>
 		</div>
 
-		<div class="field-layout grid-cols-3">
+		<div class="field-layout grid-cols-1 md:grid-cols-3">
 			<div>
 				<label for="fechaRegreso" class="form-label">Fecha (Día/Mes/Año)</label>
 				<input
