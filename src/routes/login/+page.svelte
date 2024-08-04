@@ -56,12 +56,12 @@
 	<title>Iniciar Sesion - Salidas de campo</title>
 </svelte:head>
 
-<div class="flex justify-center items-center h-screen">
+<div class="px-5 flex justify-center items-center h-screen">
 	<div class="max-w-xl container">
 		<Banner titulo="Iniciar Sesion" variante="proyeccion"></Banner>
 
 		<div class="flex flex-col gap-7 py-5">
-			<p>
+			<p class="text-pretty">
 				Estimado(a) docente o secretaria, solo puede acceder al aplicativo de salidas de campo si ha
 				iniciado sesión. Por favor, ingrese con su cuenta de Google.
 			</p>
