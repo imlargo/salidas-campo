@@ -14,7 +14,7 @@
 		<div class="separador w-3/4"></div>
 	</div>
 
-	<div class="flex sm:justify-end items-center gap-3 w-full sm:w-1/4">
+	<div class="flex sm:justify-end items-center gap-3 w-full md:w-1/4">
 		<slot />
 	</div>
 </header>

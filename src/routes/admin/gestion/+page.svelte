@@ -63,20 +63,16 @@
 </Banner>
 
 <main class="py-12 w-full">
-	<div class="flex justify-end gap-4">
+	<div class="flex flex-col md:flex-row justify-end gap-4">
 		<button class="btn-primary">
 			<i class="bi bi-table"></i>
 			<span>Consolidar conceptos</span>
 		</button>
 
-		<div class="vr"></div>
-
 		<button class="btn-primary">
 			<i class="bi bi-file-earmark-text"></i>
 			<span>Generar agenda</span>
 		</button>
-
-		<div class="vr"></div>
 
 		<button class="btn-primary">
 			<i class="bi bi-cloud-check"></i>
@@ -86,7 +82,7 @@
 
 	<hr class="mt-5" />
 
-	<div class="flex justify-between py-4">
+	<div class="flex flex-col md:flex-row justify-between py-4">
 		<div class="flex gap-4 items-center">
 			<span>
 				<strong>Solicitudes agendadas: </strong>
@@ -96,7 +92,7 @@
 			>
 		</div>
 
-		<div class="flex items-center gap-3">
+		<div class="flex flex-col md:flex-row items-center gap-3">
 			<i id="filter-icon" class:filtro-activo={filtrado} class="bi bi-funnel"></i>
 
 			<select

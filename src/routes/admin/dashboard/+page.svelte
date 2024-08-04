@@ -19,10 +19,9 @@
 
 <main class="py-12 flex flex-col w-full gap-8">
 	<!-- Descargar reportes -->
-
 	<Section titulo="Descargar reportes" icon="bi bi-bookmark">
 		<div class="border rounded-md p-4 shadow-lg">
-			<div class="flex justify-between items-top">
+			<div class="flex justify-between items-top ">
 				<h4 class="card-titulo">Proyecciones</h4>
 
 				<span
@@ -46,7 +45,7 @@
 				campo
 			</p>
 
-			<div class="flex mt-2 gap-3">
+			<div class="flex flex-col md:flex-row mt-2 gap-3">
 				<button
 					class="btn-primary"
 					id="btn-getConsolidadoProyeccion"
@@ -57,7 +56,6 @@
 					<span>Descargar reporte</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
-				<div class="vr"></div>
 				<button
 					class="btn-primary"
 					id="btn-getConsolidadoExtra"
@@ -68,8 +66,7 @@
 					<span>Descargar Extras</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
-				<div class="vr"></div>
-				<select class="px-3 py-1 border rounded block w-50">
+				<select class="px-3 py-1 border rounded block w-full md:max-w-fit">
 					{#each controllerDashboard.uabs as uab}
 						<option value={uab.nombre}>{uab.nombre}</option>
 					{/each}
@@ -100,7 +97,7 @@
 				campo
 			</p>
 
-			<div class="flex gap-3 mt-2">
+			<div class="flex flex-col sm:flex-row gap-3 mt-2">
 				<button
 					class="btn-primary"
 					data-bs-toggle="tooltip"
@@ -111,7 +108,6 @@
 					<span>Descargar reporte</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
-				<div class="vr"></div>
 				<button
 					class="btn-primary"
 					data-bs-toggle="tooltip"
@@ -122,7 +118,6 @@
 					<span>Avisar docentes</span>
 					<i class="bi bi-send"></i>
 				</button>
-				<div class="vr"></div>
 				<button
 					id="btn-getConsolidadoFinal"
 					class="btn-primary"
@@ -133,7 +128,6 @@
 					<span>Consolidado final</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
-				<div class="vr"></div>
 				<button
 					id="btn-getSolicitudesAprobadas"
 					class="btn-primary"
@@ -149,7 +143,7 @@
 	</Section>
 
 	<Section titulo="Configuración " icon="bi bi-gear">
-		<div class="grid grid-cols-2 gap-y-4 gap-x-7">
+		<div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-7">
 			<div>
 				<span class="form-label">Inicio de semestre</span>
 				<input
@@ -222,7 +216,7 @@
 
 		<hr />
 
-		<div class="flex gap-4">
+		<div class="flex flex-col sm:flex-row gap-4">
 			<button
 				class="btn btn-sm btn-primary boton btn-sm"
 				data-bs-toggle="tooltip"
