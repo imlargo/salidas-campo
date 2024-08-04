@@ -12,7 +12,7 @@
 	class StoreProyecciones {
 		proyecciones: Proyeccion[] = $state(proyecciones);
 
-		deleteProyeccion(id: string) {
+		deleteProyeccion(id: number) {
 			this.proyecciones = this.proyecciones.filter((p) => p.id !== id);
 		}
 	}

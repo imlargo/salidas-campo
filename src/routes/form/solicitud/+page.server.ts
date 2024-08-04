@@ -63,7 +63,7 @@ export const load = (async ({ url }) => {
 	// Si ya ha sido solicitada y esta en modo de edicion
 	if (proyeccion.solicitada && url.searchParams.has('edit')) {
 		// Obtiene la solicitud a editar
-		const solicitud = (await dbController.getSolicitud(proyeccion.id)) as Solicitud;
+		const solicitud = (await dbController.getSolicitud(proyeccion.id.toString())) as Solicitud;
 
 		/* Verificar si la solicitud puede ser modificada segun su estado */
 		if (solicitud.agendado && !solicitud.revisado) {
@@ -74,7 +74,7 @@ export const load = (async ({ url }) => {
 		if (
 			solicitud.agendado &&
 			solicitud.estado !== EstadoSolicitud.PENDIENTE &&
-			solicitud.estado !== EstadoSolicitud.DENEGADA
+			solicitud.estado !== EstadoSolicitud.NEGADA
 		) {
 			// El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla
 			redirect(307, '/modulo/docente');

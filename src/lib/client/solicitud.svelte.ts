@@ -10,7 +10,7 @@ import { controllerProyeccion } from './proyeccion.svelte';
 import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
 
 class ControllerSolicitud implements Solicitud {
-	id = $state('');
+	id = $state(-1);
 	proyeccion: Proyeccion | null = $state(null);
 
 	isBlank = $state(false);

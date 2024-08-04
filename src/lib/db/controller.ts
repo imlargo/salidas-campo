@@ -2,7 +2,7 @@ import type { Proyeccion, Solicitud, Config, UAB, Destino } from '../types';
 
 import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
 
-import { EstadoSolicitud, solicitudStatus } from '../util/enums';
+import { EstadoSolicitud } from '../util/enums';
 
 import {
 	getFirestore,
@@ -25,8 +25,8 @@ import { GroupBy } from '$src/lib/util/utils';
 
 import type { UserResponse } from '../types';
 
-function getSnapshotData(querySnapshot) {
-	const data = [];
+function getSnapshotData(querySnapshot: any[]) {
+	const data: any[] = [];
 	querySnapshot.forEach((doc) => {
 		data.push({
 			...doc.data(),
@@ -101,10 +101,10 @@ class DBController {
 	/* Proyeccion */
 	async createProyeccion(proyeccion: Proyeccion) {
 		const lastInd = await this.getLastInd();
-		const key = (lastInd + 1).toString();
+		const key = lastInd + 1;
 
 		proyeccion.id = key;
-		await setDoc(doc(db, 'proyeccion', key), proyeccion);
+		await setDoc(doc(db, 'proyeccion', key.toString()), proyeccion);
 		return key;
 	}
 
@@ -114,7 +114,7 @@ class DBController {
 	}
 
 	async updateProyeccion(proyeccion: Proyeccion) {
-		const docRef = doc(db, 'proyeccion', proyeccion.id);
+		const docRef = doc(db, 'proyeccion', proyeccion.id.toString());
 		await updateDoc(docRef, proyeccion as object);
 	}
 
@@ -138,7 +138,7 @@ class DBController {
 		await updateDoc(docRef, data);
 	}
 
-	async updateInternalData(data) {
+	async updateInternalData(data: any) {
 		const docRef = doc(db, 'config', 'data');
 		await setDoc(docRef, data);
 	}
@@ -156,18 +156,15 @@ class DBController {
 	async getProyeccionesByDocente(email: string): Promise<Proyeccion[]> {
 		const q = query(colProyeccion, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot) as Proyeccion[];
+		return getSnapshotData(querySnapshot).sort(
+			(a: Proyeccion, b: Proyeccion) => a.id - b.id
+		) as Proyeccion[];
 	}
 
 	async getSolicitudesByDocente(email: string) {
 		const q = query(colSolicitudes, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
 		return getSnapshotData(querySnapshot);
-	}
-
-	async getRegistro(key: string) {
-		const docSnap = await getDoc(doc(db, 'proyeccion', key));
-		return docSnap.exists() ? { ...docSnap.data(), id: docSnap.id } : null;
 	}
 
 	async getRegistros() {
@@ -178,16 +175,11 @@ class DBController {
 	async getSolicitudes(): Promise<Solicitud[]> {
 		const querySnapshot = await getDocs(colSolicitudes);
 		const solicitudes = getSnapshotData(querySnapshot);
-		return solicitudes
-			.sort((a, b) => parseInt(a.id) - parseInt(b.id))
-			.map((solicitud) => {
-				solicitud.estado = solicitud.estado.toString();
-				return solicitud;
-			});
+		return solicitudes.sort((a, b) => a.id - b.id);
 	}
 
 	async getSalidasAprobadas() {
-		const q = query(colProyeccion, where('estado', '==', solicitudStatus.APROBADA));
+		const q = query(colProyeccion, where('estado', '==', EstadoSolicitud.APROBADA));
 		const querySnapshot = await getDocs(q);
 		return getSnapshotData(querySnapshot);
 	}
@@ -220,22 +212,22 @@ class DBController {
 		await updateDoc(docRef, solicitud as object);
 	}
 
-	async updateActaSolicitudfunction(solicitud) {
+	async updateActaSolicitudfunction(solicitud: Solicitud) {
 		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
 		await updateDoc(docRef, { acta: solicitud.acta });
 	}
 
-	async updateCostoSolicitudfunction(solicitud) {
+	async updateCostoSolicitudfunction(solicitud: Solicitud) {
 		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
 		await updateDoc(docRef, { costo: solicitud.costo });
 	}
 
-	async updateComiteSolicitudfunction(solicitud) {
+	async updateComiteSolicitudfunction(solicitud: Solicitud) {
 		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
 		await updateDoc(docRef, { comite: solicitud.comite });
 	}
 
-	async updateEstadoSolicitudfunction(solicitud) {
+	async updateEstadoSolicitudfunction(solicitud: Solicitud) {
 		const docRef = doc(db, 'solicitudes', solicitud.idProyeccion.toString());
 		await updateDoc(docRef, {
 			agendado: solicitud.agendado,
@@ -245,10 +237,16 @@ class DBController {
 	}
 
 	async getLastInd(): Promise<number> {
-		// const q = query(colProyeccion, orderBy("id", "desc"), limit(1));
-		// const lastDoc = await getDocs(q);
-		const queryProyeccion = await getDocs(colProyeccion);
-		return queryProyeccion.size;
+		const q = query(colProyeccion, orderBy('id', 'desc'), limit(1));
+		const lastDoc = await getDocs(q);
+
+		if (lastDoc.empty) {
+			return 1;
+		}
+
+		const lastInd = lastDoc.docs[0].data().id;
+
+		return lastInd;
 	}
 
 	async getLastIndSolicitud() {

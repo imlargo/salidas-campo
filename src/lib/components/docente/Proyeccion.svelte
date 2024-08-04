@@ -15,8 +15,8 @@
 	let modal: SvelteComponent;
 
 	async function deleteProyeccion() {
-		storeProyecciones.deleteProyeccion(proyeccion.id);
-		await dbController.deleteProyeccion(proyeccion.id);
+		storeProyecciones.deleteProyeccion(proyeccion.id.toString());
+		await dbController.deleteProyeccion(proyeccion.id.toString());
 	}
 </script>
 

@@ -6,7 +6,7 @@ import { dbController } from '../db/controller';
 import { EmailProyeccion } from '../util/emails';
 
 class ControllerProyeccion implements Proyeccion {
-	id = $state('');
+	id = $state(-1);
 	editMode = $state(false);
 
 	ultimoDestinoSelection = $state('');

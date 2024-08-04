@@ -86,10 +86,10 @@
 			bind:value={controller.solicitud.estado}
 			onchange={() => controller.changeEstado()}
 		>
-			<option selected value="0"> -- Seleccionar -- </option>
-			<option value="1">Aprobada</option>
-			<option value="2">Negada</option>
-			<option value="3">Pendiente</option>
+			<option selected value={EstadoSolicitud.SIN_ASIGNAR}> -- Seleccionar -- </option>
+			<option value={EstadoSolicitud.APROBADA}>Aprobada</option>
+			<option value={EstadoSolicitud.NEGADA}>Negada</option>
+			<option value={EstadoSolicitud.PENDIENTE}>Pendiente</option>
 		</select>
 	</div>
 	<div>

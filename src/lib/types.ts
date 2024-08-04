@@ -44,7 +44,7 @@ export interface Config {
 }
 
 export interface Proyeccion {
-	id: string;
+	id: number;
 	marcaTemporal: string;
 	facultad: string;
 	docente: string;
@@ -74,7 +74,7 @@ export interface Proyeccion {
 }
 
 export interface Solicitud {
-	id: string;
+	id: number;
 	marcaTemporal: string;
 	facultad: string;
 	docente: string;
@@ -105,7 +105,7 @@ export interface Solicitud {
 
 	riesgos: SeleccionRiesgo[];
 	agenda: string[];
-	idProyeccion: string;
+	idProyeccion: number;
 	comite: string;
 	acta: string;
 	agendado: boolean;

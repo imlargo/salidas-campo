@@ -12,7 +12,7 @@ export class ControllerSolicitud {
 		this.solicitud.agendado = true;
 		this.changeAgendado();
 
-		await dbController.updateCampoSolicitud(this.solicitud.id, {
+		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {
 			comite: this.solicitud.comite
 		});
 	}
@@ -23,7 +23,7 @@ export class ControllerSolicitud {
 			return;
 		}
 
-		await dbController.updateCampoSolicitud(this.solicitud.id, {
+		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {
 			agendado: this.solicitud.agendado
 		});
 	}
@@ -44,7 +44,7 @@ export class ControllerSolicitud {
 			// selectConcepto.reportValidity();
 		}
 
-		await dbController.updateCampoSolicitud(this.solicitud.id, {
+		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {
 			revisado: this.solicitud.revisado
 		});
 	}
@@ -71,13 +71,13 @@ export class ControllerSolicitud {
 		}
 
 		this.changeRevisado();
-		await dbController.updateCampoSolicitud(this.solicitud.id, {
+		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {
 			estado: this.solicitud.estado
 		});
 	}
 
 	async changeActa() {
-		await dbController.updateCampoSolicitud(this.solicitud.id, {
+		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {
 			acta: this.solicitud.acta
 		});
 	}
