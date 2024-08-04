@@ -240,7 +240,7 @@ class DBController {
 		const lastDoc = await getDocs(q);
 
 		if (lastDoc.empty) {
-			return 1;
+			return 0;
 		}
 
 		const lastInd = lastDoc.docs[0].data().id;

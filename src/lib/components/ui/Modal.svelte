@@ -26,10 +26,16 @@
 
 	function modalAction(element: HTMLDivElement) {
 		modalInstance = new bootstrap.Modal(element);
+
+		if (!isConfirmacion && callback) {
+			element.addEventListener('hidden.bs.modal', () => {
+				callback();
+			});
+		}
 	}
 </script>
 
-<div use:modalAction class="modal" tabindex="-1" aria-hidden="true">
+<div use:modalAction class="modal fade" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header orange">

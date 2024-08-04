@@ -3,6 +3,7 @@
 	import Section from '$src/lib/components/form/Section.svelte';
 	import SearchDestinos from '$src/lib/components/form/SearchDestinos.svelte';
 	import Form from '$src/lib/components/form/Form.svelte';
+	import Modal from '$src/lib/components/ui/Modal.svelte';
 
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
@@ -10,6 +11,8 @@
 	import { storeFiltro } from '$src/lib/client/asignaturas.svelte';
 	import { validateGroups } from '$src/lib/util/validation';
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
+	import type { SvelteComponent } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	const { data } = $props();
 	const { user, userData } = data;
@@ -31,6 +34,12 @@
 	if (data.proyeccion !== null) {
 		controllerProyeccion.loadFromData(data.proyeccion);
 	}
+
+	async function callbackModal() {
+		await goto('/modulo/docente');
+	}
+
+	let modal: SvelteComponent;
 </script>
 
 <svelte:head>
@@ -41,6 +50,24 @@
 	<a href="/modulo/docente" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
 </Banner>
 
+<Modal
+	bind:this={modal}
+	titulo="Confirmacion de registro"
+	isConfirmacion={false}
+	callback={callbackModal}
+>
+	<p>
+		Hola {userData.nombre}, se ha {data.proyeccion !== null ? 'modificado' : 'registrado'} su salida
+		de campo con éxito. Se ha enviado un correo de confirmación a {user.email} con los datos de la salida
+		e información adicional.
+	</p>
+
+	<strong
+		>Su código consecutivo es: FM{controllerProyeccion.id}, también llegará en el correo de
+		confirmación.</strong
+	>
+</Modal>
+
 <p class="text-lg my-8 text-zinc-600">
 	Estimado docente, la fase de proyección consiste en la planificación y organización de las salidas
 	de campo que se realizarán en el próximo semestre. Su participación es fundamental para estimar
@@ -48,7 +75,13 @@
 	ejecución.
 </p>
 
-<Form handleSubmit={() => controllerProyeccion.sendData()} isEdit={data.proyeccion !== null}>
+<Form
+	handleSubmit={async () => {
+		await controllerProyeccion.sendData();
+		modal.open();
+	}}
+	isEdit={data.proyeccion !== null}
+>
 	<Section titulo="Información General">
 		<div>
 			<label for="facultad" class="form-label">Facultad</label>
