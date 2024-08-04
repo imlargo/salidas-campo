@@ -60,23 +60,27 @@
 		</select>
 	</div>
 	<div class="flex justify-center">
-		<input
-			id="agendado"
-			class="form-check-input"
-			type="checkbox"
-			bind:checked={controller.solicitud.agendado}
-			onchange={() => controller.changeAgendado()}
-			disabled={controller.solicitud.revisado}
-		/>
+		<div class="form-check form-switch check-center">
+			<input
+				id="agendado"
+				class="form-check-input"
+				type="checkbox"
+				bind:checked={controller.solicitud.agendado}
+				onchange={() => controller.changeAgendado()}
+				disabled={controller.solicitud.revisado}
+			/>
+		</div>
 	</div>
 	<div class="flex justify-center">
-		<input
-			id="revisado"
-			class="form-check-input"
-			type="checkbox"
-			bind:checked={controller.solicitud.revisado}
-			onchange={() => controller.changeRevisado()}
-		/>
+		<div class="form-check form-switch check-center">
+			<input
+				id="revisado"
+				class="form-check-input"
+				type="checkbox"
+				bind:checked={controller.solicitud.revisado}
+				onchange={() => controller.changeRevisado()}
+			/>
+		</div>
 	</div>
 	<div>
 		<select

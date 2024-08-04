@@ -150,7 +150,7 @@
 						name="uab"
 						value={controllerSolicitud.uab}
 						onchange={(e) => controllerSolicitud.changeUAB(e.target?.value)}
-						class:form-disabled={isNew || isEdit}
+						disabled={isNew || isEdit}
 					>
 						<option value="">--- Seleccionar ---</option>
 						{#each storeData.uabs as uab}
@@ -187,8 +187,8 @@
 						class="form-control"
 						id="asignatura"
 						name="asignatura"
-						class:form-disabled={isNew || isEdit}
 						bind:value={storeFiltro.valueAsignatura}
+						disabled={isNew || isEdit}
 					>
 						<option value="">--- Seleccionar ---</option>
 
@@ -204,8 +204,8 @@
 						class="form-control"
 						id="codigo"
 						name="codigo"
-						class:form-disabled={isNew || isEdit}
 						bind:value={storeFiltro.valueCodigo}
+						disabled={isNew || isEdit}
 					>
 						<option value="">--- Seleccionar ---</option>
 
