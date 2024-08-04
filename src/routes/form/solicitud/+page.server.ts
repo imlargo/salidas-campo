@@ -3,6 +3,8 @@ import type { Solicitud } from '$src/lib/types';
 import { EstadoSolicitud } from '$src/lib/util/enums';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+
 
 export const load = (async ({ url, locals }) => {
 	const user = locals.user;
@@ -25,20 +27,31 @@ export const load = (async ({ url, locals }) => {
 
 	// En caso de error en la id
 	if (proyeccion === null) {
-		// alert("No se ha encontrado la salida de campo solicitada, verifica el codigo FM");
-		// window.location.href = "resumen.html";
-
-		redirect(307, '/modulo/docente');
+		error(403, {
+			message: 'Unauthorized',
+			tipo: 'solicitud',
+			titulo: 'Salida no encontrada',
+			mensaje: 'No se ha encontrado la salida de campo solicitada, verifica el codigo FM',
+		});
 	}
 
 	if (proyeccion.email !== user.email) {
-		redirect(307, '/modulo/docente');
+		error(403, {
+			message: 'Unauthorized',
+			tipo: 'solicitud',
+			titulo: 'No tienes permisos para solicitar esta proyeccion',
+			mensaje: 'No tienes permisos para solicitar esta proyeccion',
+		});
 	}
 
 	// Si ya ha sido solicitada pero no esta en modo de edicion
 	if (proyeccion.solicitada && !url.searchParams.has('edit')) {
-		// Ya has solicitado esta salida de campo, para modificarla ve al panel de resumen.
-		redirect(307, '/modulo/docente');
+		error(403, {
+			message: 'Unauthorized',
+			tipo: 'solicitud',
+			titulo: 'Salida solicitada',
+			mensaje: 'Ya has solicitado esta salida de campo, para modificarla ve al panel de resumen.',
+		});
 	}
 
 	// Si es en blanco
@@ -73,24 +86,36 @@ export const load = (async ({ url, locals }) => {
 
 		// Si es una solicitud de otra persona
 		if (solicitud.email !== user.email) {
-			// No tienes permisos para editar este registro
-			redirect(307, '/modulo/docente');
+			error(403, {
+				message: 'Unauthorized',
+				tipo: 'solicitud',
+				titulo: 'No tienes permisos para modificar esta solicitud',
+				mensaje: 'No tienes permisos para modificar esta solicitud, posiblemente te equivocaste, te recomendamos que verifiques el link',
+			});
 		}
 
 		/* Verificar si la solicitud puede ser modificada segun su estado */
 		if (solicitud.agendado && !solicitud.revisado) {
-			// La solicitud actual se encuentra agendada, por lo tanto no es posible modificarla
-			redirect(307, '/modulo/docente');
-			return;
+			// 
+			error(403, {
+				message: 'Unauthorized',
+				tipo: 'solicitud',
+				titulo: 'No se puede modificar la solicitud',
+				mensaje: 'La solicitud actual se encuentra agendada, por lo tanto no es posible modificarla',
+			});
 		}
 		if (
 			solicitud.agendado &&
 			solicitud.estado !== EstadoSolicitud.PENDIENTE &&
 			solicitud.estado !== EstadoSolicitud.NEGADA
 		) {
-			// El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla
-			redirect(307, '/modulo/docente');
-			return;
+			// 
+			error(403, {
+				message: 'Unauthorized',
+				tipo: 'solicitud',
+				titulo: 'No se puede modificar la solicitud',
+				mensaje: 'El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla',
+			});
 		}
 
 		return {
