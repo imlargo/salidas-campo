@@ -72,7 +72,7 @@ class ControllerSolicitud implements Solicitud {
 
 		return seleccion;
 	});
-	idProyeccion = $state('');
+	idProyeccion = $state(-1);
 	comite = $state('');
 	acta = $state('');
 	agendado = $state(false);
@@ -98,7 +98,7 @@ class ControllerSolicitud implements Solicitud {
 		this.docente = proyeccion.docente;
 		// this.email = proyeccion.email;
 		this.uab = proyeccion.uab;
-		this.asignatura = proyeccion.asignatura;
+		// this.asignatura = proyeccion.asignatura;
 
 		this.tieneRelacion = proyeccion.relacion !== null;
 		this.incluirRelacion = proyeccion.relacion !== null;
@@ -284,12 +284,12 @@ class ControllerSolicitud implements Solicitud {
 			solicitud.idProyeccion = idProyeccion;
 			solicitud.id = idProyeccion;
 
-			await dbController.setProyeccionSolicitada(idProyeccion);
+			await dbController.setProyeccionSolicitada(idProyeccion.toString());
 			await dbController.createSolicitud(solicitud);
 		}
 
 		if (this.isEdit) {
-			await dbController.updateSolicitud(this.id, solicitud);
+			await dbController.updateSolicitud(this.id.toString(), solicitud);
 		}
 
 		console.log(solicitud);

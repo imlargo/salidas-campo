@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { dbController } from '$src/lib/db/controller';
 import { validarFechaActual, getActualDate, calcularDuracion } from '$src/lib/util/utils';
+import type { Proyeccion, Solicitud } from '$src/lib/types';
 
 export const load = (async ({ locals }) => {
 	const user = locals.user;
@@ -17,7 +18,10 @@ export const load = (async ({ locals }) => {
 		calcularDuracion(getActualDate(), new Date(config.finSolicitud)).toString()
 	);
 
-	const proyecciones = await dbController.getProyeccionesByDocente(user.email);
+	const proyecciones: Proyeccion[] = await dbController.getProyeccionesByDocente(user.email);
+	const solicitudes: Solicitud[] = solicitudActiva
+		? await dbController.getSolicitudesByDocente(user.email)
+		: [];
 
 	return {
 		config,
@@ -25,6 +29,7 @@ export const load = (async ({ locals }) => {
 		proyeccionActiva,
 		diasFaltantesProyeccion,
 		diasFaltantesSolicitud,
-		proyecciones
+		proyecciones,
+		solicitudes
 	};
 }) satisfies PageServerLoad;

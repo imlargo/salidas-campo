@@ -19,13 +19,13 @@ import {
 	where,
 	orderBy,
 	limit,
-	type DocumentData
+	type DocumentData, QuerySnapshot
 } from 'firebase/firestore';
 import { GroupBy } from '$src/lib/util/utils';
 
 import type { UserResponse } from '../types';
 
-function getSnapshotData(querySnapshot: any[]) {
+function getSnapshotData(querySnapshot: QuerySnapshot<DocumentData, DocumentData>) {
 	const data: any[] = [];
 	querySnapshot.forEach((doc) => {
 		data.push({
@@ -130,7 +130,7 @@ class DBController {
 
 	async getSolicitud(key: string): Promise<Solicitud | null> {
 		const docSnap = await getDoc(doc(db, 'solicitudes', key));
-		return docSnap.exists() ? ({ ...docSnap.data(), id: docSnap.id } as Solicitud) : null;
+		return docSnap.exists() ? docSnap.data() as Solicitud : null;
 	}
 
 	async updateCampoSolicitud(id: string, data: { [key: string]: any }) {
@@ -156,15 +156,13 @@ class DBController {
 	async getProyeccionesByDocente(email: string): Promise<Proyeccion[]> {
 		const q = query(colProyeccion, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot).sort(
-			(a: Proyeccion, b: Proyeccion) => a.id - b.id
-		) as Proyeccion[];
+		return getSnapshotData(querySnapshot).sort((a: Proyeccion, b: Proyeccion) => a.id - b.id) as Proyeccion[];
 	}
 
-	async getSolicitudesByDocente(email: string) {
+	async getSolicitudesByDocente(email: string): Promise<Solicitud[]> {
 		const q = query(colSolicitudes, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot);
+		return getSnapshotData(querySnapshot).sort((a: Solicitud, b: Solicitud) => a.id - b.id) as Solicitud[];
 	}
 
 	async getRegistros() {
