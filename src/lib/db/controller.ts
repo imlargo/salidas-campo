@@ -17,6 +17,8 @@ import {
 	updateDoc,
 	query,
 	where,
+	orderBy,
+	limit,
 	type DocumentData
 } from 'firebase/firestore';
 import { GroupBy } from '$src/lib/util/utils';
@@ -242,7 +244,9 @@ class DBController {
 		});
 	}
 
-	async getLastInd() {
+	async getLastInd(): Promise<number> {
+		// const q = query(colProyeccion, orderBy("id", "desc"), limit(1));
+		// const lastDoc = await getDocs(q);
 		const queryProyeccion = await getDocs(colProyeccion);
 		return queryProyeccion.size;
 	}

@@ -46,7 +46,6 @@
 	<div class="py-5">
 		<TablaProyecciones {proyecciones} />
 	</div>
-	
 </main>
 
 <style lang="scss">

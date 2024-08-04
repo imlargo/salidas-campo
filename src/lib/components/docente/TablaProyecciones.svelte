@@ -8,6 +8,16 @@
 	};
 
 	const { proyecciones }: Props = $props();
+
+	class StoreProyecciones {
+		proyecciones: Proyeccion[] = $state(proyecciones);
+
+		deleteProyeccion(id: string) {
+			this.proyecciones = this.proyecciones.filter((p) => p.id !== id);
+		}
+	}
+
+	const storeProyecciones = new StoreProyecciones();
 </script>
 
 <div class="grid grid-cols-8 font-semibold gap-x-5">
@@ -22,7 +32,7 @@
 </div>
 
 <div class="flex flex-col divide-y divide-solid mt-3 border-y">
-	{#each proyecciones as proyeccion}
-		<RowProyeccion {proyeccion} />
+	{#each storeProyecciones.proyecciones as proyeccion}
+		<RowProyeccion {proyeccion} {storeProyecciones} />
 	{/each}
 </div>
