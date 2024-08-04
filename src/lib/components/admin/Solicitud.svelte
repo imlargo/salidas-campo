@@ -60,10 +60,10 @@
 		</select>
 	</div>
 	<div class="flex justify-center">
-		<div class="form-check form-switch check-center">
+		<div class="form-switch">
 			<input
 				id="agendado"
-				class="form-check-input"
+				class="form-switch-input"
 				type="checkbox"
 				bind:checked={controller.solicitud.agendado}
 				onchange={() => controller.changeAgendado()}
@@ -72,10 +72,10 @@
 		</div>
 	</div>
 	<div class="flex justify-center">
-		<div class="form-check form-switch check-center">
+		<div class="form-switch">
 			<input
 				id="revisado"
-				class="form-check-input"
+				class="form-switch-input"
 				type="checkbox"
 				bind:checked={controller.solicitud.revisado}
 				onchange={() => controller.changeRevisado()}
