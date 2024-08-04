@@ -151,6 +151,12 @@ class DBController {
 		return docSnap.exists() ? (docSnap.data() as Solicitud) : null;
 	}
 
+	async getSolicitudesBy(campo: string, valor: any): Promise<Solicitud[]> {
+		const q = query(colSolicitudes, where(campo, '==', valor));
+		const querySnapshot = await getDocs(q);
+		return sortById(getSnapshotData(querySnapshot)) as Solicitud[];
+	}
+
 	async updateCampoSolicitud(id: string, data: { [key: string]: any }) {
 		const docRef = doc(db, 'solicitudes', id);
 		await updateDoc(docRef, data);

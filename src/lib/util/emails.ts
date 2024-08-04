@@ -165,12 +165,26 @@ export function EmailSolicitud(solicitud: Solicitud, modificacion: boolean): Ema
 
 	return {
 		para: solicitud.email,
-		asunto: `> Confirmación ${modificacion ? 'modificación' : ''} solicitud de salida de campo`,
+		asunto: `Confirmación ${modificacion ? 'modificación' : ''} solicitud de salida de campo`,
 		cuerpo: cuerpo
 	};
 }
 
 export function EmailAvisoSolicitudSalida(proyecciones: Proyeccion[]): Email {
+	const listadoProyecciones = proyecciones
+		.map((proyeccion) => {
+			const instance = new ProyeccionInstance(proyeccion);
+
+			return `<tr>
+            <td>FM${proyeccion.id}</td>
+            <td>${instance.getAsignaturas()}</td>
+            <td>${proyeccion.fechaSalida}</td>
+            <td>${proyeccion.duracion} días</td>
+            <td>${instance.getMunicipios()}</td>
+        </tr>`;
+		})
+		.join('');
+
 	const cuerpo = `<strong>Estimado(a) Docente</strong>
 
                 <p>Le recordamos que actualmente tiene(s) <strong>${proyecciones.length}</strong> salida(s) de campo proyectada(s) para el semestre en curso que están pendientes por solicitar para su trámite ante el Consejo de Facultad. Tenga en cuenta que para realizar salidas de campo, es imprescindible completar el formulario de solicitud para cada una de las salidas que tenga planeado realizar.</p>
@@ -182,18 +196,27 @@ export function EmailAvisoSolicitudSalida(proyecciones: Proyeccion[]): Email {
 
                 <p>
                     <strong>Salidas de campo pendientes:</strong>
-                    <ul>
-                    ${proyecciones.map(
-											(proyeccion) =>
-												`<li>FM${proyeccion.id} - ${proyeccion.asignatura?.ASIGNATURA} - ${proyeccion.destinos.map(({ municipio }) => municipio).join(', ')}</li>`
-										)}
-                    </ul>
                 </p>
+
+                <table>
+                	<thead>
+                		<tr>
+                			<th>Consecutivo</th>
+                			<th>Asignatura(s)</th>
+                			<th>Fecha de salida</th>
+                			<th>Duracion</th>
+                			<th>Destinos</th>
+                		</tr>
+                	</thead>
+                	<tbody>
+                        ${listadoProyecciones}
+                	</tbody>
+                </table>
 
                 <p>
                     Lo invitamos a que planifique sus salidas de campo con antelación, enviando sus solicitudes de acuerdo a las fechas
                     establecidas en el cronograma y teniendo en cuenta que estas deberán ser tramitadas ante Comité Asesor y Consejo de
-                    Facultad.
+                    Facultad. Recuerde que puede modificar o confirmar la informacion proyectada.
                 </p>
 
                 <p>
@@ -207,7 +230,7 @@ export function EmailAvisoSolicitudSalida(proyecciones: Proyeccion[]): Email {
                 <p>Gestion de Areas Curriculares, Facultad de Minas</p>`;
 	return {
 		para: proyecciones[0].email,
-		asunto: `> Salidas de campo pendientes por solicitar`,
+		asunto: `Salidas de campo pendientes por solicitar`,
 		cuerpo: cuerpo
 	};
 }

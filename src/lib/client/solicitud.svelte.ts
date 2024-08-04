@@ -296,7 +296,7 @@ class ControllerSolicitud implements Solicitud {
 		const email = EmailSolicitud(solicitud, this.isEdit);
 
 		// Enviar correo
-		await fetch('/api/services/mail', {
+		await fetch('/api/mail', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

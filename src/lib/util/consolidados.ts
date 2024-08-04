@@ -3,6 +3,7 @@ import { dbController } from '../db/controller';
 import { ArrayToExcel } from './sheet-service';
 import { ProyeccionInstance, SolicitudInstance } from './registros';
 import { getMarcaTemporal } from './utils';
+import { EstadoSolicitud } from './enums';
 
 export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): string[][] {
 	if (proyecciones.length === 0) {
@@ -82,6 +83,54 @@ export function consolidarSolicitudesAsExcel(solicitudes: Solicitud[]): any[] {
 	return data;
 }
 
+export function consolidarSolicitudesAsExcelAmpliado(solicitudes: Solicitud[]): any[] {
+	if (solicitudes.length === 0) {
+		return [];
+	}
+
+	const dataSolicitudes = solicitudes.map((solicitud) => {
+		const solicitudInstance = new SolicitudInstance(solicitud);
+
+		return {
+			'Marca temporal': solicitud.marcaTemporal,
+			Correo: solicitud.email,
+			Docente: solicitud.docente,
+
+			UAB: solicitud.uab,
+			Asignatura: solicitudInstance.getAsignaturas(),
+			Código: solicitudInstance.getCodigos(),
+			'Pregrado / Posgrado': solicitud.nivel,
+
+			'¿La salida está contemplada en el programa oficial de la asignatura?': solicitud.contemplada,
+			'Porcentaje de la práctica en la nota total de la asignatura':
+				solicitud.porcentaje.toString(),
+			'Pertinencia de la práctica': solicitud.pertinencia,
+			'Objetivo de la práctica': solicitud.objetivo,
+			'Alcance de la práctica': solicitud.alcance,
+			'Descripción de la salida': solicitud.descripcion,
+			'Número mínimo de estudiantes a participar.': solicitud.asistentes.toString(),
+			'Destino(s)': solicitudInstance.getDestinos(),
+			'Fecha de salida': solicitud.fechaSalida,
+			'Fecha de regreso': solicitud.fechaRegreso,
+			Riesgos: solicitudInstance.getRiesgos(),
+			Agenda: solicitudInstance.getAgenda(),
+			'Requerimientos adicionales': solicitud.requerimientos,
+			'Justificación de los requerimientos': solicitud.justificacionRequerimientos,
+			'Pertinencia de los requerimientos': solicitud.pertinenciaRequerimientos,
+			'Comité asesor': solicitud.comite,
+			'Numero de Acta': solicitud.acta,
+			// "Agendado": solicitud.agendado,
+			// "Revisado": solicitud.revisado,
+			Concepto: solicitud.estado,
+			'Fue extra': solicitud.blank ? 'SI' : 'NO'
+		} satisfies Record<string, string>;
+	});
+
+	const data = [Object.keys(dataSolicitudes[0]), ...dataSolicitudes.map(Object.values)];
+
+	return data;
+}
+
 export async function getConsolidadoProyeccion() {
 	const proyecciones = await dbController.getProyecciones();
 	const data = consolidarProyeccionesAsExcel(proyecciones);
@@ -101,4 +150,25 @@ export async function getConsolidadoByUAB(uab: string) {
 	const data = consolidarProyeccionesAsExcel(proyecciones);
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado proyecciones ${uab} ${marcaTemporal}`);
+}
+
+export async function getConsolidadoSolicitud() {
+	const solicitudes = await dbController.getSolicitudes();
+	const data = consolidarSolicitudesAsExcel(solicitudes);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado solicitudes ${marcaTemporal}`);
+}
+
+export async function getConsolidadoSolicitudAmpliado() {
+	const solicitudes = await dbController.getSolicitudes();
+	const data = consolidarSolicitudesAsExcelAmpliado(solicitudes);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado ampliado de solicitudes ${marcaTemporal}`);
+}
+
+export async function getConsolidadoSolicitudesAprobadas() {
+	const solicitudes = await dbController.getSolicitudesBy('estado', EstadoSolicitud.APROBADA);
+	const data = consolidarSolicitudesAsExcel(solicitudes);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado solicitudes aprobadas ${marcaTemporal}`);
 }

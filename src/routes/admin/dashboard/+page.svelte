@@ -15,7 +15,10 @@
 	import {
 		getConsolidadoProyeccion,
 		getConsolidadoByUAB,
-		getConsolidadoExtras
+		getConsolidadoExtras,
+		getConsolidadoSolicitud,
+		getConsolidadoSolicitudesAprobadas,
+		getConsolidadoSolicitudAmpliado
 	} from '$lib/util/consolidados';
 
 	import { tooltipAction } from '$lib/actions/tooltip';
@@ -32,15 +35,15 @@
 			<div class="flex justify-between items-top">
 				<h4 class="card-titulo">Proyecciones</h4>
 
-				<span
+				<button
 					class="cursor-pointer"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Copiar link del formulario de proyeccion"
+					use:tooltipAction={'Copiar link del formulario de proyeccion'}
+					onclick={() =>
+						navigator.clipboard.writeText('https://salidas-campo.vercel.app/form/proyeccion')}
 				>
 					<span class="text-muted fw-lighter decoration-orange">Copiar link</span>
 					<i class="bi bi-clipboard2"></i>
-				</span>
+				</button>
 			</div>
 
 			<p>
@@ -111,40 +114,32 @@
 			<div class="flex flex-col sm:flex-row gap-3 mt-2">
 				<button
 					class="btn-primary font-semibold"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de las solicitudes hasta el momento"
-					id="btn-getConsolidadoSolicitud"
+					use:tooltipAction={'Descargar consolidado de las solicitudes hasta el momento'}
+					onclick={getConsolidadoSolicitud}
 				>
 					<span>Descargar reporte</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
 				<button
 					class="btn-primary font-semibold"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Avisar a docentes que proyectaron salidas pero no han realizado la solicitud correspondiente"
-					id="btn-avisoDocentes"
+					use:tooltipAction={'Avisar a docentes que proyectaron salidas pero no han realizado la solicitud correspondiente'}
+					onclick={controllerDashboard.avisarDocentes}
 				>
 					<span>Avisar docentes</span>
 					<i class="bi bi-send"></i>
 				</button>
 				<button
-					id="btn-getConsolidadoFinal"
 					class="btn-primary font-semibold"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de las solicitudes hasta el momento con todos los datos"
+					use:tooltipAction={'Descargar consolidado de las solicitudes hasta el momento con todos los datos'}
+					onclick={getConsolidadoSolicitudAmpliado}
 				>
 					<span>Consolidado final</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
 				<button
-					id="btn-getSolicitudesAprobadas"
 					class="btn-primary font-semibold"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de las solicitudes aprobadas hasta el momento"
+					use:tooltipAction={'Descargar consolidado de las solicitudes aprobadas hasta el momento'}
+					onclick={getConsolidadoSolicitudesAprobadas}
 				>
 					<span>Solicitudes aprobadas</span>
 					<i class="bi bi-download fw-bold"></i>
@@ -230,9 +225,7 @@
 		<div class="flex flex-col sm:flex-row gap-4">
 			<button
 				class="btn-primary font-semibold"
-				data-bs-toggle="tooltip"
-				data-bs-placement="top"
-				data-bs-title="Actualizar dats"
+				use:tooltipAction={'Actualizar dats'}
 				id="btn-update-data"
 			>
 				<span>Actualizar datos</span>
@@ -241,9 +234,7 @@
 
 			<button
 				class="btn-primary font-semibold"
-				data-bs-toggle="tooltip"
-				data-bs-placement="top"
-				data-bs-title="Actualizar dats"
+				use:tooltipAction={'Actualizar dats'}
 				id="btn-update-users"
 			>
 				<span>Actualizar usuarios</span>

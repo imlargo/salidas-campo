@@ -21,6 +21,22 @@ class ControllerDashboard {
 		await dbController.setCampoConfig(campo as string, fecha);
 		console.log('Cambiada');
 	}
+
+	async avisarDocentes() {
+		const proyecciones = await dbController.getProyecciones();
+
+		const docentes = [...new Set(proyecciones.map(({ email }) => email))].length;
+
+		await fetch('/api/aviso', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				proyecciones: proyecciones
+			})
+		});
+	}
 }
 
 export const controllerDashboard = new ControllerDashboard();
