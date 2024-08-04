@@ -11,7 +11,7 @@
 		controller
 	}: {
 		destino: Destino;
-		controller: any;
+		controller: Record<string, any>;
 	} = $props();
 </script>
 

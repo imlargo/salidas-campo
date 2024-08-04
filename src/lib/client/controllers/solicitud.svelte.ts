@@ -67,8 +67,8 @@ export class ControllerSolicitud {
 			// inputActa.classList.remove("validation-acta");
 		}
 
-		if (this.solicitud.estado === EstadoSolicitud.SIN_ASIGNAR && !this.solicitud.revisado) {
-		}
+		// if (this.solicitud.estado === EstadoSolicitud.SIN_ASIGNAR && !this.solicitud.revisado) {
+		// }
 
 		this.changeRevisado();
 		await dbController.updateCampoSolicitud(this.solicitud.id.toString(), {

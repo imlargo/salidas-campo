@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '$styles/form.scss';
-	import type { SeleccionRiesgo, Riesgo, RiesgoExtendido } from '$lib/types';
+	import type { SeleccionRiesgo, Riesgo } from '$lib/types';
 	import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
 

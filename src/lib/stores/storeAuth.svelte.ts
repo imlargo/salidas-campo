@@ -1,40 +1,5 @@
 import type { UAB } from '$lib/types';
 import { ROL } from '$utils/enums';
-
-import { initializeApp } from 'firebase/app';
-import { storeData } from './storeData.svelte';
-import { browser } from '$app/environment';
-
-import {
-	getAuth,
-	GoogleAuthProvider,
-	signInWithPopup,
-	signOut,
-	onAuthStateChanged,
-	setPersistence,
-	browserLocalPersistence,
-	browserSessionPersistence
-} from 'firebase/auth';
-
-import {
-	getFirestore,
-	collection,
-	onSnapshot,
-	doc,
-	addDoc,
-	setDoc,
-	getDocs,
-	getDoc,
-	deleteDoc,
-	updateDoc,
-	query,
-	where
-} from 'firebase/firestore';
-
-import { dbController } from '../db/controller';
-
-import { app, auth, provider } from '$lib/client/firebase';
-
 import type { UserData } from '$lib/types';
 
 class StoreAuth implements UserData {

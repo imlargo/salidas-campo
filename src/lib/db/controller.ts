@@ -1,15 +1,11 @@
 import type { Proyeccion, Solicitud, Config, UAB, Destino } from '../types';
 
-import { db, colProyeccion, colSolicitudes, colConfig } from '../client/firebase';
+import { db, colProyeccion, colSolicitudes } from '../client/firebase';
 
 import { EstadoSolicitud } from '../util/enums';
 
 import {
-	getFirestore,
-	collection,
-	onSnapshot,
 	doc,
-	addDoc,
 	setDoc,
 	getDocs,
 	getDoc,

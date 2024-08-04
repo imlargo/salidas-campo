@@ -3,7 +3,7 @@
 	import Section from '$src/lib/components/form/Section.svelte';
 	import SearchDestinos from '$src/lib/components/form/SearchDestinos.svelte';
 	import Form from '$src/lib/components/form/Form.svelte';
-	import type { Proyeccion, Solicitud, Destino, Asignatura } from '$lib/types';
+	import type { Proyeccion, Solicitud } from '$lib/types';
 	import Agenda from '$src/lib/components/form/Agenda.svelte';
 	import Riesgos from '$src/lib/components/form/Riesgos.svelte';
 
@@ -14,7 +14,6 @@
 	import { validateGroups } from '$src/lib/util/validation';
 	import { controllerSolicitud } from '$src/lib/client/solicitud.svelte';
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
-	import { redirect } from '@sveltejs/kit';
 	import { calcularDuracion } from '$src/lib/util/utils';
 
 	const { data } = $props();

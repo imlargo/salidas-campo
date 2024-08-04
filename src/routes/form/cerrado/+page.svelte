@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { storeData } from '$src/lib/stores/storeData.svelte';
-	import { storeAuth } from '$src/lib/stores/storeAuth.svelte';
 	import Banner from '$components/form/Banner.svelte';
 	import type { Config } from '$lib/types';
 

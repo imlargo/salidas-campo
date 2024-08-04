@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { NivelRiesgo } from '$src/lib/util/enums';
-	import type { SeleccionRiesgo, Riesgo, RiesgoExtendido } from '$lib/types';
+	import type { RiesgoExtendido } from '$lib/types';
 	import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
 
 	const {
@@ -23,9 +23,9 @@
 			bind:value={riesgo.nivel}
 		>
 			<option value="" disabled>-- Tipo --</option>
-			<option value="Posible">Posible</option>
-			<option value="Probable">Probable</option>
-			<option value="Inminente">Inminente</option>
+			<option value={NivelRiesgo.POSIBLE}>{NivelRiesgo.POSIBLE}</option>
+			<option value={NivelRiesgo.PROBABLE}>{NivelRiesgo.PROBABLE}</option>
+			<option value={NivelRiesgo.INMINENTE}>{NivelRiesgo.INMINENTE}</option>
 		</select>
 	{/if}
 </div>

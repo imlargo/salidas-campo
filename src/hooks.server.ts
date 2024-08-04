@@ -11,7 +11,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const session = event.cookies.get('session') ?? '';
 	const rawUserData = event.cookies.get('userData') ?? '';
 	const userData = rawUserData !== '' ? JSON.parse(rawUserData) : null;
-	const isValid = session !== '' && rawUserData !== "";
+	const isValid = session !== '' && rawUserData !== '';
 	const isLogin: boolean = event.url.pathname === '/login';
 
 	// Si no hay session y no es login, redirigir a login
@@ -42,7 +42,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	try {
-		let decodedUser: DecodedIdToken = await admin.auth().verifySessionCookie(session, false);
+		const decodedUser: DecodedIdToken = await admin.auth().verifySessionCookie(session, false);
 		event.locals.user = decodedUser;
 		event.locals.userData = userData;
 

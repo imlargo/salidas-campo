@@ -7,7 +7,7 @@
 
 	type Props = {
 		proyeccion: Proyeccion;
-		storeProyecciones: any;
+		storeProyecciones: Record<string, any>;
 	};
 
 	let { proyeccion, storeProyecciones }: Props = $props();

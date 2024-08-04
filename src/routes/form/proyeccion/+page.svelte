@@ -10,7 +10,6 @@
 	import { storeFiltro } from '$src/lib/client/asignaturas.svelte';
 	import { validateGroups } from '$src/lib/util/validation';
 	import { controllerProyeccion } from '$src/lib/client/proyeccion.svelte';
-	import { redirect } from '@sveltejs/kit';
 
 	const { data } = $props();
 	const { user, userData } = data;

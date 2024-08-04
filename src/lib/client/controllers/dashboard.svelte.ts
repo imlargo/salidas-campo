@@ -1,5 +1,4 @@
-import { storeAuth } from '$stores/storeAuth.svelte';
-import type { Proyeccion, Destino, Asignatura, UAB, Config } from '$lib/types';
+import type { UAB, Config } from '$lib/types';
 import { dbController } from '$lib/db/controller';
 
 class ControllerDashboard {

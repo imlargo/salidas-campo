@@ -54,6 +54,8 @@
 
 <div id="resultado-busqueda" class="rounded-b border border-top-0">
 	{#each coincidencias as coincidencia}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<div
 			onclick={() => agegarDestino(coincidencia)}
 			class="flex gap-2 hover:bg-zinc-100 cursor-pointer px-2 py-2 border-bottom"

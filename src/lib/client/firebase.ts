@@ -25,7 +25,6 @@ const app = initializeApp(firebaseConfig);
 // Auth
 const auth = getAuth(app);
 
-const persistance: Persistence = { type: 'NONE' };
 setPersistence(auth, browserLocalPersistence);
 
 const provider = new GoogleAuthProvider();

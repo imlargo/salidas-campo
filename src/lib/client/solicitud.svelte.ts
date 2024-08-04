@@ -1,9 +1,7 @@
 import { storeAuth } from '$stores/storeAuth.svelte';
 import { storeFiltro } from './asignaturas.svelte';
 import type { Proyeccion, Solicitud, Destino, Asignatura, SeleccionRiesgo } from '$lib/types';
-import { calcularDuracion } from '../util/utils';
 import { dbController } from '../db/controller';
-import { EmailProyeccion } from '../util/emails';
 import { EstadoSolicitud, NivelRiesgo } from '$utils/enums';
 import { getMarcaTemporal } from '../util/utils';
 import { controllerProyeccion } from './proyeccion.svelte';

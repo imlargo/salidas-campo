@@ -1,12 +1,10 @@
 <script lang="ts">
 	import Banner from '$src/lib/components/form/Banner.svelte';
-	import { validarFechaActual } from '$src/lib/util/utils';
 	import TablaProyecciones from '$src/lib/components/docente/TablaProyecciones.svelte';
 	import TableSolicitudes from '$src/lib/components/docente/TableSolicitudes.svelte';
 
 	const { data } = $props();
 	const {
-		config,
 		solicitudActiva,
 		proyeccionActiva,
 		diasFaltantesProyeccion,

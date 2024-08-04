@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-
 	import '$styles/form.scss';
 	import Footer from '$components/layout/Footer.svelte';
 </script>

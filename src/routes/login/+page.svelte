@@ -1,7 +1,6 @@
 <script lang="ts">
 	import '$styles/form.scss';
 	import Banner from '$components/form/Banner.svelte';
-	import { ROL } from '$utils/enums';
 	import { getUserSession } from '$src/lib/client/user.js';
 
 	const { data } = $props();
@@ -10,7 +9,6 @@
 	import { auth, provider } from '$lib/client/firebase';
 	import { signInWithPopup } from 'firebase/auth';
 	import { dbController } from '$lib/db/controller';
-	import type { UserData } from '$lib/types';
 
 	let form: HTMLFormElement;
 	async function login(): Promise<void> {

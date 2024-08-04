@@ -1,6 +1,6 @@
 import type { Proyeccion } from '../types';
 
-function consolidarProyecciones(proyecciones: Proyeccion[], campos) {
+export function consolidarProyecciones(proyecciones: Proyeccion[], campos: any) {
 	const registros = proyecciones.sort((a, b) => parseInt(a.id) - parseInt(b.id));
 
 	const data = [
