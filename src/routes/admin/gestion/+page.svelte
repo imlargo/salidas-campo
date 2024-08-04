@@ -54,8 +54,6 @@
 			)
 		);
 
-		console.log(data);
-
 		return data;
 	});
 </script>

@@ -50,6 +50,14 @@ export const actions = {
 			sameSite: 'lax'
 		});
 
+		cookies.set('userData', userData as string, {
+			maxAge: expiresIn,
+			path: '/',
+			httpOnly: true,
+			secure: true,
+			sameSite: 'lax'
+		});
+
 		throw redirect(303, '/');
 	}
 } satisfies Actions;

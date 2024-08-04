@@ -1,4 +1,5 @@
-import type { LayoutLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
+
 import type { UAB } from '$src/lib/types';
 import asignaturas from '$lib/assets/asignaturas.json';
 import geo from '$lib/assets/geo.json';
@@ -6,7 +7,9 @@ import { dbController } from '$src/lib/db/controller';
 import { redirect } from '@sveltejs/kit';
 import { validarFechaActual } from '$src/lib/util/utils';
 
-export const load = (async ({ url }) => {
+export const load = (async ({ url, locals }) => {
+	const { user, userData } = locals;
+
 	const [data, config] = await Promise.all([dbController.loadData(), dbController.loadConfig()]);
 
 	const formulario =
@@ -60,6 +63,8 @@ export const load = (async ({ url }) => {
 		riesgos: data.riesgos,
 		uabs: data.uabs as UAB[],
 		asignaturas,
-		destinos: geo
+		destinos: geo,
+		user: user,
+		userData: userData
 	};
-}) satisfies LayoutLoad;
+}) satisfies LayoutServerLoad;

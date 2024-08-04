@@ -48,49 +48,14 @@ class StoreAuth implements UserData {
 	isAdmin = $state(false);
 	isDepartamento = $state(false);
 
-	constructor() {
-		if (browser) {
-			this.init();
-		}
-	}
-
-	async init() {
-		await setPersistence(auth, browserLocalPersistence);
-
-		onAuthStateChanged(auth, async (user) => {
-			if (user !== null) {
-				const sessionAuth = this.getFromStorage();
-
-				// Cargar del cache
-				if (sessionAuth !== null) {
-					this.setData(sessionAuth);
-					return;
-				}
-
-				const userData = await dbController.getUser(user.email as string);
-
-				// Si el docente no es valido
-				if (userData === null) {
-					return;
-				}
-
-				const sessionData: UserData = {
-					user: user,
-					email: user.email as string,
-					nombre: user.displayName as string,
-					rol: userData.ROL,
-					uab: storeData.uabs.find((uab) => uab.codigo === userData.CODIGO_UAB) || null,
-					isAdmin: userData.ROL === ROL.ADMIN,
-					isDepartamento: userData.ROL === ROL.UAB
-				};
-
-				this.setData(sessionData);
-			} else {
-				// No user is signed in. Sign in.
-				this.clearData();
-				signInWithPopup(auth, provider);
-			}
-		});
+	init(user: any, userData: UserData) {
+		this.user = user;
+		this.email = userData.email;
+		this.nombre = userData.nombre;
+		this.rol = userData.rol;
+		this.uab = userData.uab;
+		this.isAdmin = userData.isAdmin;
+		this.isDepartamento = userData.isDepartamento;
 	}
 
 	getData(): UserData {

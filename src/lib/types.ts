@@ -125,7 +125,6 @@ export interface Asignatura {
 }
 
 export interface UserData {
-	user: any;
 	email: string;
 	nombre: string;
 	rol: ROL;

@@ -18,7 +18,10 @@
 	import { calcularDuracion } from '$src/lib/util/utils';
 
 	const { data } = $props();
+	const { user, userData } = data;
 	const { solicitud, proyeccion, isEdit, isBlank, isNew } = data;
+
+	storeAuth.init(user, userData);
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
@@ -27,9 +30,16 @@
 	storeData.riesgos = data.riesgos;
 	storeData.uabs = data.uabs;
 
+	controllerSolicitud.docente = userData.nombre;
 	controllerSolicitud.isBlank = isBlank as boolean;
 	controllerSolicitud.isNew = isNew as boolean;
 	controllerSolicitud.isEdit = isEdit as boolean;
+
+	if (isBlank) {
+		// Si es nueva proyección, cargar la UAB del usuario
+		controllerSolicitud.uab = userData.uab.codigo;
+		controllerSolicitud.changeUAB(userData.uab.codigo);
+	}
 
 	if (isNew) {
 		controllerSolicitud.loadFromProyeccion(proyeccion as Proyeccion);
@@ -38,18 +48,6 @@
 	if (isEdit) {
 		controllerSolicitud.loadFromSolicitud(solicitud as Solicitud);
 	}
-
-	$effect(() => {
-		if (storeAuth.email !== '') {
-			controllerSolicitud.docente = storeAuth.nombre;
-		}
-
-		if (storeAuth.uab !== null && isBlank) {
-			// Si es nueva proyección, cargar la UAB del usuario
-			controllerSolicitud.uab = storeAuth.uab.codigo;
-			controllerSolicitud.changeUAB(storeAuth.uab.codigo);
-		}
-	});
 
 	let duracion = $derived.by(() => {
 		if (isBlank) {
@@ -75,7 +73,7 @@
 </svelte:head>
 
 <Banner titulo="Formulario de solicitud de salidas de campo" variante="solicitud">
-	<a href="/resumen" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
+	<a href="/modulo/docente" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
 </Banner>
 
 <p class="text-lg my-8 text-zinc-600">
@@ -151,13 +149,15 @@
 						class="form-control"
 						id="uab"
 						name="uab"
-						value={storeAuth.uab?.codigo || ''}
+						value={controllerSolicitud.uab}
 						onchange={(e) => controllerSolicitud.changeUAB(e.target?.value)}
 						class:form-disabled={isNew || isEdit}
 					>
 						<option value="">--- Seleccionar ---</option>
 						{#each storeData.uabs as uab}
-							<option value={uab.codigo}>{uab.nombre}</option>
+							<option selected={uab.codigo === controllerSolicitud.uab} value={uab.codigo}
+								>{uab.nombre}</option
+							>
 						{/each}
 					</select>
 				</div>

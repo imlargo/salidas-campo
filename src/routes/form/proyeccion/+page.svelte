@@ -13,6 +13,9 @@
 	import { redirect } from '@sveltejs/kit';
 
 	const { data } = $props();
+	const { user, userData } = data;
+
+	storeAuth.init(user, userData);
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
@@ -21,16 +24,10 @@
 	storeData.riesgos = data.riesgos;
 	storeData.uabs = data.uabs;
 
-	$effect(() => {
-		if (storeAuth.uab !== null) {
-			// Si es en blanco seleccionar UAB
-			if (data.proyeccion === null) {
-				controllerProyeccion.uab = storeAuth.uab.codigo;
-				controllerProyeccion.changeUAB(storeAuth.uab.codigo);
-				return;
-			}
-		}
-	});
+	if (data.proyeccion === null) {
+		controllerProyeccion.uab = userData.uab.codigo;
+		controllerProyeccion.changeUAB(userData.uab.codigo);
+	}
 
 	if (data.proyeccion !== null) {
 		controllerProyeccion.loadFromData(data.proyeccion);
@@ -42,7 +39,7 @@
 </svelte:head>
 
 <Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
-	<a href="/resumen" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
+	<a href="/modulo/docente" class="nav-link"><i class="bi bi-house"></i> Resumen</a>
 </Banner>
 
 <p class="text-lg my-8 text-zinc-600">
@@ -114,12 +111,14 @@
 				class="form-control"
 				id="uab"
 				name="uab"
-				value={storeAuth.uab?.codigo || ''}
+				value={userData.uab?.codigo || ''}
 				onchange={(e) => controllerProyeccion.changeUAB(e.target?.value)}
 			>
 				<option value="">--- Seleccionar ---</option>
-				{#each storeData.uabs as uab}
-					<option value={uab.codigo}>{uab.nombre}</option>
+				{#each data.uabs as uab}
+					<option selected={uab.codigo === userData.uab?.codigo} value={uab.codigo}
+						>{uab.nombre}</option
+					>
 				{/each}
 			</select>
 		</div>

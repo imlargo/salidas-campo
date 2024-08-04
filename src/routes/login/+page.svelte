@@ -36,6 +36,12 @@
 		input.value = token;
 		form.appendChild(input);
 
+		const userDataInput = document.createElement('input');
+		userDataInput.type = 'hidden';
+		userDataInput.name = 'userData';
+		userDataInput.value = JSON.stringify(userSessionData);
+		form.appendChild(userDataInput);
+
 		form.submit();
 	}
 
