@@ -307,8 +307,8 @@
 					bind:value={controllerSolicitud.contemplada}
 				>
 					<option disabled value=""> -- Seleccionar -- </option>
-					<option value="true">Sí</option>
-					<option value="false">No</option>
+					<option value="SI">Sí</option>
+					<option value="NO">No</option>
 				</select>
 
 				<div class="mt-2">
@@ -323,7 +323,7 @@
 
 					<p class="mt-2 text-justify">
 						<strong>Nota: </strong>
-						<span class="text-zinc-200"
+						<span class="text-zinc-600"
 							>Estimad@ docente, si en el contenido de la asignatura no se encuentra el párrafo de
 							salida de campo, debe contactarse con el Sistema de Gestión de Áreas Curriculares para
 							realizar la solicitud ante el comité asesor.</span
