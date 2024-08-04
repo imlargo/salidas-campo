@@ -38,7 +38,7 @@
 	<span>Fecha salida</span>
 	<span>Fecha regreso</span>
 	<span>Destinos</span>
-	<span>Modificar</span>
+	<span>Solicitud</span>
 	<span class="text-center">Eliminar</span>
 </div>
 
