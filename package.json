@@ -44,6 +44,7 @@
 	"dependencies": {
 		"firebase": "^10.12.4",
 		"firebase-admin": "^12.3.0",
-		"tippy.js": "^6.3.7"
+		"tippy.js": "^6.3.7",
+		"xlsx": "^0.18.5"
 	}
 }

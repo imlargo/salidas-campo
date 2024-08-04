@@ -1,6 +1,5 @@
 import type { Proyeccion, Solicitud } from '../types';
-
-import { GroupBy } from './utils';
+import { ProyeccionInstance, SolicitudInstance } from './registros';
 
 interface Email {
 	para: string;
@@ -9,6 +8,8 @@ interface Email {
 }
 
 function getProyeccionAsTable(proyeccion: Proyeccion) {
+	const proyeccionInstance = new ProyeccionInstance(proyeccion);
+
 	return `<table>
         <tr><td><strong>FM:</strong></td><td>FM${proyeccion.id}</td></tr>
         <tr><td><strong>Facultad:</strong></td><td>${proyeccion.facultad}</td></tr>
@@ -16,8 +17,8 @@ function getProyeccionAsTable(proyeccion: Proyeccion) {
 
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
         <tr><td><strong>Departamento:</strong></td><td>${proyeccion.uab}</td></tr>
-        <tr><td><strong>Asignatura:</strong></td><td>${proyeccion.relacion ? proyeccion.asignatura?.ASIGNATURA + ', ' + proyeccion.relacion.ASIGNATURA : proyeccion.asignatura?.ASIGNATURA}</td></tr>
-        <tr><td><strong>Código:</strong></td><td>${proyeccion.relacion ? proyeccion.asignatura?.COD_ASIGNATURA + ', ' + proyeccion.relacion.COD_ASIGNATURA : proyeccion.asignatura?.COD_ASIGNATURA}</td></tr>
+        <tr><td><strong>Asignatura:</strong></td><td>${proyeccionInstance.getAsignaturas()}</td></tr>
+        <tr><td><strong>Código:</strong></td><td>${proyeccionInstance.getCodigos()}</td></tr>
         <tr><td><strong>Grupo:</strong></td><td>${proyeccion.grupo}</td></tr>
         <tr><td><strong>Asistentes:</strong></td><td>${proyeccion.asistentes}</td></tr>
 
@@ -35,14 +36,16 @@ function getProyeccionAsTable(proyeccion: Proyeccion) {
         <tr><td><strong>Duración (días):</strong></td><td>${proyeccion.duracion}</td></tr>
 
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
-        <tr><td><strong>Departamentos:</strong></td><td>${proyeccion.destinos.map(({ departamento }) => departamento)}</td></tr>
-        <tr><td><strong>Municipios:</strong></td><td>${proyeccion.destinos.map(({ municipio }) => municipio)}</td></tr>
+        <tr><td><strong>Departamentos:</strong></td><td>${proyeccionInstance.getDepartamentos()}</td></tr>
+        <tr><td><strong>Municipios:</strong></td><td>${proyeccionInstance.getMunicipios()}</td></tr>
         <tr><td><strong>Último destino:</strong></td><td>${proyeccion.ultimoDestino.municipio}</td></tr>
         <tr><td><strong>Observaciones:</strong></td><td>${proyeccion.observaciones}</td></tr>
     </table>`;
 }
 
 function getSolicitudAsTable(solicitud: Solicitud) {
+	const solicitudInstance = new SolicitudInstance(solicitud);
+
 	return `<table>
         <tr><td><strong>Facultad:</strong></td><td>${solicitud.facultad}</td></tr>
         <tr><td><strong>Docente:</strong></td><td>${solicitud.docente}</td></tr>
@@ -50,8 +53,8 @@ function getSolicitudAsTable(solicitud: Solicitud) {
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
 
         <tr><td><strong>Departamento:</strong></td><td>${solicitud.uab}</td></tr>
-        <tr><td><strong>Asignatura:</strong></td><td>${solicitud.relacion ? solicitud.asignatura?.ASIGNATURA + ', ' + solicitud.relacion.ASIGNATURA : solicitud.asignatura?.ASIGNATURA}</td></tr>
-        <tr><td><strong>Código:</strong></td><td>${solicitud.relacion ? solicitud.asignatura?.COD_ASIGNATURA + ', ' + solicitud.relacion.COD_ASIGNATURA : solicitud.asignatura?.COD_ASIGNATURA}</td></tr>
+        <tr><td><strong>Asignatura:</strong></td><td>${solicitudInstance.getAsignaturas()}</td></tr>
+        <tr><td><strong>Código:</strong></td><td>${solicitudInstance.getCodigos()}</td></tr>
         <tr><td>Pregrado / Posgrado</td><td>${solicitud.nivel}</td></tr>
 
         <tr><td><hr></td><td><hr></td></tr>
@@ -64,15 +67,13 @@ function getSolicitudAsTable(solicitud: Solicitud) {
         <tr><td>Número mínimo de estudiantes a participar</td><td>${solicitud.asistentes}</td></tr>
 
         <tr><td><hr></td><td><hr></td></tr>
-        <tr><td>Destino(s)</td><td>${solicitud.destinos.map(({ municipio }) => municipio)}</td></tr>
+        <tr><td>Destino(s)</td><td>${solicitudInstance.getDestinos()}</td></tr>
         <tr><td>Fecha de salida</td><td>${solicitud.fechaSalida}</td></tr>
         <tr><td>Fecha de regreso</td><td>${solicitud.fechaRegreso}</td></tr>
-        <tr><td>Riesgos</td><td>${Object.entries(GroupBy(solicitud.riesgos, ({ nivel }) => nivel))
-					.map(([nivel, riesgos]) => `${nivel}: ${riesgos.map((r) => r.nombre).join(', ')}`)
-					.join('\n')}</td></tr>
+        <tr><td>Riesgos</td><td>${solicitudInstance.getRiesgos()}</td></tr>
         <tr><td><hr></td><td><hr></td></tr>
 
-        <tr><td>Agenda</td><td>${solicitud.agenda.map((dia, i) => `Día ${i + 1}: ${dia}`).join('\n')}</td></tr>
+        <tr><td>Agenda</td><td>${solicitudInstance.getAgenda()}</td></tr>
 
         <tr><td>Requerimientos adicionales</td><td>${solicitud.requerimientos}</td></tr>
         <tr><td>Justificación de los requerimientos</td><td>${solicitud.justificacionRequerimientos}</td></tr>

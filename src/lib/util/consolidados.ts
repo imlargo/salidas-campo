@@ -1,47 +1,81 @@
-import type { Proyeccion } from '../types';
+import type { Proyeccion, Solicitud } from '../types';
 
-export function consolidarProyecciones(proyecciones: Proyeccion[], campos: any) {
-	const registros = proyecciones.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+import { ProyeccionInstance, SolicitudInstance } from './registros';
 
-	const data = [
-		Object.keys(campos),
-		...registros.map((registro) =>
-			Object.values(campos).map((key) => {
-				if (key === 'id') {
-					const id = registro[key];
-					return id.includes('FM') ? registro[key] : `FM${id}`;
-				}
+export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): any[] {
+	if (proyecciones.length === 0) {
+		return [];
+	}
 
-				if (key === 'agenda') {
-					return parseAgenda(registro);
-				}
+	const dataProyecciones = proyecciones.map((proyeccion) => {
+		const proyeccionInstance = new ProyeccionInstance(proyeccion);
 
-				if (key === 'duracion') {
-					return calcDuracion(new Date(registro.fechaSalida), new Date(registro.fechaRegreso));
-				}
+		return {
+			'MARCA TEMPORAL': proyeccion.marcaTemporal,
+			CONSECUTIVO: 'FM' + proyeccion.id.toString(),
+			FACULTAD: proyeccion.facultad,
+			DEPARTAMENTO: proyeccion.uab,
+			ASIGNATURA: proyeccionInstance.getAsignaturas(),
+			CODIGO: proyeccionInstance.getCodigos(),
+			GRUPO: proyeccion.grupo,
+			DOCENTE: proyeccion.docente,
+			ASISTENTES: proyeccion.asistentes.toString(),
+			DURACIÓN: proyeccion.duracion.toString(),
+			'FECHA SALIDA': proyeccion.fechaSalida,
+			'HORA SALIDA': proyeccion.horaSalida,
+			'LUGAR SALIDA': proyeccion.lugarSalida,
+			'FECHA LLEGADA': proyeccion.fechaRegreso,
+			'LUGAR LLEGADA': proyeccion.lugarRegreso,
+			'HORA LLEGADA': proyeccion.horaRegreso,
+			DEPARTAMENTOS: proyeccionInstance.getDepartamentos(),
+			MUNICIPIOS: proyeccionInstance.getMunicipios(),
+			'DESTINO MÁS LEJANO': proyeccion.ultimoDestino.municipio
+		} satisfies Record<string, string>;
+	});
 
-				if (key === 'riesgos') {
-					return Object.entries(Object.groupBy(registro.riesgos, ({ nivel }) => nivel))
-						.map(([nivel, riesgos]) => `${nivel}: ${riesgos.map((r) => r.riesgo).join(', ')}`)
-						.join('\n');
-				}
+	const data = [Object.keys(dataProyecciones[0]), ...dataProyecciones.map(Object.values)];
 
-				if (key === 'estado') {
-					return SolicitudStatus.getAsString(registro.estado);
-				}
+	return data;
+}
 
-				if (
-					key === 'requerimientos' ||
-					key === 'justificacionRequerimientos' ||
-					key === 'pertinenciaRequerimientos'
-				) {
-					return registro[key] || 'Ninguno';
-				}
+export function consolidarSolicitudesAsExcel(solicitudes: Solicitud[]): any[] {
+	if (solicitudes.length === 0) {
+		return [];
+	}
 
-				return registro[key];
-			})
-		)
-	];
+	const dataSolicitudes = solicitudes.map((solicitud) => {
+		const solicitudInstance = new SolicitudInstance(solicitud);
+
+		return {
+			'Marca temporal': solicitud.marcaTemporal,
+			Correo: solicitud.email,
+			Docente: solicitud.docente,
+
+			UAB: solicitud.uab,
+			Asignatura: solicitudInstance.getAsignaturas(),
+			Código: solicitudInstance.getCodigos(),
+			'Pregrado / Posgrado': solicitud.nivel,
+
+			'¿La salida está contemplada en el programa oficial de la asignatura?': solicitud.contemplada,
+			'Porcentaje de la práctica en la nota total de la asignatura':
+				solicitud.porcentaje.toString(),
+			'Pertinencia de la práctica': solicitud.pertinencia,
+			'Objetivo de la práctica': solicitud.objetivo,
+			'Alcance de la práctica': solicitud.alcance,
+			'Descripción de la salida': solicitud.descripcion,
+			'Número mínimo de estudiantes a participar.': solicitud.asistentes.toString(),
+			'Destino(s)': solicitudInstance.getDestinos(),
+			'Fecha de salida': solicitud.fechaSalida,
+			'Fecha de regreso': solicitud.fechaRegreso,
+			Riesgos: solicitudInstance.getRiesgos(),
+			Agenda: solicitudInstance.getAgenda(),
+			'Requerimientos adicionales': solicitud.requerimientos,
+			'Justificación de los requerimientos': solicitud.justificacionRequerimientos,
+			'Pertinencia de los requerimientos': solicitud.pertinenciaRequerimientos
+		} satisfies Record<string, string>;
+	});
+
+	const data = [Object.keys(dataSolicitudes[0]), ...dataSolicitudes.map(Object.values)];
 
 	return data;
 }
