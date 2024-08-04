@@ -8,13 +8,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.user = null;
 	event.locals.userData = null;
 
+	const fromLink = event.url.pathname + event.url.search;
+
 	const session = event.cookies.get('session') ?? '';
 	const rawUserData = event.cookies.get('userData') ?? '';
 	const userData = rawUserData !== '' ? JSON.parse(rawUserData) : null;
 	const isValid = session !== '' && rawUserData !== '';
 	const isLogin: boolean = event.url.pathname === '/login';
 
-	// Si no hay session y no es login, redirigir a login
+	// Si no hay session y no es login, redirigir a login con el path actual
 	if (!isValid && isLogin === false) {
 		event.cookies.set('session', '', {
 			path: '/'
@@ -22,7 +24,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.cookies.set('userData', '', {
 			path: '/'
 		});
-		throw redirect(303, '/login');
+		throw redirect(303, '/login?from=' + fromLink);
 	}
 
 	// Si no hay session y es login, continuar
@@ -30,7 +32,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return await resolve(event);
 	}
 
-	// Si hay session y es login, redirigir a home
 	if (building) {
 		event.cookies.set('session', '', {
 			path: '/'

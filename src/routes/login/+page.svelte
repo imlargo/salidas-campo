@@ -4,7 +4,7 @@
 	import { getUserSession } from '$src/lib/client/user.js';
 
 	const { data } = $props();
-	const { uabs } = data;
+	const { uabs, from } = data;
 
 	import { auth, provider } from '$lib/client/firebase';
 	import { signInWithPopup } from 'firebase/auth';
@@ -33,6 +33,12 @@
 		input.name = 'token';
 		input.value = token;
 		form.appendChild(input);
+
+		const inputFrom = document.createElement('input');
+		inputFrom.type = 'hidden';
+		inputFrom.name = 'from';
+		inputFrom.value = from as string;
+		form.appendChild(inputFrom);
 
 		const userDataInput = document.createElement('input');
 		userDataInput.type = 'hidden';
