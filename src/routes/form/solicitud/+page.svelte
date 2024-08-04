@@ -313,7 +313,7 @@
 
 				<div class="mt-2">
 					<a
-						href={`https://siamed.unal.edu.co/academia/apoyo-administrativo/ConsultaContenidos.do?action=Info&idAsignatura=${isEdit ? solicitud.asignatura.COD_ASIGNATURA : storeFiltro.asignatura?.COD_ASIGNATURA}`}
+						href={`https://siamed.unal.edu.co/academia/apoyo-administrativo/ConsultaContenidos.do?action=Info&idAsignatura=${isEdit && solicitud !== null ? solicitud.asignatura?.COD_ASIGNATURA : storeFiltro.asignatura?.COD_ASIGNATURA}`}
 						class="fw-light decoration-orange text-black"
 						target="_blank"
 					>
