@@ -22,13 +22,13 @@
 
 		// Si el usuario no es valido
 		if (userData === null) {
+			await auth.signOut();
+			window.location.href = 'https://www.google.com';
 			return;
 		}
 
 		// Si el usuario es valido
 		const userSessionData = getUserSession(user, userData, uabs);
-
-		// await auth.signOut();
 
 		const input = document.createElement('input');
 		input.type = 'hidden';
