@@ -48,7 +48,7 @@
 			</div>
 
 			<div class="py-5">
-				<TablaProyecciones {proyecciones} {solicitudes} />
+				<TablaProyecciones {proyecciones} />
 			</div>
 		</section>
 	{/if}
