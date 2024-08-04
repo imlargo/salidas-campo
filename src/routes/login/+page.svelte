@@ -70,7 +70,7 @@
 				>
 			</div>
 
-			<button on:click={login} type="button" class="btn-login">
+			<button onclick={login} type="button" class="btn-login">
 				<span>Continuar con Google</span>
 				<i class="bi bi-arrow-right"></i>
 			</button>
