@@ -5,7 +5,6 @@ import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 import { error } from '@sveltejs/kit';
 
-
 export const load = (async ({ url, locals }) => {
 	const user = locals.user;
 
@@ -31,7 +30,7 @@ export const load = (async ({ url, locals }) => {
 			message: 'Unauthorized',
 			tipo: 'solicitud',
 			titulo: 'Salida no encontrada',
-			mensaje: 'No se ha encontrado la salida de campo solicitada, verifica el codigo FM',
+			mensaje: 'No se ha encontrado la salida de campo solicitada, verifica el codigo FM'
 		});
 	}
 
@@ -40,7 +39,7 @@ export const load = (async ({ url, locals }) => {
 			message: 'Unauthorized',
 			tipo: 'solicitud',
 			titulo: 'No tienes permisos para solicitar esta proyeccion',
-			mensaje: 'No tienes permisos para solicitar esta proyeccion',
+			mensaje: 'No tienes permisos para solicitar esta proyeccion'
 		});
 	}
 
@@ -50,7 +49,7 @@ export const load = (async ({ url, locals }) => {
 			message: 'Unauthorized',
 			tipo: 'solicitud',
 			titulo: 'Salida solicitada',
-			mensaje: 'Ya has solicitado esta salida de campo, para modificarla ve al panel de resumen.',
+			mensaje: 'Ya has solicitado esta salida de campo, para modificarla ve al panel de resumen.'
 		});
 	}
 
@@ -90,18 +89,19 @@ export const load = (async ({ url, locals }) => {
 				message: 'Unauthorized',
 				tipo: 'solicitud',
 				titulo: 'No tienes permisos para modificar esta solicitud',
-				mensaje: 'No tienes permisos para modificar esta solicitud, posiblemente te equivocaste, te recomendamos que verifiques el link',
+				mensaje:
+					'No tienes permisos para modificar esta solicitud, posiblemente te equivocaste, te recomendamos que verifiques el link'
 			});
 		}
 
 		/* Verificar si la solicitud puede ser modificada segun su estado */
 		if (solicitud.agendado && !solicitud.revisado) {
-			// 
+			//
 			error(403, {
 				message: 'Unauthorized',
 				tipo: 'solicitud',
 				titulo: 'No se puede modificar la solicitud',
-				mensaje: 'La solicitud actual se encuentra agendada, por lo tanto no es posible modificarla',
+				mensaje: 'La solicitud actual se encuentra agendada, por lo tanto no es posible modificarla'
 			});
 		}
 		if (
@@ -109,12 +109,13 @@ export const load = (async ({ url, locals }) => {
 			solicitud.estado !== EstadoSolicitud.PENDIENTE &&
 			solicitud.estado !== EstadoSolicitud.NEGADA
 		) {
-			// 
+			//
 			error(403, {
 				message: 'Unauthorized',
 				tipo: 'solicitud',
 				titulo: 'No se puede modificar la solicitud',
-				mensaje: 'El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla',
+				mensaje:
+					'El estado de su solicitud no es PENDIENTE o DENEGADA, por lo tanto no es posible modificarla'
 			});
 		}
 

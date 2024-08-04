@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { page } from '$app/stores';
-    import Banner from '$components/form/Banner.svelte';
+	import { page } from '$app/stores';
+	import Banner from '$components/form/Banner.svelte';
 </script>
 
 <svelte:head>
@@ -12,12 +12,10 @@
 </Banner>
 
 <main>
-    
-<p class="text-lg my-8 text-zinc-600">
-	{$page.error?.mensaje}
-</p>
+	<p class="text-lg my-8 text-zinc-600">
+		{$page.error?.mensaje}
+	</p>
 </main>
-
 
 <style lang="scss">
 	.field-layout {

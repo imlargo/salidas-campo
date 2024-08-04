@@ -10,7 +10,7 @@ export function normalizarTexto(texto: string) {
 	return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-export function GroupBy(array: [], func: (obj: any) => any) {
+export function GroupBy(array: any[], func: (obj: any) => any): Record<string, any[]> {
 	return array.reduce((acc, obj) => {
 		const key = func(obj);
 		if (!acc[key]) {

@@ -14,7 +14,7 @@ export const load = (async ({ url, locals }) => {
 			message: 'Unauthorized',
 			tipo: 'proyeccion',
 			titulo: 'No tienes permisos para ver esta proyección',
-			mensaje: 'No tienes permisos para ver esta proyección',
+			mensaje: 'No tienes permisos para ver esta proyección'
 		});
 	}
 

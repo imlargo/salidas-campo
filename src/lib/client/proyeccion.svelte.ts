@@ -130,7 +130,7 @@ class ControllerProyeccion implements Proyeccion {
 
 		const email = EmailProyeccion(proyeccion, this.editMode);
 
-		fetch('/api/services/mail', {
+		await fetch('/api/services/mail', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

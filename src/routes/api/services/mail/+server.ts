@@ -1,13 +1,11 @@
 import type { RequestHandler } from './$types';
+import { APPS_SCRIPT_API } from '$env/static/private';
 
 export const POST: RequestHandler = async ({ request }) => {
-	const API_URL =
-		'https://script.google.com/macros/s/AKfycbykUwdl5oVKCqyeuDT_SbZxq4SO9NNvRtVbSuzQpCpsHdLed7OmMmTMWHlvclH8IDbffg/exec';
-
 	// Obtener los datos de la pagina
 	const emailRequest = await request.json();
 
-	await fetch(API_URL, {
+	await fetch(APPS_SCRIPT_API, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
