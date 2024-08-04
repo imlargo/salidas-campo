@@ -6,6 +6,7 @@ import { EstadoSolicitud, NivelRiesgo } from '$utils/enums';
 import { getMarcaTemporal } from '../util/utils';
 import { controllerProyeccion } from './proyeccion.svelte';
 import { controllerRiesgos } from '$src/lib/client/controllers/riesgos.svelte';
+import { EmailSolicitud } from '../util/emails';
 
 class ControllerSolicitud implements Solicitud {
 	id = $state(-1);
@@ -241,6 +242,11 @@ class ControllerSolicitud implements Solicitud {
 		const solicitud = this.getData();
 		const marcaTemporal = getMarcaTemporal();
 
+		if (this.riesgos.length === 0) {
+			// alert("Debe seleccionar al menos un riesgo y su nivel");
+			return;
+		}
+
 		if (this.multidocente) {
 			solicitud.docente = `${this.docente},${this.docenteAdicional}`;
 		}
@@ -269,11 +275,6 @@ class ControllerSolicitud implements Solicitud {
 			await dbController.createSolicitud(solicitud);
 		}
 
-		if (this.riesgos.length === 0) {
-			// alert("Debe seleccionar al menos un riesgo y su nivel");
-			return;
-		}
-
 		if (this.isNew) {
 			if (this.proyeccion === null) {
 				return;
@@ -292,7 +293,16 @@ class ControllerSolicitud implements Solicitud {
 
 		console.log(solicitud);
 
+		const email = EmailSolicitud(solicitud, this.isEdit);
+
 		// Enviar correo
+		await fetch('/api/services/mail', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(email)
+		});
 	}
 }
 
