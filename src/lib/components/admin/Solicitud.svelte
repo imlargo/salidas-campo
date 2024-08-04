@@ -40,11 +40,11 @@
 	>
 		{controller.solicitud.docente}
 	</button>
-	<div class="truncate" use:tooltipAction={controller.solicitud.departamentoFacultad}>
-		{controller.solicitud.departamentoFacultad}
+	<div class="truncate" use:tooltipAction={controller.solicitud.uab}>
+		{controller.solicitud.uab}
 	</div>
-	<div class="truncate" use:tooltipAction={controller.solicitud.asignatura}>
-		{controller.solicitud.asignatura}
+	<div class="truncate" use:tooltipAction={controller.solicitud.asignatura?.ASIGNATURA as string}>
+		{controller.solicitud.asignatura?.ASIGNATURA}
 	</div>
 	<div class="truncate">
 		<select
