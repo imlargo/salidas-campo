@@ -4,7 +4,7 @@
 	import Footer from '$src/lib/components/layout/Footer.svelte';
 </script>
 
-<div class="px-5 md:mx-auto md:max-w-7xl container py-5">
+<div class="p-5 md:mx-12">
 	<slot />
 
 	<Footer />
