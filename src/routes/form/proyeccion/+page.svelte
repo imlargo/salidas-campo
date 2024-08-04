@@ -29,11 +29,6 @@
 				controllerProyeccion.changeUAB(storeAuth.uab.codigo);
 				return;
 			}
-
-			// Si es editada verificar que sea del mismo usuario
-			if (data.proyeccion.email !== storeAuth.email) {
-				redirect(307, '/');
-			}
 		}
 	});
 

@@ -4,7 +4,9 @@ import { EstadoSolicitud } from '$src/lib/util/enums';
 import type { PageServerLoad } from './$types';
 import { redirect } from '@sveltejs/kit';
 
-export const load = (async ({ url }) => {
+export const load = (async ({ url, locals }) => {
+	const user = locals.user;
+
 	// Si es una solicitud en blanco
 	if (!url.searchParams.has('id')) {
 		// Cargar como solicitud en blanco (sin proyeccion)
@@ -26,6 +28,10 @@ export const load = (async ({ url }) => {
 		// alert("No se ha encontrado la salida de campo solicitada, verifica el codigo FM");
 		// window.location.href = "resumen.html";
 
+		redirect(307, '/modulo/docente');
+	}
+
+	if (proyeccion.email !== user.email) {
 		redirect(307, '/modulo/docente');
 	}
 
@@ -64,6 +70,12 @@ export const load = (async ({ url }) => {
 	if (proyeccion.solicitada && url.searchParams.has('edit')) {
 		// Obtiene la solicitud a editar
 		const solicitud = (await dbController.getSolicitud(proyeccion.id.toString())) as Solicitud;
+
+		// Si es una solicitud de otra persona
+		if (solicitud.email !== user.email) {
+			// No tienes permisos para editar este registro
+			redirect(307, '/modulo/docente');
+		}
 
 		/* Verificar si la solicitud puede ser modificada segun su estado */
 		if (solicitud.agendado && !solicitud.revisado) {

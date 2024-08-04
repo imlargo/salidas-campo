@@ -42,18 +42,6 @@
 	$effect(() => {
 		if (storeAuth.email !== '') {
 			controllerSolicitud.docente = storeAuth.nombre;
-
-			// Si es una proyeccion de otra persona
-			if (isNew && proyeccion?.email !== storeAuth.email) {
-				// No tienes permisos para editar este registro
-				redirect(307, '/');
-			}
-
-			// Si es una solicitud de otra persona
-			if (isEdit && solicitud?.email !== storeAuth.email) {
-				// No tienes permisos para editar este registro
-				redirect(307, '/');
-			}
 		}
 
 		if (storeAuth.uab !== null && isBlank) {
