@@ -1,6 +1,6 @@
 import { write, utils } from 'xlsx';
 
-function ArrayToExcel(array: string[][], name: string) {
+export function ArrayToExcel(array: string[][], name: string) {
 	const fileType =
 		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 	const workSheet = utils.aoa_to_sheet(array);

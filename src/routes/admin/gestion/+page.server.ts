@@ -1,4 +1,4 @@
-import type { LayoutLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import { dbController } from '$src/lib/db/controller';
 
 export const load = (async () => {
@@ -13,4 +13,4 @@ export const load = (async () => {
 		internalData,
 		solicitudes
 	};
-}) satisfies LayoutLoad;
+}) satisfies PageServerLoad;

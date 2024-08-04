@@ -11,6 +11,7 @@ class ControllerDashboard {
 		inicioSemestre: '',
 		inicioSolicitud: ''
 	});
+	selectedUAB: string = $state('');
 
 	async cambiarFechaConfig(e: Event) {
 		const elemento = e.target as HTMLInputElement;

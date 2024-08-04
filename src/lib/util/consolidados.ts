@@ -1,8 +1,10 @@
 import type { Proyeccion, Solicitud } from '../types';
-
+import { dbController } from '../db/controller';
+import { ArrayToExcel } from './sheet-service';
 import { ProyeccionInstance, SolicitudInstance } from './registros';
+import { getMarcaTemporal } from './utils';
 
-export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): any[] {
+export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): string[][] {
 	if (proyecciones.length === 0) {
 		return [];
 	}
@@ -78,4 +80,25 @@ export function consolidarSolicitudesAsExcel(solicitudes: Solicitud[]): any[] {
 	const data = [Object.keys(dataSolicitudes[0]), ...dataSolicitudes.map(Object.values)];
 
 	return data;
+}
+
+export async function getConsolidadoProyeccion() {
+	const proyecciones = await dbController.getProyecciones();
+	const data = consolidarProyeccionesAsExcel(proyecciones);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado proyecciones ${marcaTemporal}`);
+}
+
+export async function getConsolidadoExtras() {
+	const proyecciones = await dbController.getProyeccionesExtra();
+	const data = consolidarProyeccionesAsExcel(proyecciones);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado proyecciones extra ${marcaTemporal}`);
+}
+
+export async function getConsolidadoByUAB(uab: string) {
+	const proyecciones = await dbController.getProyeccionesByUAB(uab);
+	const data = consolidarProyeccionesAsExcel(proyecciones);
+	const marcaTemporal = getMarcaTemporal();
+	ArrayToExcel(data, `Consolidado proyecciones ${uab} ${marcaTemporal}`);
 }

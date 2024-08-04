@@ -11,6 +11,14 @@
 
 	controllerDashboard.uabs = internalData.uabs;
 	controllerDashboard.config = config;
+
+	import {
+		getConsolidadoProyeccion,
+		getConsolidadoByUAB,
+		getConsolidadoExtras
+	} from '$lib/util/consolidados';
+
+	import { tooltipAction } from '$lib/actions/tooltip';
 </script>
 
 <Banner titulo="Modulo Vicedecanatura" variante="proyeccion">
@@ -47,36 +55,39 @@
 
 			<div class="flex flex-col md:flex-row mt-2 gap-3">
 				<button
-					class="btn-primary"
-					id="btn-getConsolidadoProyeccion"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de proyecciones hasta el momento"
+					class="btn-primary font-semibold"
+					onclick={getConsolidadoProyeccion}
+					use:tooltipAction={'Descargar consolidado de proyecciones hasta el momento'}
 				>
 					<span>Descargar reporte</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
 				<button
-					class="btn-primary"
-					id="btn-getConsolidadoExtra"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de proyecciones hechas fuera de tiempo"
+					class="btn-primary font-semibold"
+					onclick={getConsolidadoExtras}
+					use:tooltipAction={'Descargar consolidado de proyecciones hechas fuera de tiempo'}
 				>
 					<span>Descargar Extras</span>
 					<i class="bi bi-download fw-bold"></i>
 				</button>
-				<select class="px-3 py-1 border rounded block w-full md:max-w-fit">
+				<select
+					class="px-3 py-1 border rounded block w-full md:max-w-fit"
+					bind:value={controllerDashboard.selectedUAB}
+				>
+					<option selected value="">-- Seleccionar --</option>
 					{#each controllerDashboard.uabs as uab}
-						<option value={uab.nombre}>{uab.nombre}</option>
+						<option value={uab.codigo}>{uab.nombre}</option>
 					{/each}
 				</select>
 				<button
-					class="btn-primary"
-					data-bs-toggle="tooltip"
-					data-bs-placement="top"
-					data-bs-title="Descargar consolidado de proyecciones de un departamento"
-					id="btn-getConsolidadoDepartamento"
+					class="btn-primary font-semibold"
+					use:tooltipAction={'Descargar consolidado de proyecciones de un departamento'}
+					onclick={() =>
+						getConsolidadoByUAB(
+							controllerDashboard.uabs.find(
+								({ codigo }) => codigo === controllerDashboard.selectedUAB
+							)?.codigo as string
+						)}
 				>
 					<span>Descargar</span>
 					<i class="bi bi-download fw-bold"></i>
@@ -99,7 +110,7 @@
 
 			<div class="flex flex-col sm:flex-row gap-3 mt-2">
 				<button
-					class="btn-primary"
+					class="btn-primary font-semibold"
 					data-bs-toggle="tooltip"
 					data-bs-placement="top"
 					data-bs-title="Descargar consolidado de las solicitudes hasta el momento"
@@ -109,7 +120,7 @@
 					<i class="bi bi-download fw-bold"></i>
 				</button>
 				<button
-					class="btn-primary"
+					class="btn-primary font-semibold"
 					data-bs-toggle="tooltip"
 					data-bs-placement="top"
 					data-bs-title="Avisar a docentes que proyectaron salidas pero no han realizado la solicitud correspondiente"
@@ -120,7 +131,7 @@
 				</button>
 				<button
 					id="btn-getConsolidadoFinal"
-					class="btn-primary"
+					class="btn-primary font-semibold"
 					data-bs-toggle="tooltip"
 					data-bs-placement="top"
 					data-bs-title="Descargar consolidado de las solicitudes hasta el momento con todos los datos"
@@ -130,7 +141,7 @@
 				</button>
 				<button
 					id="btn-getSolicitudesAprobadas"
-					class="btn-primary"
+					class="btn-primary font-semibold"
 					data-bs-toggle="tooltip"
 					data-bs-placement="top"
 					data-bs-title="Descargar consolidado de las solicitudes aprobadas hasta el momento"
@@ -218,7 +229,7 @@
 
 		<div class="flex flex-col sm:flex-row gap-4">
 			<button
-				class="btn btn-sm btn-primary boton btn-sm"
+				class="btn-primary font-semibold"
 				data-bs-toggle="tooltip"
 				data-bs-placement="top"
 				data-bs-title="Actualizar dats"
@@ -229,7 +240,7 @@
 			</button>
 
 			<button
-				class="btn btn-sm btn-primary boton btn-sm"
+				class="btn-primary font-semibold"
 				data-bs-toggle="tooltip"
 				data-bs-placement="top"
 				data-bs-title="Actualizar dats"
@@ -251,11 +262,7 @@
 						placeholder="Código FM de la salida de campo"
 						id="inputCode"
 					/>
-					<button
-						class="btn btn-outline-warning searchBoton"
-						type="button"
-						id="btn-searchProyeccion">Buscar</button
-					>
+					<button class="btn-primary" type="button" id="btn-searchProyeccion">Buscar</button>
 				</div>
 			</div>
 		</div>

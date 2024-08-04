@@ -22,6 +22,10 @@ import { GroupBy } from '$src/lib/util/utils';
 
 import type { UserResponse } from '../types';
 
+function sortById(registro: Proyeccion[] | Solicitud[]): Proyeccion[] | Solicitud[] {
+	return registro.sort((a, b) => a.id - b.id);
+}
+
 function getSnapshotData(querySnapshot: QuerySnapshot<DocumentData, DocumentData>) {
 	const data: any[] = [];
 	querySnapshot.forEach((doc) => {
@@ -110,6 +114,23 @@ class DBController {
 		return docSnap.exists() ? (docSnap.data() as Proyeccion) : null;
 	}
 
+	async getProyecciones(): Promise<Proyeccion[]> {
+		const querySnapshot = await getDocs(colProyeccion);
+		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
+	}
+
+	async getProyeccionesExtra(): Promise<Proyeccion[]> {
+		const q = query(colProyeccion, where('blank', '==', true));
+		const querySnapshot = await getDocs(q);
+		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
+	}
+
+	async getProyeccionesByUAB(uab: string): Promise<Proyeccion[]> {
+		const q = query(colProyeccion, where('uab', '==', uab));
+		const querySnapshot = await getDocs(q);
+		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
+	}
+
 	async updateProyeccion(proyeccion: Proyeccion) {
 		const docRef = doc(db, 'proyeccion', proyeccion.id.toString());
 		await updateDoc(docRef, proyeccion as object);
@@ -153,28 +174,19 @@ class DBController {
 	async getProyeccionesByDocente(email: string): Promise<Proyeccion[]> {
 		const q = query(colProyeccion, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot).sort(
-			(a: Proyeccion, b: Proyeccion) => a.id - b.id
-		) as Proyeccion[];
+		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
 	}
 
 	async getSolicitudesByDocente(email: string): Promise<Solicitud[]> {
 		const q = query(colSolicitudes, where('email', '==', email));
 		const querySnapshot = await getDocs(q);
-		return getSnapshotData(querySnapshot).sort(
-			(a: Solicitud, b: Solicitud) => a.id - b.id
-		) as Solicitud[];
-	}
-
-	async getRegistros() {
-		const querySnapshot = await getDocs(colProyeccion);
-		return getSnapshotData(querySnapshot);
+		return sortById(getSnapshotData(querySnapshot)) as Solicitud[];
 	}
 
 	async getSolicitudes(): Promise<Solicitud[]> {
 		const querySnapshot = await getDocs(colSolicitudes);
 		const solicitudes = getSnapshotData(querySnapshot);
-		return solicitudes.sort((a, b) => a.id - b.id);
+		return sortById(solicitudes) as Solicitud[];
 	}
 
 	async getSalidasAprobadas() {
