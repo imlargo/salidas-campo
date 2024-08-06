@@ -20,14 +20,14 @@
 	const storeProyecciones = new StoreProyecciones();
 </script>
 
-<div class="grid grid-cols-8 md:font-semibold gap-x-5">
-	<span class="text-center">Consecutivo</span>
-	<span>Codigo(s)</span>
+<div class="grid grid-cols-4 sm:grid-cols-8 md:font-semibold gap-x-5 font-semibold">
+	<span class="text-center hidden sm:block">Consecutivo</span>
+	<span class="hidden sm:block">Codigo(s)</span>
 	<span>Asignatura(s)</span>
-	<span>Fecha salida</span>
-	<span>Duracion</span>
+	<span class="hidden sm:block">Fecha salida</span>
+	<span class="hidden sm:block">Duracion</span>
 	<span>Destinos</span>
-	<span>Modificar</span>
+	<span class="text-center">Modificar</span>
 	<span class="text-center">Eliminar</span>
 </div>
 

@@ -29,21 +29,23 @@
 	<p>¿Estás seguro de que deseas eliminar esta proyeccion?</p>
 </Modal>
 
-<div class="grid grid-cols-8 items-center proyeccion gap-x-5 py-2">
-	<div class="text-center">FM{proyeccion.id}</div>
-	<div use:tooltipAction={proyeccion.asignatura?.COD_ASIGNATURA as string}>
+<div class="grid grid-cols-4 sm:grid-cols-8 items-center proyeccion gap-x-5 py-2">
+	<div class="text-center hidden sm:block">FM{proyeccion.id}</div>
+	<div class="hidden sm:block" use:tooltipAction={proyeccion.asignatura?.COD_ASIGNATURA as string}>
 		{proyeccion.asignatura?.COD_ASIGNATURA}
 	</div>
 	<div class="text-nowrap truncate" use:tooltipAction={proyeccion.asignatura?.ASIGNATURA as string}>
 		{proyeccion.asignatura?.ASIGNATURA}
 	</div>
-	<div>{proyeccion.fechaSalida}</div>
-	<div>{proyeccion.duracion} días</div>
+	<div class="hidden sm:block">{proyeccion.fechaSalida}</div>
+	<div class="hidden sm:block">{proyeccion.duracion} días</div>
 	<div>{proyeccion.destinos.map(({ municipio }) => municipio).join(', ')}</div>
-	<a href="/form/proyeccion?id={proyeccion.id}">
-		<span>Modificar</span>
-		<i class="bi bi-pencil-square"></i>
-	</a>
+	<div class="flex justify-center items-center">
+		<a href="/form/proyeccion?id={proyeccion.id}">
+			<span>Modificar</span>
+			<i class="bi bi-pencil-square"></i>
+		</a>
+	</div>
 	<div class="flex items-center justify-center">
 		<button
 			onclick={() => modal.open()}

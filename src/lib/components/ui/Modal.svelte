@@ -36,7 +36,7 @@
 </script>
 
 <div use:modalAction class="modal fade" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
+	<div class="modal-dialog modal-dialog-centered px-5">
 		<div class="modal-content">
 			<div class="modal-header orange">
 				<h5 class="text-xl">{titulo}</h5>
