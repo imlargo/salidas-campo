@@ -8,6 +8,7 @@ import { EmailProyeccion } from '../util/emails';
 class ControllerProyeccion implements Proyeccion {
 	id = $state(-1);
 	editMode = $state(false);
+	isSent = false;
 
 	ultimoDestinoSelection = $state('');
 	multidocente = $state(false);

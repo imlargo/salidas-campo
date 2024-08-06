@@ -77,6 +77,10 @@
 
 <Form
 	handleSubmit={async () => {
+		if (controllerProyeccion.isSent) {
+			return;
+		}
+		controllerProyeccion.isSent = true;
 		await controllerProyeccion.sendData();
 		modal.open();
 	}}
