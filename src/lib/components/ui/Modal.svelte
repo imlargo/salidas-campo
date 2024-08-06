@@ -25,7 +25,10 @@
 	}
 
 	function modalAction(element: HTMLDivElement) {
-		modalInstance = new bootstrap.Modal(element);
+		modalInstance = new bootstrap.Modal(element, {
+			keyboard: false,
+			backdrop: 'static',
+		});
 
 		if (!isConfirmacion && callback) {
 			element.addEventListener('hidden.bs.modal', () => {
