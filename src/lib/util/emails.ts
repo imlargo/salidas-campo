@@ -112,7 +112,7 @@ export function EmailProyeccion(proyeccion: Proyeccion, isModificacion: boolean)
 	};
 }
 
-export function EmailAsignacion(uab: string, proyeccion: Proyeccion, modificacion: boolean): Email {
+export function EmailAsignacion(uab: string, proyeccion: Proyeccion): Email {
 	// Plantilla de correo:
 	const cuerpo = `<h2>Estimado(a) docente</h2>
 
@@ -233,4 +233,14 @@ export function EmailAvisoSolicitudSalida(proyecciones: Proyeccion[]): Email {
 		asunto: `Salidas de campo pendientes por solicitar`,
 		cuerpo: cuerpo
 	};
+}
+
+export async function sendMail(email: Email) {
+	fetch('/api/mail', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(email)
+	});
 }

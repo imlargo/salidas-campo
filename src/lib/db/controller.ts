@@ -131,6 +131,12 @@ class DBController {
 		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
 	}
 
+	async getProyeccionesBy(campo: string, valor: any): Promise<Proyeccion[]> {
+		const q = query(colProyeccion, where(campo, '==', valor));
+		const querySnapshot = await getDocs(q);
+		return sortById(getSnapshotData(querySnapshot)) as Proyeccion[];
+	}
+
 	async updateProyeccion(proyeccion: Proyeccion) {
 		const docRef = doc(db, 'proyeccion', proyeccion.id.toString());
 		await updateDoc(docRef, proyeccion as object);
@@ -201,7 +207,7 @@ class DBController {
 		return getSnapshotData(querySnapshot);
 	}
 
-	async asignarDocente(id: string, correoDocente: string) {
+	async asignarDocente(id: string, correoDocente: string): Promise<boolean> {
 		const docenteRef = await getDoc(doc(db, 'users', correoDocente));
 
 		if (docenteRef.exists()) {
