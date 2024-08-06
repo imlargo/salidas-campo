@@ -91,6 +91,7 @@
 				id="facultad"
 				readonly
 				required
+				disabled
 				class="form-control input-disabled"
 				bind:value={controllerProyeccion.facultad}
 			/>
@@ -105,6 +106,7 @@
 				id="docente"
 				name="docente"
 				readonly
+				disabled
 				bind:value={controllerProyeccion.docente}
 			/>
 
@@ -365,9 +367,9 @@
 				required
 				readonly
 				type="number"
-				onkeydown={checkNumber}
 				id="duracion"
 				name="duracion"
+				disabled
 				class="form-control input-disabled"
 				placeholder="Duración de la salida"
 				value={controllerProyeccion.duracion}
