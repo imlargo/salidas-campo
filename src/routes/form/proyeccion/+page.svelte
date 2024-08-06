@@ -15,9 +15,6 @@
 	import { goto } from '$app/navigation';
 
 	const { data } = $props();
-	const { user, userData } = data;
-
-	storeAuth.init(user, userData);
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
@@ -27,8 +24,8 @@
 	storeData.uabs = data.uabs;
 
 	if (data.proyeccion === null) {
-		controllerProyeccion.uab = userData.uab.codigo;
-		controllerProyeccion.changeUAB(userData.uab.codigo);
+		controllerProyeccion.uab = storeAuth.uab?.codigo as string;
+		controllerProyeccion.changeUAB(storeAuth.uab?.codigo as string);
 	}
 
 	if (data.proyeccion !== null) {
@@ -57,8 +54,8 @@
 	callback={callbackModal}
 >
 	<p>
-		Hola {userData.nombre}, se ha {data.proyeccion !== null ? 'modificado' : 'registrado'} su salida
-		de campo con éxito. Se ha enviado un correo de confirmación a {user.email} con los datos de la salida
+		Hola {storeAuth.nombre}, se ha {data.proyeccion !== null ? 'modificado' : 'registrado'} su salida
+		de campo con éxito. Se ha enviado un correo de confirmación a {storeAuth.email} con los datos de la salida
 		e información adicional.
 	</p>
 
@@ -149,12 +146,12 @@
 				class="form-control"
 				id="uab"
 				name="uab"
-				value={userData.uab?.codigo || ''}
+				value={storeAuth.uab?.codigo || ''}
 				onchange={(e) => controllerProyeccion.changeUAB(e.target?.value)}
 			>
 				<option value="">--- Seleccionar ---</option>
 				{#each data.uabs as uab}
-					<option selected={uab.codigo === userData.uab?.codigo} value={uab.codigo}
+					<option selected={uab.codigo === storeAuth.uab?.codigo} value={uab.codigo}
 						>{uab.nombre}</option
 					>
 				{/each}

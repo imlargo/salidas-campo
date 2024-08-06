@@ -17,10 +17,7 @@
 	import { calcularDuracion } from '$src/lib/util/utils';
 
 	const { data } = $props();
-	const { user, userData } = data;
 	const { solicitud, proyeccion, isEdit, isBlank, isNew } = data;
-
-	storeAuth.init(user, userData);
 
 	storeData.asignaturas = data.asignaturas;
 	storeData.destinos = data.destinos;
@@ -29,15 +26,15 @@
 	storeData.riesgos = data.riesgos;
 	storeData.uabs = data.uabs;
 
-	controllerSolicitud.docente = userData.nombre;
+	controllerSolicitud.docente = storeAuth.nombre;
 	controllerSolicitud.isBlank = isBlank as boolean;
 	controllerSolicitud.isNew = isNew as boolean;
 	controllerSolicitud.isEdit = isEdit as boolean;
 
 	if (isBlank) {
 		// Si es nueva proyección, cargar la UAB del usuario
-		controllerSolicitud.uab = userData.uab.codigo;
-		controllerSolicitud.changeUAB(userData.uab.codigo);
+		controllerSolicitud.uab = storeAuth.uab?.codigo as string;
+		controllerSolicitud.changeUAB(storeAuth.uab?.codigo as string);
 	}
 
 	if (isNew) {
