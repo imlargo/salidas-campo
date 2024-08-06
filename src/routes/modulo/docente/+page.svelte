@@ -21,6 +21,10 @@
 				: 'verde';
 </script>
 
+<svelte:head>
+	<title>Modulo docente - Salidas de campo</title>
+</svelte:head>
+
 <Banner titulo="Modulo docente" variante="proyeccion"></Banner>
 
 <main class="py-12 w-full">
