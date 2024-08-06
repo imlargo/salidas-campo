@@ -22,7 +22,7 @@ class ControllerProyeccion implements Proyeccion {
 	uab = $state('');
 	asignatura = $derived(storeFiltro.asignatura);
 	grupo = $state('');
-	asistentes = $state(0);
+	asistentes = $state('');
 
 	fechaSalida = $state('');
 	horaSalida = $state('');

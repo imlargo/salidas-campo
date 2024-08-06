@@ -263,7 +263,7 @@
 					id="asistentes"
 					class="form-control"
 					placeholder="Cantidad de asistentes"
-					max="200"
+					max="300"
 					bind:value={controllerProyeccion.asistentes}
 				/>
 			</div>
@@ -388,7 +388,7 @@
 		</div>
 	</Section>
 	<Section titulo="Destino más lejano">
-		<p>Destino más lejano hace referencia al lugar con mayor distancia desde Medellin</p>
+		<p>El destino más lejano se refiere al lugar ubicado a la mayor distancia desde Medellín.</p>
 
 		<div>
 			<label for="municipio" class="form-label">Municipio más lejano</label>
@@ -409,12 +409,14 @@
 		<div>
 			<label for="observaciones" class="form-label">Observaciones</label>
 			<p class="mb-2">
-				Observaciones hace referencia a la especificada del destino por ejemplo municipio, empresa o
-				lugar al que se va a dirigir
+				Ingrese aqui cualquier comentario adicional que deba ser considerado. Esto puede incluir
+				especificaciones sobre una vereda, empresa o lugar en particular, así como detalles
+				adicionales sobre el destino.
 			</p>
 			<textarea
 				name="observaciones"
 				id="observaciones"
+				placeholder="Escriba aqui sus observaciones"
 				class="form-control"
 				bind:value={controllerProyeccion.observaciones}
 			></textarea>
