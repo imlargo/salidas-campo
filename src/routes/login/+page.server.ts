@@ -6,33 +6,19 @@ import { ROL } from '$lib/util/enums';
 import { dbController } from '$lib/db/controller';
 import type { UserData } from '$src/lib/types';
 import type { PageServerLoad } from './$types';
+import { getRoleRedirect } from '$src/lib/server/role-router';
 
 export const load = (async ({ url, locals }) => {
 	const user = locals.user;
 	const userData: UserData = locals.userData;
 	const from = url.searchParams.get('from');
 
+	if (user !== null) {
+		const redirectPath = getRoleRedirect(userData);
+		throw redirect(303, redirectPath);
+	}
+
 	const data = await dbController.loadData();
-
-	if (user === null) {
-		return {
-			uabs: data.uabs,
-			from: from || null
-		};
-	}
-
-	if (userData.rol === ROL.ADMIN) {
-		throw redirect(303, '/admin/dashboard');
-	}
-
-	if (userData.rol === ROL.PLANTA || userData.rol === ROL.OCASIONAL) {
-		throw redirect(303, '/modulo/docente');
-	}
-
-	if (userData.rol === ROL.UAB) {
-		throw redirect(303, '/modulo/uab');
-	}
-
 	return {
 		uabs: data.uabs,
 		from: from || null
@@ -88,22 +74,10 @@ export const actions = {
 
 		if (from) {
 			console.log('Redirigiendo a pagina anterior: ', from);
-
 			throw redirect(303, from as string);
 		}
 
-		if (userData.rol === ROL.ADMIN) {
-			throw redirect(303, '/admin/dashboard');
-		}
-
-		if (userData.rol === ROL.PLANTA || userData.rol === ROL.OCASIONAL) {
-			throw redirect(303, '/modulo/docente');
-		}
-
-		if (userData.rol === ROL.UAB) {
-			throw redirect(303, '/modulo/uab');
-		}
-
-		throw redirect(303, '/');
+		const redirectPath = getRoleRedirect(userData);
+		throw redirect(303, redirectPath);
 	}
 } satisfies Actions;

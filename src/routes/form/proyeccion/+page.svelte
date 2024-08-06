@@ -388,7 +388,6 @@
 		</div>
 	</Section>
 	<Section titulo="Destino más lejano">
-
 		<p>Destino más lejano hace referencia al lugar con mayor distancia desde Medellin</p>
 
 		<div>
@@ -410,7 +409,8 @@
 		<div>
 			<label for="observaciones" class="form-label">Observaciones</label>
 			<p class="mb-2">
-				Observaciones hace referencia a la especificada del destino por ejemplo municipio, empresa o lugar al que se va a dirigir
+				Observaciones hace referencia a la especificada del destino por ejemplo municipio, empresa o
+				lugar al que se va a dirigir
 			</p>
 			<textarea
 				name="observaciones"
