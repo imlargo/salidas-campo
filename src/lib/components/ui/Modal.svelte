@@ -27,7 +27,7 @@
 	function modalAction(element: HTMLDivElement) {
 		modalInstance = new bootstrap.Modal(element, {
 			keyboard: false,
-			backdrop: 'static',
+			backdrop: 'static'
 		});
 
 		if (!isConfirmacion && callback) {
@@ -71,7 +71,7 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 20;
+		@apply z-30;
 		display: none;
 		width: 100%;
 		height: 100%;

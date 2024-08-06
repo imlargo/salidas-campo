@@ -4,6 +4,7 @@ import type { Proyeccion, Destino, Asignatura } from '$lib/types';
 import { calcularDuracion } from '../util/utils';
 import { dbController } from '../db/controller';
 import { EmailProyeccion } from '../util/emails';
+import { toastController } from '$src/lib/stores/toastStore.svelte.js';
 
 class ControllerProyeccion implements Proyeccion {
 	id = $state(-1);
@@ -110,8 +111,11 @@ class ControllerProyeccion implements Proyeccion {
 		}
 
 		if (this.destinos.length === 0) {
+			toastController.addMensaje('Debe seleccionar al menos un destino');
 			return;
 		}
+
+		toastController.addMensaje('Enviando informacion...');
 
 		// Agregar marca temporal del momento en que se envía el formulario (Fecha, hora)
 		const marcaTemporal = new Date();
@@ -119,8 +123,6 @@ class ControllerProyeccion implements Proyeccion {
 
 		// Enviar a la API para guardar en la base de datos
 		// proyeccion.solicitada = this.editMode ? this.solicitada : false;
-
-		console.log(proyeccion);
 
 		if (this.editMode) {
 			await dbController.updateProyeccion(proyeccion);
