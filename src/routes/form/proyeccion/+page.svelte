@@ -272,7 +272,7 @@
 	<Section titulo="Información de la salida y regreso">
 		<div class="field-layout grid-cols-1 md:grid-cols-3">
 			<div>
-				<label for="fechaSalida" class="form-label">Fecha (Día/Mes/Año)</label>
+				<label for="fechaSalida" class="form-label">Fecha de salida (Día/Mes/Año)</label>
 				<input
 					required
 					class="form-control"
@@ -287,7 +287,7 @@
 				/>
 			</div>
 			<div>
-				<label for="horaSalida" class="form-label">Hora</label>
+				<label for="horaSalida" class="form-label">Hora de salida</label>
 				<input
 					required
 					class="form-control"
@@ -317,7 +317,7 @@
 
 		<div class="field-layout grid-cols-1 md:grid-cols-3">
 			<div>
-				<label for="fechaRegreso" class="form-label">Fecha (Día/Mes/Año)</label>
+				<label for="fechaRegreso" class="form-label">Fecha de llegada (Día/Mes/Año)</label>
 				<input
 					required
 					class="form-control"
@@ -331,7 +331,7 @@
 				/>
 			</div>
 			<div>
-				<label for="horaRegreso" class="form-label">Hora</label>
+				<label for="horaRegreso" class="form-label">Hora de llegada</label>
 				<input
 					required
 					class="form-control"
@@ -391,7 +391,7 @@
 		<p>Destino más lejano hace referencia al lugar con mayor distancia desde Medellin</p>
 
 		<div>
-			<label for="municipio" class="form-label">Municipio</label>
+			<label for="municipio" class="form-label">Municipio más lejano</label>
 			<select
 				required
 				class="form-control"
