@@ -23,7 +23,7 @@ textarea {
 	@apply px-3 py-1 border bg-white text-black rounded block w-full opacity-100;
 
 	&[disabled] {
-		@apply bg-gray-100 text-black opacity-100;
+		@apply bg-zinc-200 text-black opacity-100;
 	}
 }
 
