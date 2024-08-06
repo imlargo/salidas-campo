@@ -21,9 +21,7 @@
 				: 'verde';
 </script>
 
-<Banner titulo="Modulo docente" variante="proyeccion">
-	<a href="/admin/dashboard" class="nav-link"><i class="bi bi-house"></i> Docente</a>
-</Banner>
+<Banner titulo="Modulo docente" variante="proyeccion"></Banner>
 
 <main class="py-12 w-full">
 	{#if proyeccionActiva}
