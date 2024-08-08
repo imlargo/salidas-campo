@@ -44,7 +44,7 @@
 </svelte:head>
 
 <Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
-	<a href="/modulo/docente" class="nav-link"><i class="bi bi-house"></i> Modulo Docente</a>
+	<a href="/modulo/docente" data-sveltekit-reload class="nav-link"><i class="bi bi-house"></i> Modulo Docente</a>
 </Banner>
 
 <Modal

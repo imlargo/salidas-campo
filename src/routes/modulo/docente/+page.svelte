@@ -31,7 +31,7 @@
 	{#if proyeccionActiva}
 		<section>
 			<div class="flex items-center justify-center">
-				<a href="/form/proyeccion" class="btn-primary text-xl font-semibold">
+				<a data-sveltekit-reload href="/form/proyeccion" class="btn-primary text-xl font-semibold">
 					<span>Agregar otra salida de campo</span>
 					<i class="bi bi-arrow-right"></i>
 				</a>
@@ -58,7 +58,7 @@
 
 		<section>
 			<div class="flex items-center justify-center">
-				<a href="/form/solicitud" class="btn-primary text-xl font-semibold">
+				<a data-sveltekit-reload href="/form/solicitud" class="btn-primary text-xl font-semibold">
 					<span>Crear solicitud en blanco</span>
 					<i class="bi bi-arrow-right"></i>
 				</a>
