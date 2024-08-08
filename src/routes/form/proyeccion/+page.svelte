@@ -40,16 +40,18 @@
 </script>
 
 <svelte:head>
-	<title>Formulario de Proyeccion - Salidas de campo</title>
+	<title>Formulario de Proyección - Salidas de campo</title>
 </svelte:head>
 
 <Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
-	<a href="/modulo/docente" data-sveltekit-reload class="nav-link"><i class="bi bi-house"></i> Modulo Docente</a>
+	<a href="/modulo/docente" data-sveltekit-reload class="nav-link"
+		><i class="bi bi-house"></i> Módulo Docente</a
+	>
 </Banner>
 
 <Modal
 	bind:this={modal}
-	titulo="Confirmacion de registro"
+	titulo="Confirmación de registro"
 	isConfirmacion={false}
 	callback={callbackModal}
 >
@@ -119,7 +121,7 @@
 					bind:checked={controllerProyeccion.multidocente}
 				/>
 				<label class="form-check-label decoration-orange" for="multi-docente">
-					<span>Opcional: la salida de campo incluye más de un docente?</span>
+					<span>Opcional: ¿la salida de campo incluye más de un docente?</span>
 				</label>
 			</div>
 		</div>
@@ -363,7 +365,7 @@
 		<hr />
 
 		<div>
-			<label for="duracion" class="form-label">Duracion (Cantidad de días)</label>
+			<label for="duracion" class="form-label">Duración (Cantidad de días)</label>
 			<input
 				required
 				readonly
@@ -410,14 +412,14 @@
 		<div>
 			<label for="observaciones" class="form-label">Observaciones</label>
 			<p class="mb-2">
-				Ingrese aqui cualquier comentario adicional que deba ser considerado. Esto puede incluir
+				Ingrese aquí cualquier comentario adicional que deba ser considerado. Esto puede incluir
 				especificaciones sobre una vereda, empresa o lugar en particular, así como detalles
 				adicionales sobre el destino.
 			</p>
 			<textarea
 				name="observaciones"
 				id="observaciones"
-				placeholder="Escriba aqui sus observaciones"
+				placeholder="Escriba aquí sus observaciones"
 				class="form-control"
 				bind:value={controllerProyeccion.observaciones}
 			></textarea>
