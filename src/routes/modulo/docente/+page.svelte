@@ -22,10 +22,10 @@
 </script>
 
 <svelte:head>
-	<title>Modulo docente - Salidas de campo</title>
+	<title>Módulo docente - Salidas de campo</title>
 </svelte:head>
 
-<Banner titulo="Modulo docente" variante="proyeccion"></Banner>
+<Banner titulo="Módulo docente" variante="proyeccion"></Banner>
 
 <main class="py-12 w-full">
 	{#if proyeccionActiva}

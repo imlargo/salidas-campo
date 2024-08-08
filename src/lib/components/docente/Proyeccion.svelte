@@ -26,7 +26,7 @@
 	isConfirmacion={true}
 	callback={deleteProyeccion}
 >
-	<p>¿Estás seguro de que deseas eliminar esta proyeccion?</p>
+	<p>¿Estás seguro de que deseas eliminar esta proyección?</p>
 </Modal>
 
 <div class="grid grid-cols-4 sm:grid-cols-8 items-center proyeccion gap-x-5 py-2">

@@ -22,10 +22,10 @@
 
 <div class="grid grid-cols-4 sm:grid-cols-8 md:font-semibold gap-x-5 font-semibold">
 	<span class="text-center hidden sm:block">Consecutivo</span>
-	<span class="hidden sm:block">Codigo(s)</span>
+	<span class="hidden sm:block">Código(s)</span>
 	<span>Asignatura(s)</span>
 	<span class="hidden sm:block">Fecha salida</span>
-	<span class="hidden sm:block">Duracion</span>
+	<span class="hidden sm:block">Duración</span>
 	<span>Destinos</span>
 	<span class="text-center">Modificar</span>
 	<span class="text-center">Eliminar</span>

@@ -16,26 +16,26 @@
 	let userSessionData: UserData | null = $state(null);
 
 	let isLogged = $state(false);
-	let modalInstance: SvelteComponent;
+	let modalInstance: any;
 
 	let form: HTMLFormElement;
 	async function login(): Promise<void> {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
 		isLogged = true;
-		toastController.addMensaje('Iniciando sesion... Por favor espere');
+		toastController.addMensaje('Iniciando sesión... Por favor espere');
 		const token = await result.user.getIdToken();
 
 		const userData = await dbController.getUser(user.email as string);
 
-		// Si el usuario no es valido
+		// Si el usuario no es válido
 		if (userData === null) {
 			modalInstance.open();
 			await auth.signOut();
 			return;
 		}
 
-		// Si el usuario es valido
+		// Si el usuario es válido
 		userSessionData = getUserSession(user, userData, uabs);
 
 		toastController.addMensaje(`Bienvenid@ ${userSessionData.nombre}`);
@@ -65,12 +65,12 @@
 </script>
 
 <svelte:head>
-	<title>Iniciar Sesion - Salidas de campo</title>
+	<title>Iniciar Sesión - Salidas de Campo</title>
 </svelte:head>
 
 <Modal
 	bind:this={modalInstance}
-	titulo="Ups! No tienes permiso de estar aqui."
+	titulo="¡Ups! No tienes permiso de estar aquí."
 	isConfirmacion={false}
 	callback={() => {
 		window.location.href = 'https://www.google.com';
@@ -88,7 +88,7 @@
 
 <div class="px-5 flex justify-center items-center h-screen">
 	<div class="max-w-xl container">
-		<Banner titulo="Iniciar Sesion" variante="proyeccion"></Banner>
+		<Banner titulo="Iniciar Sesión" variante="proyeccion"></Banner>
 
 		<div class="flex flex-col gap-7 py-5">
 			<p class="text-pretty">
@@ -99,7 +99,7 @@
 			<div class="login-nota rounded ps-4 py-4">
 				<i class="bi bi-info-circle"></i>
 				<span
-					>Recuerde que para completar el formulario debe iniciar sesión con su cuenta de correo
+					>Recuerda que para completar el formulario debes iniciar sesión con tu cuenta de correo
 					institucional.</span
 				>
 			</div>
