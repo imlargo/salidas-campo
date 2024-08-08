@@ -1,7 +1,7 @@
 export enum ROL {
 	ADMIN = 'ADMIN',
 	PLANTA = 'DOCENTE',
-	OCASIONAL = 'ESTUDIANTE',
+	OCASIONAL = 'OCASIONAL',
 	UAB = 'UAB',
 	NONE = 'NONE'
 }
