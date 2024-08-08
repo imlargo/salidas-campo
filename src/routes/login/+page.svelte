@@ -2,6 +2,9 @@
 	import '$styles/form.scss';
 	import Banner from '$components/form/Banner.svelte';
 	import { getUserSession } from '$src/lib/client/user.js';
+	import Modal from '$src/lib/components/ui/Modal.svelte';
+	import type { UserData } from '$src/lib/types';
+	import { toastController } from '$src/lib/stores/toastStore.svelte';
 
 	const { data } = $props();
 	const { uabs, from } = data;
@@ -10,23 +13,32 @@
 	import { signInWithPopup } from 'firebase/auth';
 	import { dbController } from '$lib/db/controller';
 
+	let userSessionData: UserData | null = $state(null);
+
+	let isLogged = $state(false);
+	let modalInstance: SvelteComponent;
+
 	let form: HTMLFormElement;
 	async function login(): Promise<void> {
 		const result = await signInWithPopup(auth, provider);
 		const user = result.user;
+		isLogged = true;
+		toastController.addMensaje('Iniciando sesion... Por favor espere');
 		const token = await result.user.getIdToken();
 
 		const userData = await dbController.getUser(user.email as string);
 
 		// Si el usuario no es valido
 		if (userData === null) {
+			modalInstance.open();
 			await auth.signOut();
-			window.location.href = 'https://www.google.com';
 			return;
 		}
 
 		// Si el usuario es valido
-		const userSessionData = getUserSession(user, userData, uabs);
+		userSessionData = getUserSession(user, userData, uabs);
+
+		toastController.addMensaje(`Bienvenid@ ${userSessionData.nombre}`);
 
 		const input = document.createElement('input');
 		input.type = 'hidden';
@@ -56,6 +68,24 @@
 	<title>Iniciar Sesion - Salidas de campo</title>
 </svelte:head>
 
+<Modal
+	bind:this={modalInstance}
+	titulo="Ups! No tienes permiso de estar aqui."
+	isConfirmacion={false}
+	callback={() => {
+		window.location.href = 'https://www.google.com';
+	}}
+>
+	<p class="login-nota rounded ps-4 py-2">
+		Solo los docentes de la facultad y las secretarias de departamento tienen acceso a esta
+		aplicación. Por favor, inicia sesión con una cuenta autorizada para continuar.
+	</p>
+	<p class="mt-3">
+		Recuerda que no se permite el acceso a monitores, estudiantes ni personas externas, solamente el
+		docente puede ingresar.
+	</p>
+</Modal>
+
 <div class="px-5 flex justify-center items-center h-screen">
 	<div class="max-w-xl container">
 		<Banner titulo="Iniciar Sesion" variante="proyeccion"></Banner>
@@ -74,10 +104,22 @@
 				>
 			</div>
 
-			<button onclick={login} type="button" class="btn-login">
-				<span>Continuar con Google</span>
-				<i class="bi bi-arrow-right"></i>
-			</button>
+			{#if isLogged}
+				<button
+					class="py-2 px-4 w-full rounded-lg shadow-lg border border-zinc-300 text-center font-semibold text-zinc-700"
+				>
+					<span
+						>{userSessionData === null
+							? 'Ingresando... Por favor espere'
+							: `Bienvenid@ ${userSessionData.nombre}`}</span
+					>
+				</button>
+			{:else}
+				<button disabled={isLogged} onclick={login} type="button" class="btn-login">
+					<span>Continuar con Google</span>
+					<i class="bi bi-arrow-right"></i>
+				</button>
+			{/if}
 		</div>
 
 		<Footer />

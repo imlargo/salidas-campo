@@ -55,8 +55,8 @@
 >
 	<p>
 		Hola {storeAuth.nombre}, se ha {data.proyeccion !== null ? 'modificado' : 'registrado'} su salida
-		de campo con éxito. Se ha enviado un correo de confirmación a {storeAuth.email} con los datos de la salida
-		e información adicional.
+		de campo con éxito. Se ha enviado un correo de confirmación a {storeAuth.email} con los datos de
+		la salida e información adicional.
 	</p>
 
 	<strong
