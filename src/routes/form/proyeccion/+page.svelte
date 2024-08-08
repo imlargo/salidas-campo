@@ -44,7 +44,7 @@
 </svelte:head>
 
 <Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
-	<a href="/modulo/docente" class="nav-link"><i class="bi bi-house"></i> Modulo Docente</a>
+	<a href="/modulo/docente" data-sveltekit-reload class="nav-link"><i class="bi bi-house"></i> Modulo Docente</a>
 </Banner>
 
 <Modal
@@ -55,8 +55,8 @@
 >
 	<p>
 		Hola {storeAuth.nombre}, se ha {data.proyeccion !== null ? 'modificado' : 'registrado'} su salida
-		de campo con éxito. Se ha enviado un correo de confirmación a {storeAuth.email} con los datos de la salida
-		e información adicional.
+		de campo con éxito. Se ha enviado un correo de confirmación a {storeAuth.email} con los datos de
+		la salida e información adicional.
 	</p>
 
 	<strong
