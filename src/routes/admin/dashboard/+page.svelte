@@ -1,9 +1,12 @@
 <script lang="ts">
 	import Banner from '$src/lib/components/form/Banner.svelte';
 	import Section from '$src/lib/components/form/Section.svelte';
+	import type { Proyeccion } from '$src/lib/types';
 
 	import { toastController } from '$src/lib/stores/toastStore.svelte.js';
 	import { showPicker } from '$src/lib/util/utils';
+	import TablaProyecciones from '$src/lib/components/admin/TablaProyecciones.svelte';
+	import { dbController } from '$db/controller';
 
 	const { data } = $props();
 
@@ -23,6 +26,12 @@
 	} from '$lib/util/consolidados';
 
 	import { tooltipAction } from '$lib/actions/tooltip';
+
+	let listadoProyecciones: Proyeccion[] = $state([]);
+	async function cargarListado() {
+		const proyecciones = await dbController.getProyecciones();
+		listadoProyecciones = proyecciones;
+	}
 </script>
 
 <Banner titulo="Modulo Vicedecanatura" variante="proyeccion">
@@ -257,35 +266,22 @@
 		</div>
 	</Section>
 
-	<Section titulo="Buscar salida" icon="bi bi-search">
-		<div class="row">
-			<div class="col-12">
-				<div class="input-group mb-3">
-					<input
-						type="text"
-						class="form-control searchBar"
-						placeholder="Código FM de la salida de campo"
-						id="inputCode"
-					/>
-					<button class="btn-primary" type="button" id="btn-searchProyeccion">Buscar</button>
-				</div>
-			</div>
+	<Section titulo="Listado proyecciones" icon="bi bi-clipboard2-check">
+		<div>
+			<button
+				class="btn-primary font-medium"
+				onclick={() => {
+					toastController.addMensaje('Cargando listado de proyecciones...');
+					cargarListado();
+				}}
+			>
+				<i class="bi bi-arrow-clockwise"></i>
+
+				<span>Cargar listado</span>
+			</button>
 		</div>
-
-		<div class="row">
-			<div class="col-12">
-				<div class="card">
-					<div class="card-header">
-						<div class="d-flex justify-content-between align-items-center">
-							<span>Datos de la salida</span>
-							<button type="button" class="btn-close btn-close-black" id="btn-clearBusqueda"
-							></button>
-						</div>
-					</div>
-
-					<div class="card-body" id="resultado-busqueda"></div>
-				</div>
-			</div>
+		<div>
+			<TablaProyecciones proyecciones={listadoProyecciones} />
 		</div>
 	</Section>
 </main>
