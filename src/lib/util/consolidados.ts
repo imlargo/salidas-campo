@@ -32,7 +32,8 @@ export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): strin
 			'HORA LLEGADA': proyeccion.horaRegreso,
 			DEPARTAMENTOS: proyeccionInstance.getDepartamentos(),
 			MUNICIPIOS: proyeccionInstance.getMunicipios(),
-			'DESTINO MÁS LEJANO': proyeccion.ultimoDestino.municipio
+			'DESTINO MÁS LEJANO': proyeccion.ultimoDestino.municipio,
+			OBSERVACIONES: proyeccion.observaciones || ''
 		} satisfies Record<string, string>;
 	});
 
