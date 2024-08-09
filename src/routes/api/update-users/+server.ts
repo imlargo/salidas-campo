@@ -71,7 +71,7 @@ export const GET: RequestHandler = async ({ locals, cookies }) => {
 	const result = await addData(db, collectionPath, data);
 
 	return json({
-		ok: true
+		ok: result
 	});
 };
 
