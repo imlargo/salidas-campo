@@ -49,3 +49,7 @@ export function calcularDuracion(fecha1: Date, fecha2: Date) {
 	const dias = diferencia / (1000 * 3600 * 24);
 	return dias + 1;
 }
+
+export function normalizarFecha(fecha: string): string {
+	return fecha.split('-').reverse().join('/');
+}
