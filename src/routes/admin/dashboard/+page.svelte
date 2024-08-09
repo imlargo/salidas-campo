@@ -2,6 +2,7 @@
 	import Banner from '$src/lib/components/form/Banner.svelte';
 	import Section from '$src/lib/components/form/Section.svelte';
 
+	import { toastController } from '$src/lib/stores/toastStore.svelte.js';
 	import { showPicker } from '$src/lib/util/utils';
 
 	const { data } = $props();
@@ -39,7 +40,11 @@
 					class="cursor-pointer"
 					use:tooltipAction={'Copiar link del formulario de proyeccion'}
 					onclick={() =>
-						navigator.clipboard.writeText('https://salidas-campo.vercel.app/form/proyeccion')}
+						{
+							toastController.addMensaje('Link copiado al portapapeles');
+							navigator.clipboard.writeText('https://salidas-campo.vercel.app/form/proyeccion')
+						}
+					}
 				>
 					<span class="text-muted fw-lighter decoration-orange">Copiar link</span>
 					<i class="bi bi-clipboard2"></i>
@@ -59,7 +64,10 @@
 			<div class="flex flex-col md:flex-row mt-2 gap-3">
 				<button
 					class="btn-primary font-semibold"
-					onclick={getConsolidadoProyeccion}
+					onclick={() => {
+						toastController.addMensaje('Generando consolidado de proyecciones');
+						getConsolidadoProyeccion();
+					}}
 					use:tooltipAction={'Descargar consolidado de proyecciones hasta el momento'}
 				>
 					<span>Descargar reporte</span>
@@ -67,7 +75,10 @@
 				</button>
 				<button
 					class="btn-primary font-semibold"
-					onclick={getConsolidadoExtras}
+					onclick={() => {
+						toastController.addMensaje('Generando consolidado de proyecciones extras');
+						getConsolidadoExtras();
+					}}
 					use:tooltipAction={'Descargar consolidado de proyecciones hechas fuera de tiempo'}
 				>
 					<span>Descargar Extras</span>
