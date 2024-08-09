@@ -39,12 +39,10 @@
 				<button
 					class="cursor-pointer"
 					use:tooltipAction={'Copiar link del formulario de proyeccion'}
-					onclick={() =>
-						{
-							toastController.addMensaje('Link copiado al portapapeles');
-							navigator.clipboard.writeText('https://salidas-campo.vercel.app/form/proyeccion')
-						}
-					}
+					onclick={() => {
+						toastController.addMensaje('Link copiado al portapapeles');
+						navigator.clipboard.writeText('https://salidas-campo.vercel.app/form/proyeccion');
+					}}
 				>
 					<span class="text-muted fw-lighter decoration-orange">Copiar link</span>
 					<i class="bi bi-clipboard2"></i>
@@ -96,12 +94,17 @@
 				<button
 					class="btn-primary font-semibold"
 					use:tooltipAction={'Descargar consolidado de proyecciones de un departamento'}
-					onclick={() =>
+					onclick={() => {
+						if (!controllerDashboard.selectedUAB) {
+							toastController.addMensaje('Selecciona un departamento');
+							return;
+						}
 						getConsolidadoByUAB(
 							controllerDashboard.uabs.find(
 								({ codigo }) => codigo === controllerDashboard.selectedUAB
 							)?.codigo as string
-						)}
+						);
+					}}
 				>
 					<span>Descargar</span>
 					<i class="bi bi-download fw-bold"></i>

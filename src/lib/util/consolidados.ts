@@ -4,6 +4,7 @@ import { ArrayToExcel } from './sheet-service';
 import { ProyeccionInstance, SolicitudInstance } from './registros';
 import { getMarcaTemporal } from './utils';
 import { EstadoSolicitud } from './enums';
+import { toastController } from '$src/lib/stores/toastStore.svelte.js';
 
 export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): string[][] {
 	if (proyecciones.length === 0) {
@@ -135,6 +136,12 @@ export function consolidarSolicitudesAsExcelAmpliado(solicitudes: Solicitud[]): 
 export async function getConsolidadoProyeccion() {
 	const proyecciones = await dbController.getProyecciones();
 	const data = consolidarProyeccionesAsExcel(proyecciones);
+
+	if (data.length === 0) {
+		toastController.addMensaje("No hay proyecciones para consolidar");
+		return;
+	}
+	
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado proyecciones ${marcaTemporal}`);
 }
@@ -142,6 +149,10 @@ export async function getConsolidadoProyeccion() {
 export async function getConsolidadoExtras() {
 	const proyecciones = await dbController.getProyeccionesExtra();
 	const data = consolidarProyeccionesAsExcel(proyecciones);
+	if (data.length === 0) {
+		toastController.addMensaje("No hay proyecciones extra para consolidar");
+		return;
+	}
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado proyecciones extra ${marcaTemporal}`);
 }
@@ -149,6 +160,10 @@ export async function getConsolidadoExtras() {
 export async function getConsolidadoByUAB(uab: string) {
 	const proyecciones = await dbController.getProyeccionesByUAB(uab);
 	const data = consolidarProyeccionesAsExcel(proyecciones);
+	if (data.length === 0) {
+		toastController.addMensaje("No hay proyecciones del departamento para consolidar");
+		return;
+	}
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado proyecciones ${uab} ${marcaTemporal}`);
 }
@@ -156,6 +171,10 @@ export async function getConsolidadoByUAB(uab: string) {
 export async function getConsolidadoSolicitud() {
 	const solicitudes = await dbController.getSolicitudes();
 	const data = consolidarSolicitudesAsExcel(solicitudes);
+	if (data.length === 0) {
+		toastController.addMensaje("No hay solicitudes para consolidar");
+		return;
+	}
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado solicitudes ${marcaTemporal}`);
 }
@@ -163,6 +182,10 @@ export async function getConsolidadoSolicitud() {
 export async function getConsolidadoSolicitudAmpliado() {
 	const solicitudes = await dbController.getSolicitudes();
 	const data = consolidarSolicitudesAsExcelAmpliado(solicitudes);
+	if (data.length === 0) {
+		toastController.addMensaje("No hay solicitudes para consolidar");
+		return;
+	}
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado ampliado de solicitudes ${marcaTemporal}`);
 }
@@ -170,6 +193,10 @@ export async function getConsolidadoSolicitudAmpliado() {
 export async function getConsolidadoSolicitudesAprobadas() {
 	const solicitudes = await dbController.getSolicitudesBy('estado', EstadoSolicitud.APROBADA);
 	const data = consolidarSolicitudesAsExcel(solicitudes);
+	if (data.length === 0) {
+		toastController.addMensaje("No hay solicitudes aprobadas para consolidar");
+		return;
+	}
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado solicitudes aprobadas ${marcaTemporal}`);
 }
