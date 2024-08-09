@@ -1,10 +1,13 @@
 import type { PageServerLoad } from './$types';
 import { dbController } from '$src/lib/db/controller';
 import { validarFechaActual, getActualDate, calcularDuracion } from '$src/lib/util/utils';
-import type { Proyeccion, Solicitud } from '$src/lib/types';
+import type { Proyeccion, Solicitud, UserData } from '$src/lib/types';
+import { ROL } from '$src/lib/util/enums';
+import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ locals }) => {
 	const user = locals.user;
+	const userData: UserData = locals.userData as UserData;
 
 	const config = await dbController.loadConfig();
 
@@ -22,6 +25,10 @@ export const load = (async ({ locals }) => {
 	const solicitudes: Solicitud[] = solicitudActiva
 		? await dbController.getSolicitudesByDocente(user.email)
 		: [];
+
+	if (userData.rol === ROL.UAB) {
+		redirect(308, '/modulo/uab');
+	}
 
 	return {
 		config,

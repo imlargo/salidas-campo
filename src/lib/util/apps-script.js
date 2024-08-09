@@ -9,7 +9,7 @@ function GroupBy(array, func) {
 	}, {});
 }
 
-function sheetToObjects(sheet) {
+function sheetToArrayOfObjects(sheet) {
 	const sheetData = sheet.getDataRange().getValues();
 	const cols = sheetData[0];
 	sheetData.shift();
@@ -17,7 +17,7 @@ function sheetToObjects(sheet) {
 	return sheetData.map((row) => Object.fromEntries(row.map((rowData, i) => [cols[i], rowData])));
 }
 
-function sheetToArray(sheet) {
+function sheetToArrayOfStrings(sheet) {
 	const sheetData = sheet.getDataRange().getValues();
 	sheetData.shift();
 	return sheetData.flat();
@@ -33,58 +33,6 @@ function callToBackend(payload) {
 	const res = UrlFetchApp.fetch('', options);
 	const content = res.getContentText();
 	return content;
-}
-
-function updateUsers() {
-	const sheetDocentes = SpreadsheetApp.openById(
-		'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
-	).getSheetByName('DOCENTES');
-	const sheetAdmins = SpreadsheetApp.openById(
-		'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
-	).getSheetByName('ADMINS');
-	const sheetUabs = SpreadsheetApp.openById(
-		'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
-	).getSheetByName('UAB');
-
-	const data = {};
-	// Agregar docentes
-	for (const docente of sheetToObjects(sheetDocentes)) {
-		data[docente.CORREO] = {
-			ROL: docente.ROL,
-			CODIGO_UAB: docente.CODIGO_UAB.toString()
-		};
-	}
-
-	// Agregar admins
-	for (const admin of [...new Set(sheetToArray(sheetAdmins))]) {
-		data[admin] = {
-			ROL: 'ADMIN',
-			CODIGO_UAB: '3400'
-		};
-	}
-
-	for (const uab of sheetToObjects(sheetUabs)) {
-		data[uab.CORREO_UAB] = {
-			ROL: 'UAB',
-			CODIGO_UAB: uab.CODIGO_UAB.toString()
-		};
-	}
-
-	// Limpiar usuarios
-	const isCleared = callToBackend({ type: 'clear', collectionPath: 'users' });
-	if (isCleared.result === false) {
-		Logger.log('Error, no se pudo limpiar la colección de usuarios');
-		return false;
-	}
-
-	const isNew = callToBackend({
-		type: 'add',
-		collectionPath: 'users',
-		data: data
-	});
-	Logger.log(isNew);
-
-	return isNew.result;
 }
 
 const call = {
@@ -106,6 +54,28 @@ const call = {
 		});
 	},
 
+	updateUsersData: (request) => {
+		const sheetDocentes = SpreadsheetApp.openById(
+			'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
+		).getSheetByName('DOCENTES');
+		const sheetAdmins = SpreadsheetApp.openById(
+			'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
+		).getSheetByName('ADMINS');
+		const sheetUabs = SpreadsheetApp.openById(
+			'1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0'
+		).getSheetByName('UAB');
+
+		const arrayDocentes = sheetToArrayOfObjects(sheetDocentes);
+		const arrayAdmins = [...new Set(sheetToArrayOfStrings(sheetAdmins))];
+		const arrayUabs = sheetToArrayOfObjects(sheetUabs);
+
+		return JSON.stringify({
+			docentes: arrayDocentes,
+			admins: arrayAdmins,
+			uabs: arrayUabs
+		});
+	},
+
 	getData: (request) => {
 		const spreadSheet = SpreadsheetApp.openById('1PPjK6xt2l-1X1oe_6h50qi9DPvFPrrhaNof34qxfcu0');
 
@@ -114,9 +84,9 @@ const call = {
 		const sheetRIESGOS = spreadSheet.getSheetByName('RIESGOS');
 
 		return JSON.stringify({
-			uab: sheetToObjects(sheetUAB),
-			riesgos: sheetToObjects(sheetRIESGOS),
-			lugares: sheetToArray(sheetLUGARES)
+			uab: sheetToArrayOfObjects(sheetUAB),
+			riesgos: sheetToArrayOfObjects(sheetRIESGOS),
+			lugares: sheetToArrayOfStrings(sheetLUGARES)
 		});
 	},
 
@@ -125,17 +95,17 @@ const call = {
 
 		if (request.data === 'lugares') {
 			const sheet = spreadSheet.getSheetByName('LUGARES');
-			return JSON.stringify(sheetToArray(sheet));
+			return JSON.stringify(sheetToArrayOfStrings(sheet));
 		}
 
 		if (request.data === 'uab') {
 			const sheet = spreadSheet.getSheetByName('UAB');
-			return JSON.stringify(sheetToObjects(sheet));
+			return JSON.stringify(sheetToArrayOfObjects(sheet));
 		}
 
 		if (request.data === 'riesgos') {
 			const sheet = spreadSheet.getSheetByName('RIESGOS');
-			return JSON.stringify(sheetToObjects(sheet));
+			return JSON.stringify(sheetToArrayOfObjects(sheet));
 		}
 	},
 
