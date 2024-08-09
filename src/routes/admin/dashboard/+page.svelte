@@ -257,7 +257,11 @@
 
 			<button
 				class="btn-primary font-semibold"
-				use:tooltipAction={'Actualizar dats'}
+				use:tooltipAction={'Actualizar usuarios'}
+				onclick={async () => {
+					toastController.addMensaje('Actualizando usuarios...');
+					await fetch('/api/update-users');
+				}}
 				id="btn-update-users"
 			>
 				<span>Actualizar usuarios</span>
