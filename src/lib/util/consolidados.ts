@@ -138,10 +138,10 @@ export async function getConsolidadoProyeccion() {
 	const data = consolidarProyeccionesAsExcel(proyecciones);
 
 	if (data.length === 0) {
-		toastController.addMensaje("No hay proyecciones para consolidar");
+		toastController.addMensaje('No hay proyecciones para consolidar');
 		return;
 	}
-	
+
 	const marcaTemporal = getMarcaTemporal();
 	ArrayToExcel(data, `Consolidado proyecciones ${marcaTemporal}`);
 }
@@ -150,7 +150,7 @@ export async function getConsolidadoExtras() {
 	const proyecciones = await dbController.getProyeccionesExtra();
 	const data = consolidarProyeccionesAsExcel(proyecciones);
 	if (data.length === 0) {
-		toastController.addMensaje("No hay proyecciones extra para consolidar");
+		toastController.addMensaje('No hay proyecciones extra para consolidar');
 		return;
 	}
 	const marcaTemporal = getMarcaTemporal();
@@ -161,7 +161,7 @@ export async function getConsolidadoByUAB(uab: string) {
 	const proyecciones = await dbController.getProyeccionesByUAB(uab);
 	const data = consolidarProyeccionesAsExcel(proyecciones);
 	if (data.length === 0) {
-		toastController.addMensaje("No hay proyecciones del departamento para consolidar");
+		toastController.addMensaje('No hay proyecciones del departamento para consolidar');
 		return;
 	}
 	const marcaTemporal = getMarcaTemporal();
@@ -172,7 +172,7 @@ export async function getConsolidadoSolicitud() {
 	const solicitudes = await dbController.getSolicitudes();
 	const data = consolidarSolicitudesAsExcel(solicitudes);
 	if (data.length === 0) {
-		toastController.addMensaje("No hay solicitudes para consolidar");
+		toastController.addMensaje('No hay solicitudes para consolidar');
 		return;
 	}
 	const marcaTemporal = getMarcaTemporal();
@@ -183,7 +183,7 @@ export async function getConsolidadoSolicitudAmpliado() {
 	const solicitudes = await dbController.getSolicitudes();
 	const data = consolidarSolicitudesAsExcelAmpliado(solicitudes);
 	if (data.length === 0) {
-		toastController.addMensaje("No hay solicitudes para consolidar");
+		toastController.addMensaje('No hay solicitudes para consolidar');
 		return;
 	}
 	const marcaTemporal = getMarcaTemporal();
@@ -194,7 +194,7 @@ export async function getConsolidadoSolicitudesAprobadas() {
 	const solicitudes = await dbController.getSolicitudesBy('estado', EstadoSolicitud.APROBADA);
 	const data = consolidarSolicitudesAsExcel(solicitudes);
 	if (data.length === 0) {
-		toastController.addMensaje("No hay solicitudes aprobadas para consolidar");
+		toastController.addMensaje('No hay solicitudes aprobadas para consolidar');
 		return;
 	}
 	const marcaTemporal = getMarcaTemporal();
