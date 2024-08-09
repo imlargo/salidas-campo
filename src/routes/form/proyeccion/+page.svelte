@@ -4,6 +4,7 @@
 	import SearchDestinos from '$src/lib/components/form/SearchDestinos.svelte';
 	import Form from '$src/lib/components/form/Form.svelte';
 	import Modal from '$src/lib/components/ui/Modal.svelte';
+	import { ROL } from '$src/lib/util/enums';
 
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
@@ -44,9 +45,15 @@
 </svelte:head>
 
 <Banner titulo="Formulario de proyección de salidas de campo" variante="proyeccion">
-	<a href="/modulo/docente" data-sveltekit-reload class="nav-link"
-		><i class="bi bi-house"></i> Módulo Docente</a
-	>
+	{#if storeAuth.rol === ROL.UAB}
+		<a href="/modulo/uab" data-sveltekit-reload class="nav-link"
+			><i class="bi bi-house"></i> Módulo UAB</a
+		>
+	{:else}
+		<a href="/modulo/docente" data-sveltekit-reload class="nav-link"
+			><i class="bi bi-house"></i> Módulo Docente</a
+		>
+	{/if}
 </Banner>
 
 <Modal
