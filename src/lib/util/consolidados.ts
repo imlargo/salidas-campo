@@ -5,6 +5,7 @@ import { ProyeccionInstance, SolicitudInstance } from './registros';
 import { getMarcaTemporal } from './utils';
 import { EstadoSolicitud } from './enums';
 import { toastController } from '$src/lib/stores/toastStore.svelte.js';
+import { normalizarFecha } from './utils';
 
 export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): string[][] {
 	if (proyecciones.length === 0) {
@@ -18,17 +19,17 @@ export function consolidarProyeccionesAsExcel(proyecciones: Proyeccion[]): strin
 			'MARCA TEMPORAL': proyeccion.marcaTemporal,
 			CONSECUTIVO: 'FM' + proyeccion.id.toString(),
 			FACULTAD: proyeccion.facultad,
-			DEPARTAMENTO: proyeccion.uab,
+			UAB: proyeccionInstance.getUab(),
 			ASIGNATURA: proyeccionInstance.getAsignaturas(),
 			CODIGO: proyeccionInstance.getCodigos(),
 			GRUPO: proyeccion.grupo,
 			DOCENTE: proyeccion.docente,
 			ASISTENTES: proyeccion.asistentes.toString(),
 			DURACIÓN: proyeccion.duracion.toString(),
-			'FECHA SALIDA': proyeccion.fechaSalida,
+			'FECHA SALIDA': normalizarFecha(proyeccion.fechaSalida),
 			'HORA SALIDA': proyeccion.horaSalida,
 			'LUGAR SALIDA': proyeccion.lugarSalida,
-			'FECHA LLEGADA': proyeccion.fechaRegreso,
+			'FECHA LLEGADA': normalizarFecha(proyeccion.fechaRegreso),
 			'LUGAR LLEGADA': proyeccion.lugarRegreso,
 			'HORA LLEGADA': proyeccion.horaRegreso,
 			DEPARTAMENTOS: proyeccionInstance.getDepartamentos(),

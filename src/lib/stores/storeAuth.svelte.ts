@@ -70,6 +70,17 @@ class StoreAuth implements UserData {
 		sessionStorage.setItem(StoreAuth.storageKey, JSON.stringify(sessionData));
 	}
 
+	getUserData(): UserData {
+		return {
+			email: this.email,
+			nombre: this.nombre,
+			rol: this.rol,
+			uab: this.uab,
+			isAdmin: this.isAdmin,
+			isDepartamento: this.isDepartamento
+		};
+	}
+
 	getFromStorage(): UserData | null {
 		const data = sessionStorage.getItem(StoreAuth.storageKey);
 		return data ? JSON.parse(data) : null;

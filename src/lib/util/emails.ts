@@ -1,5 +1,6 @@
 import type { Proyeccion, Solicitud } from '../types';
 import { ProyeccionInstance, SolicitudInstance } from './registros';
+import { normalizarFecha } from './utils';
 
 interface Email {
 	para: string;
@@ -16,19 +17,19 @@ function getProyeccionAsTable(proyeccion: Proyeccion) {
         <tr><td><strong>Docente:</strong></td><td>${proyeccion.docente}</td></tr>
 
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
-        <tr><td><strong>Departamento:</strong></td><td>${proyeccion.uab}</td></tr>
+        <tr><td><strong>Uab:</strong></td><td>${proyeccionInstance.getUab()}</td></tr>
         <tr><td><strong>Asignatura:</strong></td><td>${proyeccionInstance.getAsignaturas()}</td></tr>
         <tr><td><strong>Código:</strong></td><td>${proyeccionInstance.getCodigos()}</td></tr>
         <tr><td><strong>Grupo:</strong></td><td>${proyeccion.grupo}</td></tr>
         <tr><td><strong>Asistentes:</strong></td><td>${proyeccion.asistentes}</td></tr>
 
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
-        <tr><td><strong>Fecha de salida:</strong></td><td>${proyeccion.fechaSalida}</td></tr>
+        <tr><td><strong>Fecha de salida:</strong></td><td>${normalizarFecha(proyeccion.fechaSalida)}</td></tr>
         <tr><td><strong>Hora de salida:</strong></td><td>${proyeccion.horaSalida}</td></tr>
         <tr><td><strong>Lugar de salida:</strong></td><td>${proyeccion.lugarSalida}</td></tr>
 
         <tr> <td> <hr> </td> <td> <hr> </td> </tr>
-        <tr><td><strong>Fecha de regreso:</strong></td><td>${proyeccion.fechaRegreso}</td></tr>
+        <tr><td><strong>Fecha de regreso:</strong></td><td>${normalizarFecha(proyeccion.fechaRegreso)}</td></tr>
         <tr><td><strong>Hora de regreso:</strong></td><td>${proyeccion.horaRegreso}</td></tr>
         <tr><td><strong>Lugar de regreso:</strong></td><td>${proyeccion.lugarRegreso}</td></tr>
 

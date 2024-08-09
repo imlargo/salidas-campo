@@ -7,6 +7,7 @@
 	import { showPicker } from '$src/lib/util/utils';
 	import TablaProyecciones from '$src/lib/components/admin/TablaProyecciones.svelte';
 	import { dbController } from '$db/controller';
+	import { storeData } from '$src/lib/stores/storeData.svelte.js';
 
 	const { data } = $props();
 
@@ -15,6 +16,7 @@
 
 	controllerDashboard.uabs = internalData.uabs;
 	controllerDashboard.config = config;
+	storeData.uabs = internalData.uabs;
 
 	import {
 		getConsolidadoProyeccion,
