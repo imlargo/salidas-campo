@@ -35,6 +35,7 @@
 </script>
 
 <Banner titulo="Modulo Vicedecanatura" variante="proyeccion">
+	<a href="/admin/dashboard" class="nav-link"><i class="bi bi-house"></i> Dashboard</a>
 	<a href="/admin/gestion" class="nav-link"><i class="bi bi-house"></i> Gestion</a>
 </Banner>
 

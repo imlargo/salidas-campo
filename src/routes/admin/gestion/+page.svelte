@@ -60,6 +60,7 @@
 
 <Banner titulo="Gestion de Solicitudes" variante="proyeccion">
 	<a href="/admin/dashboard" class="nav-link"><i class="bi bi-house"></i> Dashboard</a>
+	<a href="/admin/gestion" class="nav-link"><i class="bi bi-house"></i> Gestion</a>
 </Banner>
 
 <main class="py-12 w-full">
