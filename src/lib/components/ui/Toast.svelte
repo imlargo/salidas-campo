@@ -17,7 +17,7 @@
 		<div
 			animate:flip={{ duration: 300 }}
 			use:toastAction
-			class="toast bg-purple-500 text-white z-40 flex items-center toast-purple border-0 w-80 px-4 py-3 rounded"
+			class="toast border-0 bg-purple-500 text-white z-40 flex items-center px-4 w-full sm:w-96 py-3 rounded"
 			role="alert"
 		>
 			<div class="flex justify-between items-center w-full">
@@ -31,6 +31,3 @@
 		</div>
 	{/each}
 </div>
-
-<style lang="scss">
-</style>
