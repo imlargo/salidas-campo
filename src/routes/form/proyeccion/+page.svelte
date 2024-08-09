@@ -388,6 +388,12 @@
 	</Section>
 
 	<Section titulo="Destinos">
+		<p>
+			<i class="bi bi-info-circle"></i>
+			Si no encuentras el destino deseado en el buscador, selecciona uno cercano y especifica el destino
+			exacto en el campo de observaciones.
+		</p>
+
 		<div>
 			<label for="input-municipio" class="form-label">
 				<span>Buscar municipios de destino</span>
@@ -398,10 +404,11 @@
 		</div>
 	</Section>
 	<Section titulo="Destino más lejano">
-		<p>El destino más lejano se refiere al lugar ubicado a la mayor distancia desde Medellín.</p>
-
 		<div>
 			<label for="municipio" class="form-label">Municipio más lejano</label>
+			<p class="mb-2">
+				El destino más lejano se refiere al lugar ubicado a la mayor distancia desde Medellín.
+			</p>
 			<select
 				required
 				class="form-control"
@@ -419,9 +426,9 @@
 		<div>
 			<label for="observaciones" class="form-label">Observaciones</label>
 			<p class="mb-2">
-				Ingrese aquí cualquier comentario adicional que deba ser considerado. Esto puede incluir
-				especificaciones sobre una vereda, empresa o lugar en particular, así como detalles
-				adicionales sobre el destino.
+				En este campo usted podrá diligenciar las necesidades en cuánto a transporte, especificar la
+				ubicación, empresa, rio, vereda, corregimiento, zona y detallar algunos aspectos que
+				considere necesario para la realización de la práctica extramural.
 			</p>
 			<textarea
 				name="observaciones"
