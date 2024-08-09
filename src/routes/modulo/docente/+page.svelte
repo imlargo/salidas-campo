@@ -2,6 +2,7 @@
 	import Banner from '$src/lib/components/form/Banner.svelte';
 	import TablaProyecciones from '$src/lib/components/docente/TablaProyecciones.svelte';
 	import TableSolicitudes from '$src/lib/components/docente/TableSolicitudes.svelte';
+	import LogOut from '$src/lib/components/ui/LogOut.svelte';
 
 	const { data } = $props();
 	const {
@@ -25,7 +26,9 @@
 	<title>Módulo docente - Salidas de campo</title>
 </svelte:head>
 
-<Banner titulo="Módulo docente" variante="proyeccion"></Banner>
+<Banner titulo="Módulo docente" variante="proyeccion">
+	<LogOut />
+</Banner>
 
 <main class="py-12 w-full">
 	{#if proyeccionActiva}
