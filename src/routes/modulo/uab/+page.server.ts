@@ -27,6 +27,10 @@ export const load = (async ({ locals }) => {
 		userData.nombre
 	);
 
+	if (userData.rol === ROL.PLANTA || userData.rol === ROL.OCASIONAL) {
+		redirect(308, '/modulo/docente');
+	}
+
 	return {
 		config,
 		proyeccionActiva,
