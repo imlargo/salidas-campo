@@ -52,7 +52,7 @@ export class ProyeccionInstance implements Proyeccion {
 	}
 
 	getDepartamentos(): string {
-		return this.destinos.map(({ departamento }) => departamento).join(', ');
+		return [...new Set(this.destinos.map(({ departamento }) => departamento))].join(', ');
 	}
 
 	getMunicipios(): string {
