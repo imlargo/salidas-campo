@@ -2,12 +2,14 @@
 	import Banner from '$src/lib/components/form/Banner.svelte';
 	import TableSolicitudes from '$src/lib/components/admin/TableSolicitudes.svelte';
 
+	import { storeData } from '$src/lib/stores/storeData.svelte.js';
 	import { controllerGestion } from '$src/lib/client/controllers/gestion.svelte';
 
 	const { data } = $props();
 
-	const { solicitudes } = data;
+	const { solicitudes, internalData } = data;
 	controllerGestion.solicitudes = solicitudes;
+	storeData.uabs = internalData.uabs;
 
 	let filtroCampo = $state('');
 	let filtroValor = $state('');

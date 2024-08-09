@@ -5,6 +5,7 @@
 	import Form from '$src/lib/components/form/Form.svelte';
 	import Modal from '$src/lib/components/ui/Modal.svelte';
 	import { ROL } from '$src/lib/util/enums';
+	import { getRoleRedirect } from '$utils/utils';
 
 	import { checkNumber, showPicker } from '$src/lib/util/utils';
 	import { storeData } from '$src/lib/stores/storeData.svelte';
@@ -34,7 +35,12 @@
 	}
 
 	async function callbackModal() {
-		await goto('/modulo/docente');
+		if (storeAuth.rol === ROL.ADMIN) {
+			await goto('/modulo/docente');
+			return;
+		}
+
+		await goto(getRoleRedirect(storeAuth.getUserData()));
 	}
 
 	let modal: SvelteComponent;

@@ -1,6 +1,7 @@
 import type { Proyeccion, Solicitud, Asignatura, Destino, SeleccionRiesgo } from '$lib/types';
 import { EstadoSolicitud } from './enums';
 import { GroupBy } from './utils';
+import { storeData } from '../stores/storeData.svelte';
 
 export class ProyeccionInstance implements Proyeccion {
 	id: number;
@@ -52,7 +53,7 @@ export class ProyeccionInstance implements Proyeccion {
 	}
 
 	getDepartamentos(): string {
-		return this.destinos.map(({ departamento }) => departamento).join(', ');
+		return [...new Set(this.destinos.map(({ departamento }) => departamento))].join(', ');
 	}
 
 	getMunicipios(): string {
@@ -75,6 +76,10 @@ export class ProyeccionInstance implements Proyeccion {
 		return this.relacion
 			? this.asignatura?.COD_ASIGNATURA + ', ' + this.relacion.COD_ASIGNATURA
 			: this.asignatura?.COD_ASIGNATURA || 'Error';
+	}
+
+	getUab(): string {
+		return storeData.uabs.find(({ codigo }) => codigo === this.uab)?.nombre || 'Error';
 	}
 }
 
@@ -181,5 +186,9 @@ export class SolicitudInstance implements Solicitud {
 
 	getAgenda(): string {
 		return this.agenda.map((dia, i) => `Día ${i + 1}: ${dia}`).join('\n');
+	}
+
+	getUab(): string {
+		return storeData.uabs.find(({ codigo }) => codigo === this.uab)?.nombre || 'Error';
 	}
 }
